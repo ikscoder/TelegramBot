@@ -68,7 +68,7 @@ namespace TelegramBot
 
             try
             {
-                if ((await Data.Current.IsDialogWhithManagerOpenedAsync(message.Chat)))
+                if (message.Text==null&&(await Data.Current.IsDialogWhithManagerOpenedAsync(message.Chat)))
                 {
                     Data.Current.InsertMessage(message);
                 }
@@ -239,6 +239,10 @@ namespace TelegramBot
                 {
                     if(!(await Data.Current.IsDialogWhithManagerOpenedAsync(message.Chat))) { 
                         await Bot.SendTextMessageAsync(message.Chat.Id, _help + (!await Data.Current.IsAutorizedAsync(message.Chat) ? "" : _helpManager), replyMarkup: new ReplyKeyboardRemove());
+                    }
+                    else
+                    {
+                        Data.Current.InsertMessage(message);
                     }
                 }
             }

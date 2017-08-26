@@ -3,22 +3,22 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <!--#region Settings-->
-    <SolidColorBrush x:Key="PrimaryLightColor" Color="#599ef3" />
-    <SolidColorBrush x:Key="PrimaryColor" Color="#0070c0" />
-    <Color x:Key="PrimaryCColor">#00468f</Color>
+    <SolidColorBrush x:Key="PrimaryLightColor" Color="#4f5b62" />
+    <SolidColorBrush x:Key="PrimaryColor" Color="#263238" />
+    <Color x:Key="PrimaryCColor">#263238</Color>
     <SolidColorBrush x:Key="PrimaryDarkColor" Color="#000a12" />
 
-    <SolidColorBrush x:Key="SecondaryLightColor" Color="#ff844c" />
-    <SolidColorBrush x:Key="SecondaryColor" Color="#f4511e" />
-    <SolidColorBrush x:Key="SecondaryDarkColor" Color="#b91400" />
+    <SolidColorBrush x:Key="SecondaryLightColor" Color="#e35183" />
+    <SolidColorBrush x:Key="SecondaryColor" Color="#FFAD1457" />
+    <SolidColorBrush x:Key="SecondaryDarkColor" Color="#78002e" />
 
     <SolidColorBrush x:Key="TextOnDarkColor" Color="#ffffff" />
     <SolidColorBrush x:Key="TextOnLightColor" Color="#000000" />
 
-    <SolidColorBrush x:Key="BackgroundColor" Color="#fafafa" />
+    <SolidColorBrush x:Key="BackgroundColor" Color="#f4f4f4" />
     <SolidColorBrush x:Key="AlternativeBackgroundColor" Color="#ffffff" />
 
-    <SolidColorBrush x:Key="DisabledColor" Color="#FFa8a8a8" />
+    <SolidColorBrush x:Key="DisabledColor" Color="#FFd8d8d8" />
 
     <SolidColorBrush x:Key="CheckedColor" Color="#7cb342" />
     <SolidColorBrush x:Key="UncheckedColor" Color="#f44336" />

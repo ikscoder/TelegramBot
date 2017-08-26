@@ -19,7 +19,6 @@ namespace TelegramBot
                 return;
             TBot.Bot.StartReceiving();
             ShedulingSendingAsync();
-
             var icon = new NotifyIcon
             {
                 Icon = new Icon(typeof(Program), "Robot.ico"),

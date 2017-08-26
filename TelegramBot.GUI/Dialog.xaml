@@ -25,12 +25,13 @@
                 <Label Content="{Binding Chat.FirstName, ElementName=window}"  Grid.Column="2" Foreground="{DynamicResource TextOnDarkColor}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="{DynamicResource FontFamilyHighlight}" FontSize="{DynamicResource FontSizeBig}"/>
             </Grid>
             <Grid Margin="0,40,0,0">
-                <Border Margin="5,5,5,53" BorderThickness="1" BorderBrush="{DynamicResource PrimaryColor}" >
+                <Border Margin="5,5,5,53" BorderThickness="0" BorderBrush="{DynamicResource PrimaryColor}" >
                     <ScrollViewer x:Name="ChatScroll">
-                        <StackPanel x:Name="ChatPanel" Background="{DynamicResource AlternativeBackgroundColor}" CanVerticallyScroll="True" UseLayoutRounding="True"/>
+                        <StackPanel x:Name="ChatPanel" Background="{DynamicResource BackgroundColor}" CanVerticallyScroll="True" UseLayoutRounding="True"/>
                     </ScrollViewer>
                 </Border>
                 <Button Content="Отправить" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="93" Height="38" Click="Send_Click"/>
+                <MediaElement x:Name="Media" Visibility="Hidden" LoadedBehavior="Manual" Source="Resources/alert.wav" Volume="0.5" />
             </Grid>
             <TextBox x:Name="TextMessage" Height="37" Margin="10,0,111,10" Text="" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom"/>
         </Grid>

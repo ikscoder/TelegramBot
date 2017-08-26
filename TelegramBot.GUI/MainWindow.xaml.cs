@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Navigation;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 using TelegramBot.DataConnection;
@@ -20,15 +24,34 @@ namespace TelegramBot.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
-
+        //Для скачивания фалов из телеграма
+        public static TelegramBotClient Bot { get; private set; }
         public volatile bool IsStop;
 
         public MainWindow()
         {
-            InitializeComponent();
-            PopSettings.Closed += (s, e) => { TabControlMain.Effect = null; };
+            if (!Directory.Exists("Files")) Directory.CreateDirectory("Files");
+            if (!(Process.GetProcesses().Any(proc => proc.ProcessName == "TelegramBot")))
+            {
+                Process.Start("TelegramBot.exe");
+                Thread.Sleep(2000);
+            }         
             Settings.Load();
-            if (Data.InitConnection(Settings.Current.ConnectionString)) return;
+            BotSettings.Load();
+            Bot=new TelegramBotClient(BotSettings.Current.APIKey);
+            InitializeComponent();
+
+            foreach (var com in BotSettings.Current.AvailableCommands)
+            {
+                AvailableCommandsPanel.Children.Add(new CheckBox
+                {
+                    Content = com.Key,
+                    IsChecked = com.Value,
+                    Margin = new Thickness(5)
+                });
+            }
+            PopSettings.Closed += (s, e) => { TabControlMain.Effect = null; };
+            if (Data.InitConnection(BotSettings.Current.ConnectionString)) return;
             Message.Show("Cannot connect to database");
             Close();
         }
@@ -51,11 +74,16 @@ namespace TelegramBot.GUI
 
         private async void UpdateView()
         {
-            MessagesList.ItemsSource = await Data.Current.GetAllMessagesAsync();
-            ChatList.ItemsSource = await Data.Current.GetOpenedChatsAsync();
+            ChatList.ItemsSource = await Data.Current.GetOpenedDialogChatsAsync();
             ManagerChatList.ItemsSource = await Data.Current.GetManagerChatsAsync();
             ManagersList.ItemsSource = await Data.Current.GetAllManagerIdsAsync();
-            TelegramManager.ItemsSource = (await Data.Current.GetTelegramManagerTableAsync()).DefaultView;
+            if (!(Process.GetProcesses().Any(proc => proc.ProcessName == "TelegramBot")))
+            {
+                Process.Start("TelegramBot.exe");
+                Thread.Sleep(2000);
+                Message.Show("Бот упал и был перезапущен");
+            }
+  
         }
 
         #region GUI
@@ -105,8 +133,9 @@ namespace TelegramBot.GUI
             new Dialog((Chat)ChatList.SelectedItem).Show();
         }
 
-        private void window_Loaded(object sender, RoutedEventArgs e)
+        private async void window_Loaded(object sender, RoutedEventArgs e)
         {
+            ListTables.ItemsSource = await Data.Current.GetTablesAsync();
             ShedulingUpdatingAsync();      
         }
 
@@ -145,25 +174,59 @@ namespace TelegramBot.GUI
 
         private async void SendAllManagers_Click(object sender, RoutedEventArgs e)
         {
-            if(string.IsNullOrEmpty(AllManText.Text))return;
+            if (CheckManager.IsChecked != true && CheckClient.IsChecked != true)return;
+            string richText = new TextRange(AllManText.Document.ContentStart, AllManText.Document.ContentEnd).Text.Trim();
+            if (string.IsNullOrEmpty(richText))return;
 
-            foreach (var chat in await Data.Current.GetManagerChatsAsync())
-            {
-                Data.Current.InsertMessage(new Telegram.Bot.Types.Message
-                {
-                    MessageId = -1,
-                    Date = DateTime.Now,
-                    Chat = chat,
-                    From = await Data.Current.GetBotAsync(),
-                    Text = AllManText.Text
-                }, false);     
-            }
-            AllManText.Text = null;
+            var chats = new List<Chat>();
+            if(CheckManager.IsChecked==true)
+                chats.AddRange(await Data.Current.GetManagerChatsAsync());
+            if(CheckClient.IsChecked==true)
+                chats.AddRange(await Data.Current.GetAllChatsAsync());
+            if(chats.Any())
+                foreach (var chat in chats.GroupBy(p => p.Id).Select(g => g.First()))
+                    {
+                        Data.Current.InsertMessage(new Telegram.Bot.Types.Message
+                        {
+                            MessageId = -1,
+                            Date = DateTime.Now,
+                            Chat = chat,
+                            From = await Data.Current.GetBotAsync(),
+                            Text = richText
+                        }, false);     
+                    }
+            
+            AllManText.Document = new FlowDocument();
         }
 
         private void ManagersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             TokenText.Text = null;
+        }
+
+        private async void Refresh_OnClick(object sender, RoutedEventArgs e)
+        {
+            if(ListTables.SelectedItem == null)return;
+            DBTable.ItemsSource = (await Data.Current.GetTableByNameAsync(ListTables.SelectedItem.ToString())).DefaultView;
+        }
+
+        private async void ListTables_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ListTables.SelectedItem == null) return;
+            DBTable.ItemsSource = (await Data.Current.GetTableByNameAsync(ListTables.SelectedItem.ToString())).DefaultView;
+        }
+
+        private void SetBotSettings_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var child in AvailableCommandsPanel.Children)
+            {
+                var cb = child as CheckBox;
+                if (!string.IsNullOrEmpty(cb?.Content.ToString()))
+                {
+                    BotSettings.Current.AvailableCommands[cb.Content.ToString()] = cb.IsChecked ?? false;
+                }
+            }
+            BotSettings.Save();
         }
     }
 

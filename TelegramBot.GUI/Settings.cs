@@ -13,8 +13,6 @@ namespace TelegramBot.GUI
         private static Settings _instance;
 
         private bool _isDarkTheme;
-        private string _apiKey;
-        private string _connectionString;
 
         public static Settings Current
         {
@@ -49,18 +47,6 @@ namespace TelegramBot.GUI
             }
         }
 
-        public string APIKey
-        {
-            get { return _apiKey; }
-            set { _apiKey = value; OnSettingsChanged?.Invoke(nameof(APIKey), null); }
-        }
-
-        public string ConnectionString
-        {
-            get { return _connectionString; }
-            set {_connectionString = value;OnSettingsChanged?.Invoke(nameof(ConnectionString), null);  }
-        }
-
 
         public static void Save()
         {
@@ -68,7 +54,7 @@ namespace TelegramBot.GUI
             {
                 using (var sw = new StreamWriter(SettingsFileName, false, Encoding.Default))
                 {
-                    sw.Write(JsonConvert.SerializeObject(Current));
+                    sw.Write(JsonConvert.SerializeObject(Current,Formatting.Indented));
                 }
             }
             catch (Exception e)

@@ -6,10 +6,9 @@
              xmlns:local="clr-namespace:TelegramBot.GUI"
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="200">
-    <StackPanel Background="{DynamicResource BackgroundColor}" Orientation="Horizontal" FlowDirection="RightToLeft" >
-        <Label x:Name="TimeL" Content="{Binding Message.Date, ElementName=userControl, StringFormat=\{0:HH:mm\}}" VerticalContentAlignment="Bottom" HorizontalAlignment="Right" Margin="20,0,0,0" Padding="5,5,5,0" />
+    <StackPanel x:Name="Pane" Background="{DynamicResource BackgroundColor}" Orientation="Horizontal" FlowDirection="RightToLeft" >
         <Border x:Name="MessageBorder" Background="{DynamicResource PrimaryLightColor}" CornerRadius="15" Margin="5" BorderBrush="{DynamicResource PrimaryColor}">
-            <Label x:Name="MessageLabel" Content="{Binding Message.Text, ElementName=userControl}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="25,5"/>
+            <Label x:Name="MessageLabel" Content="{Binding Message.Text, ElementName=userControl}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="25,5" ToolTip="{Binding Message.Date, ElementName=userControl, StringFormat=\{0:HH:mm\}}"/>
         </Border>
     </StackPanel>
 </UserControl>

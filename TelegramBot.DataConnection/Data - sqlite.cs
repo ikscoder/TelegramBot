@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Data.Odbc;
-using System.Data.OleDb;
+using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot.Helpers;
@@ -13,7 +12,7 @@ using Telegram.Bot.Types.Enums;
 
 namespace TelegramBot.DataConnection
 {
-    public class Data : IDisposable
+    public class Dataold : IDisposable
     {
 
         #region Main
@@ -22,12 +21,12 @@ namespace TelegramBot.DataConnection
         {
             try
             {
-                var factory = (OdbcFactory)DbProviderFactories.GetFactory("System.Data.Odbc");
-                var connection = (OdbcConnection)factory.CreateConnection();
+                var factory = (SQLiteFactory)DbProviderFactories.GetFactory("System.Data.SQLite");
+                var connection = (SQLiteConnection)factory.CreateConnection();
                 connection.ConnectionString = connectionString;
                 connection.Open();
                 connection.Close();
-                Current=new Data(connectionString);
+                Current=new Dataold(connectionString);
                 return true;
             }
             catch (Exception e)
@@ -38,14 +37,14 @@ namespace TelegramBot.DataConnection
 
         }
 
-        public static Data Current { get; set; }
+        public static Dataold Current { get; set; }
 
-        private OdbcConnection Connection { get; }
+        private SQLiteConnection Connection { get; }
 
-        private Data(string connectionString)
+        private Dataold(string connectionString)
         {
-            var factory = (OdbcFactory)DbProviderFactories.GetFactory("System.Data.Odbc");
-            Connection = (OdbcConnection)factory.CreateConnection();
+            var factory = (SQLiteFactory)DbProviderFactories.GetFactory("System.Data.SQLite");
+            Connection = (SQLiteConnection)factory.CreateConnection();
             Connection.ConnectionString = connectionString;
             Connection.Open();
         }
@@ -64,8 +63,10 @@ namespace TelegramBot.DataConnection
             if (bot == null) return;
             try
             {
-                await new OdbcCommand("DELETE FROM telegram_currentbot;", Connection).ExecuteNonQueryAsync();
-                var command = new OdbcCommand($"INSERT INTO telegram_currentbot (id) VALUES ({bot.Id});", Connection);
+                await new SQLiteCommand($"DELETE FROM [telegram_currentbot];", Connection).ExecuteNonQueryAsync();
+                var command = new SQLiteCommand("INSERT INTO [telegram_currentbot] ([id]) VALUES (@ID);", Connection);
+                command.Parameters.Add("@ID", DbType.Int32);
+                command.Parameters["@ID"].Value = bot.Id;
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -82,29 +83,51 @@ namespace TelegramBot.DataConnection
             if (chat == null) return;
             try
             {
-                var test = new OdbcCommand($"select * from telegram_chats where id={chat.Id}", Connection);
+                var test = new SQLiteCommand($"select * from [telegram_chats] where id={chat.Id}", Connection);
                 bool isUpdate = test.ExecuteReader().Read();
-                var command = new OdbcCommand {Connection = Connection};
+                var command = new SQLiteCommand(Connection);
                 if (isUpdate)
                 {
                     command.CommandText =
-                        $"UPDATE telegram_chats SET type = '{chat.Type}', title = '{chat.Title?.Replace("\\", "\\\\").Replace("\'","\\\'") }', username = '{chat.Username?.Replace("\\", "\\\\").Replace("\'","\\\'")}', first_name = '{chat.FirstName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', last_name = '{chat.LastName?.Replace("\\", "\\\\").Replace("\'","\\\'")}'";
+                        "UPDATE [telegram_chats] SET [type] = @type, [title] = @title, [username] = @username, [first_name] = @first_name, [last_name] = @last_name";
                     if (isClosed.HasValue)
-                        command.CommandText += $", is_closed = {isClosed}";
+                        command.CommandText += ", [is_closed] = @is_closed";
                     if (isDialogOpened.HasValue)
-                        command.CommandText += $", is_dialog_opened = {isDialogOpened}";
-                    command.CommandText += $" WHERE id={chat.Id};";
+                        command.CommandText += ", [is_dialog_opened] = @is_dialog_opened";
+                    command.CommandText += " WHERE id=@id;";
                 }
                 else
                 {
-                    command.CommandText = $"INSERT INTO telegram_chats (id ,type ,title ,username ,first_name ,last_name ,is_closed, is_dialog_opened) VALUES ({chat.Id}, '{chat.Type}', '{chat.Title?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{chat.Username?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{chat.FirstName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{chat.LastName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {isClosed??false}, {isDialogOpened??false});";
+                    command.CommandText = "INSERT INTO [telegram_chats] ([id] ,[type] ,[title] ,[username] ,[first_name] ,[last_name] ,[is_closed], [is_dialog_opened]) VALUES (@id, @type, @title, @username, @first_name, @last_name, @is_closed, @is_dialog_opened);";
                 }
+                command.Parameters.Add("@type", DbType.String);
+                command.Parameters["@type"].Value = chat.Type;
+                command.Parameters.Add("@title", DbType.String);
+                command.Parameters["@title"].Value = chat.Title;
+                command.Parameters.Add("@username", DbType.String);
+                command.Parameters["@username"].Value = chat.Username;
+                command.Parameters.Add("@first_name", DbType.String);
+                command.Parameters["@first_name"].Value = chat.FirstName;
+                command.Parameters.Add("@last_name", DbType.String);
+                command.Parameters["@last_name"].Value = chat.LastName;
+                if (!isUpdate || isClosed.HasValue)
+                {
+                    command.Parameters.Add("@is_closed", DbType.Boolean);
+                    command.Parameters["@is_closed"].Value = isClosed ?? false;
+                }
+                if (!isUpdate || isDialogOpened.HasValue)
+                {
+                    command.Parameters.Add("@is_dialog_opened", DbType.Boolean);
+                    command.Parameters["@is_dialog_opened"].Value = isDialogOpened ?? false;
+                }
+                command.Parameters.Add("@id", DbType.Int64);
+                command.Parameters["@id"].Value = chat.Id;
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
             {
                 Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "InsertOrUpdateChat: " + e.Message));
-#if DEBUG 
+#if DEBUG
                 throw;
 #endif
             }
@@ -115,20 +138,27 @@ namespace TelegramBot.DataConnection
             if (user == null) return;
             try
             {
-                var test = new OdbcCommand($"select * from telegram_users where id={user.Id};", Connection);
-                var command = new OdbcCommand()
+                var test = new SQLiteCommand($"select * from [telegram_users] where [id]={user.Id}", Connection);
+                var command = new SQLiteCommand(Connection)
                 {
-                    Connection= Connection,
                     CommandText =
                         test.ExecuteReader().Read()
-                            ? $"UPDATE telegram_users SET first_name = '{user.FirstName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', last_name = '{user.LastName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', username = '{user.Username?.Replace("\\", "\\\\").Replace("\'","\\\'")}' WHERE id = {user.Id};"
-                            : $"INSERT INTO telegram_users (id, first_name, last_name, username) VALUES ({user.Id}, '{user.FirstName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{user.LastName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{user.Username?.Replace("\\", "\\\\").Replace("\'","\\\'")}');"
+                            ? "UPDATE [telegram_users] SET [first_name] = @first_name, [last_name] = @last_name, [username] = @username WHERE [id] = @id;"
+                            : "INSERT INTO [telegram_users] ([id],[first_name],[last_name],[username]) VALUES(@id, @first_name, @last_name, @username);"
                 };
+                command.Parameters.Add("@id", DbType.Int64);
+                command.Parameters["@id"].Value = user.Id;
+                command.Parameters.Add("@first_name", DbType.String);
+                command.Parameters["@first_name"].Value = user.FirstName;
+                command.Parameters.Add("@last_name", DbType.String);
+                command.Parameters["@last_name"].Value = user.LastName;
+                command.Parameters.Add("@username", DbType.String);
+                command.Parameters["@username"].Value = user.Username;
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
             {
-                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, $"InsertOrUpdateUser: {e.Message}" ));
+                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "InsertOrUpdateUser: " + e.Message));
 #if DEBUG
                 throw;
 #endif
@@ -142,15 +172,18 @@ namespace TelegramBot.DataConnection
             {
                 InsertOrUpdateUser(user);
 
-                var test = new OdbcCommand($"select * from telegram_clients where telegramuserid={user.Id}", Connection);
-                var command = new OdbcCommand()
+                var test = new SQLiteCommand($"select * from [telegram_clients] where [telegramuserid]={user.Id}", Connection);
+                var command = new SQLiteCommand(Connection)
                 {
-                    Connection= Connection,
                     CommandText =
                         (test.ExecuteReader().Read() && contact != null)
-                            ? $"UPDATE telegram_clients SET phone = '{contact?.PhoneNumber?.Replace("\\", "\\\\").Replace("\'","\\\'")}' WHERE telegramuserid = {user.Id};"
-                            : $"INSERT INTO telegram_clients (phone,telegramuserid) VALUES('{contact?.PhoneNumber?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {user.Id});"
+                            ? "UPDATE [telegram_clients] SET [phone] = @phone WHERE [telegramuserid] = @telegramuserid;"
+                            : "INSERT INTO [telegram_clients] ([phone],[telegramuserid]) VALUES(@phone, @telegramuserid);"
                 };
+                command.Parameters.Add("@phone", DbType.String);
+                command.Parameters["@phone"].Value = contact?.PhoneNumber;
+                command.Parameters.Add("@telegramuserid", DbType.Int64);
+                command.Parameters["@telegramuserid"].Value = user.Id;
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -167,9 +200,13 @@ namespace TelegramBot.DataConnection
             if (user == null || string.IsNullOrEmpty(description)) return;
             try
             {
-                var reader = await new OdbcCommand($"SELECT id FROM telegram_clients where telegramuserid={user.Id};", Connection).ExecuteReaderAsync();
+                var reader = await new SQLiteCommand($"SELECT [id] FROM [telegram_clients] where [telegramuserid]={user.Id};", Connection).ExecuteReaderAsync();
                 if (!reader.Read()) return;
-                var command = new OdbcCommand($"INSERT INTO opportunities (clientid,description) VALUES({reader[0]}, '{description?.Replace("\\", "\\\\").Replace("\'","\\\'")}');", Connection);
+                var command = new SQLiteCommand("INSERT INTO [opportunities] ([clientid],[description]) VALUES(@clientid, @description);", Connection);
+                command.Parameters.Add("@clientid", DbType.Int64);
+                command.Parameters["@clientid"].Value = reader.GetInt32(0);
+                command.Parameters.Add("@description", DbType.String);
+                command.Parameters["@description"].Value = description;
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -190,7 +227,7 @@ namespace TelegramBot.DataConnection
             try
             {
                 var offices = new DataTable();
-                offices.Load(await new OdbcCommand("SELECT latitude, longitude, title, address, foursquare_id FROM telegram_offices;", Connection).ExecuteReaderAsync());
+                offices.Load(await new SQLiteCommand("SELECT [latitude], [longitude], [title], [address], [foursquare_id] FROM [telegram_offices];", Connection).ExecuteReaderAsync());
                 return Enumerable.Select(offices.AsEnumerable(), row => new Venue
                 {
                     Location = new Location
@@ -219,7 +256,7 @@ namespace TelegramBot.DataConnection
             try
             {
                 var opportunities = new DataTable();
-                opportunities.Load(await new OdbcCommand("SELECT id, clientid, description FROM opportunities;", Connection).ExecuteReaderAsync());
+                opportunities.Load(await new SQLiteCommand("SELECT [id], [clientid], [description] FROM [opportunities];", Connection).ExecuteReaderAsync());
                 var result = new List<Opportunity>(opportunities.AsEnumerable().Count());
                 foreach (var row in opportunities.AsEnumerable())
                 {
@@ -228,13 +265,13 @@ namespace TelegramBot.DataConnection
                         Description = row[2].ToString(),
                         Contact = new Contact()
                     };
-                    var command = new OdbcCommand($"SELECT phone, telegramuserid FROM telegram_clients where id={row[1]} limit 1;", Connection);
+                    var command = new SQLiteCommand($"SELECT [phone], [telegramuserid] FROM [telegram_clients] where [id]={row[1]} limit 1;", Connection);
                     var reader = await command.ExecuteReaderAsync();
                     if (reader.Read())
                     {
 
                         o.Contact.PhoneNumber = reader.GetString(0);
-                        var userc = new OdbcCommand($"SELECT first_name, last_name FROM telegram_users where id={reader[1]} limit 1;", Connection);
+                        var userc = new SQLiteCommand($"SELECT [first_name], [last_name] FROM [telegram_users] where [id]={reader[1]} limit 1;", Connection);
                         var reader2 = await userc.ExecuteReaderAsync();
                         if (reader2.Read())
                         {
@@ -261,9 +298,9 @@ namespace TelegramBot.DataConnection
             if (chat == null) return true;
             try
             {
-                var command = new OdbcCommand($"SELECT is_closed FROM telegram_chats where id={chat.Id};", Connection);
+                var command = new SQLiteCommand($"SELECT [is_closed] FROM [telegram_chats] where [id]={chat.Id};", Connection);
                 var reader = await command.ExecuteReaderAsync();
-                return !reader.Read() || reader.GetBoolean(0);
+                return !reader.Read() || bool.Parse(reader[0].ToString());
             }
             catch (Exception e)
             {
@@ -280,9 +317,9 @@ namespace TelegramBot.DataConnection
             if (chat == null) return false;
             try
             {
-                var command = new OdbcCommand($"SELECT is_dialog_opened FROM telegram_chats where id={chat.Id};", Connection);
+                var command = new SQLiteCommand($"SELECT [is_dialog_opened] FROM [telegram_chats] where [id]={chat.Id};", Connection);
                 var reader = await command.ExecuteReaderAsync();
-                return reader.Read() && reader.GetBoolean(0);
+                return reader.Read() && bool.Parse(reader[0].ToString());
             }
             catch (Exception e)
             {
@@ -299,7 +336,7 @@ namespace TelegramBot.DataConnection
             if (chat == null) return false;
             try
             {
-                var command = new OdbcCommand($"SELECT * FROM telegram_managers where telegramchatid={chat.Id};", Connection);
+                var command = new SQLiteCommand($"SELECT * FROM [telegram_managers] where [telegramchatid]={chat.Id};", Connection);
                 var reader = await command.ExecuteReaderAsync();
                 return reader.Read();
             }
@@ -322,7 +359,19 @@ namespace TelegramBot.DataConnection
             if (audio == null) return;
             try
             {
-                var command = new OdbcCommand($"INSERT INTO telegram_audios (file_id, duration, performer, title, mime_type, file_size) VALUES ('{audio.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {audio.Duration}, '{audio.Performer?.Replace("\\", "\\\\").Replace("\'", "\\\'")}', '{audio.Title?.Replace("\\", "\\\\").Replace("\'", "\\\'")}', '{audio.MimeType?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {audio.FileSize});", Connection);
+                var command = new SQLiteCommand("INSERT INTO [telegram_audios] ([file_id], [duration], [performer], [title], [mime_type], [file_size]) VALUES (@file_id, @duration, @performer, @title, @mime_type, @file_size);", Connection);
+                command.Parameters.Add("@file_id", DbType.String);
+                command.Parameters["@file_id"].Value = audio.FileId;
+                command.Parameters.Add("@duration", DbType.Int32);
+                command.Parameters["@duration"].Value = audio.Duration;
+                command.Parameters.Add("@performer", DbType.String);
+                command.Parameters["@performer"].Value = audio.Performer;
+                command.Parameters.Add("@title", DbType.String);
+                command.Parameters["@title"].Value = audio.Title;
+                command.Parameters.Add("@mime_type", DbType.String);
+                command.Parameters["@mime_type"].Value = audio.MimeType;
+                command.Parameters.Add("@file_size", DbType.Int32);
+                command.Parameters["@file_size"].Value = audio.FileSize;
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -340,7 +389,15 @@ namespace TelegramBot.DataConnection
             if (document == null) return;
             try
             {
-                var command = new OdbcCommand($"INSERT INTO telegram_documents (file_id, file_name, mime_type, file_size) VALUES ('{document.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{document.FileName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{document.MimeType?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {document.FileSize});", Connection);
+                var command = new SQLiteCommand("INSERT INTO [telegram_documents] ([file_id], [file_name], [mime_type], [file_size]) VALUES (@file_id, @file_name, @mime_type, @file_size);", Connection);
+                command.Parameters.Add("@file_id", DbType.String);
+                command.Parameters["@file_id"].Value = document.FileId;
+                command.Parameters.Add("@file_name", DbType.String);
+                command.Parameters["@file_name"].Value = document.FileName;
+                command.Parameters.Add("@mime_type", DbType.String);
+                command.Parameters["@mime_type"].Value = document.MimeType;
+                command.Parameters.Add("@file_size", DbType.Int32);
+                command.Parameters["@file_size"].Value = document.FileSize;
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -358,8 +415,13 @@ namespace TelegramBot.DataConnection
             if (message?.Location == null) return;
             try
             {
-                var command = new OdbcCommand($"INSERT INTO telegram_locations (message_id, latitude, longitude) VALUES ({message.MessageId}, {message.Location.Latitude}, {message.Location.Longitude});", Connection);
-
+                var command = new SQLiteCommand("INSERT INTO [telegram_locations] ([message_id], [latitude], [longitude]) VALUES (@message_id, @latitude, @longitude);", Connection);
+                command.Parameters.Add("@message_id", DbType.Int32);
+                command.Parameters["@message_id"].Value = message.MessageId;
+                command.Parameters.Add("@latitude", DbType.Double);
+                command.Parameters["@latitude"].Value = message.Location.Latitude;
+                command.Parameters.Add("@longitude", DbType.Double);
+                command.Parameters["@longitude"].Value = message.Location.Longitude;
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -379,7 +441,17 @@ namespace TelegramBot.DataConnection
             {
                 try
                 {
-                    var command = new OdbcCommand($"INSERT INTO telegram_messageentities (message_id, type, \"offset\", length, url) VALUES ({message.MessageId},'{entity.Type}', {entity.Offset}, {entity.Length},'{entity.Url?.Replace("\\", "\\\\").Replace("\'","\\\'")}');", Connection);
+                    var command = new SQLiteCommand("INSERT INTO [telegram_messageentities] ([message_id], [type], [offset], [length], [url]) VALUES (@message_id, @type, @offset, @length,@url);", Connection);
+                    command.Parameters.Add("@message_id", DbType.Int32);
+                    command.Parameters["@message_id"].Value = message.MessageId;
+                    command.Parameters.Add("@type", DbType.String);
+                    command.Parameters["@type"].Value = entity.Type;
+                    command.Parameters.Add("@offset", DbType.Int32);
+                    command.Parameters["@offset"].Value = entity.Offset;
+                    command.Parameters.Add("@length", DbType.Int32);
+                    command.Parameters["@length"].Value = entity.Length;
+                    command.Parameters.Add("@url", DbType.String);
+                    command.Parameters["@url"].Value = entity.Url;
                     await command.ExecuteNonQueryAsync();
                 }
                 catch (Exception e)
@@ -401,7 +473,17 @@ namespace TelegramBot.DataConnection
             {
                 try
                 {
-                    var command = new OdbcCommand($"INSERT INTO telegram_photos (messageid, file_id, width, height, file_size) VALUES ({message.MessageId}, '{photo.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {photo.Width}, {photo.Height},{photo.FileSize});", Connection);
+                    var command = new SQLiteCommand("INSERT INTO [telegram_photos] ([messageid], [file_id], [width], [height], [file_size]) VALUES (@message_id, @file_id, @width, @height,@file_size);", Connection);
+                    command.Parameters.Add("@message_id", DbType.Int32);
+                    command.Parameters["@message_id"].Value = message.MessageId;
+                    command.Parameters.Add("@file_id", DbType.String);
+                    command.Parameters["@file_id"].Value = photo.FileId;
+                    command.Parameters.Add("@width", DbType.Int32);
+                    command.Parameters["@width"].Value = photo.Width;
+                    command.Parameters.Add("@height", DbType.Int32);
+                    command.Parameters["@height"].Value = photo.Height;
+                    command.Parameters.Add("@file_size", DbType.Int32);
+                    command.Parameters["@file_size"].Value = photo.FileSize;
                     await command.ExecuteNonQueryAsync();
                 }
                 catch (Exception e)
@@ -420,7 +502,15 @@ namespace TelegramBot.DataConnection
             if (sticker == null) return;
             try
             {
-                var command = new OdbcCommand($"INSERT INTO telegram_stickers ( file_id, width, height, file_size) VALUES ('{sticker.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {sticker.Width}, {sticker.Height},{sticker.FileSize});", Connection);
+                var command = new SQLiteCommand("INSERT INTO [telegram_stickers] ( [file_id], [width], [height], [file_size]) VALUES (@file_id, @width, @height,@file_size);", Connection);
+                command.Parameters.Add("@file_id", DbType.String);
+                command.Parameters["@file_id"].Value = sticker.FileId;
+                command.Parameters.Add("@width", DbType.Int32);
+                command.Parameters["@width"].Value = sticker.Width;
+                command.Parameters.Add("@height", DbType.Int32);
+                command.Parameters["@height"].Value = sticker.Height;
+                command.Parameters.Add("@file_size", DbType.Int32);
+                command.Parameters["@file_size"].Value = sticker.FileSize;
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -437,7 +527,19 @@ namespace TelegramBot.DataConnection
             if (message?.Venue == null) return;
             try
             {
-                var command = new OdbcCommand($"INSERT INTO telegram_venues ( message_id, latitude, longitude, title, address, foursquare_id) VALUES ({message.MessageId}, {message.Venue.Location.Latitude}, {message.Venue.Location.Longitude}, '{message.Venue.Title?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{message.Venue.Address?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{message.Venue.FoursquareId?.Replace("\\", "\\\\").Replace("\'","\\\'")}');", Connection);
+                var command = new SQLiteCommand("INSERT INTO [telegram_venues] ( [message_id], [latitude], [longitude], [title], [address], [foursquare_id]) VALUES (@message_id, @latitude, @longitude, @title, @address, @foursquare_id);", Connection);
+                command.Parameters.Add("@message_id", DbType.Int32);
+                command.Parameters["@message_id"].Value = message.MessageId;
+                command.Parameters.Add("@latitude", DbType.Double);
+                command.Parameters["@latitude"].Value = message.Venue.Location.Latitude;
+                command.Parameters.Add("@longitude", DbType.Double);
+                command.Parameters["@longitude"].Value = message.Venue.Location.Longitude;
+                command.Parameters.Add("@title", DbType.String);
+                command.Parameters["@title"].Value = message.Venue.Title;
+                command.Parameters.Add("@address", DbType.String);
+                command.Parameters["@address"].Value = message.Venue.Address;
+                command.Parameters.Add("@foursquare_id", DbType.String);
+                command.Parameters["@foursquare_id"].Value = message.Venue.FoursquareId;
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -453,9 +555,21 @@ namespace TelegramBot.DataConnection
         {
             if (video == null) return;
 
-            var command = new OdbcCommand($"INSERT INTO telegram_videos ( file_id, width, height, duration, mime_type, file_size) VALUES ( '{video.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {video.Width}, {video.Height}, {video.Duration}, '{video.MimeType?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {video.FileSize});", Connection);
+            var command = new SQLiteCommand("INSERT INTO [telegram_videos] ( [file_id], [width], [height], [duration], [mime_type], [file_size]) VALUES ( @file_id, @width, @height, @duration, @mime_type, @file_size);", Connection);
             try
             {
+                command.Parameters.Add("@file_id", DbType.String);
+                command.Parameters["@file_id"].Value = video.FileId;
+                command.Parameters.Add("@width", DbType.Int32);
+                command.Parameters["@width"].Value = video.Width;
+                command.Parameters.Add("@height", DbType.Int32);
+                command.Parameters["@height"].Value = video.Height;
+                command.Parameters.Add("@duration", DbType.Int32);
+                command.Parameters["@duration"].Value = video.Duration;
+                command.Parameters.Add("@mime_type", DbType.String);
+                command.Parameters["@mime_type"].Value = video.MimeType;
+                command.Parameters.Add("@file_size", DbType.Int32);
+                command.Parameters["@file_size"].Value = video.FileSize;
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -473,7 +587,15 @@ namespace TelegramBot.DataConnection
 
             try
             {
-                var command = new OdbcCommand($"INSERT INTO telegram_voices ( file_id, duration, mime_type, file_size) VALUES ( '{voice.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {voice.Duration}, '{voice.MimeType?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {voice.FileSize});", Connection);
+                var command = new SQLiteCommand("INSERT INTO [telegram_voices] ( [file_id], [duration], [mime_type], [file_size]) VALUES ( @file_id, @duration, @mime_type, @file_size);", Connection);
+                command.Parameters.Add("@file_id", DbType.String);
+                command.Parameters["@file_id"].Value = voice.FileId;
+                command.Parameters.Add("@duration", DbType.Int32);
+                command.Parameters["@duration"].Value = voice.Duration;
+                command.Parameters.Add("@mime_type", DbType.String);
+                command.Parameters["@mime_type"].Value = voice.MimeType;
+                command.Parameters.Add("@file_size", DbType.Int32);
+                command.Parameters["@file_size"].Value = voice.FileSize;
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -487,8 +609,6 @@ namespace TelegramBot.DataConnection
 
         #endregion
 
-
-        //TODO убрать превью из стикера
         public async void InsertMessage(Message message, bool? isSended = null)
         {
             if (message == null) return;
@@ -507,8 +627,39 @@ namespace TelegramBot.DataConnection
                 if(message.ForwardFrom!=null)InsertOrUpdateUser(message.ForwardFrom);
                 if(message.ReplyToMessage!=null)InsertMessage(message.ReplyToMessage);
                 if(message.PinnedMessage!=null)InsertMessage(message.PinnedMessage);
-                var command = new OdbcCommand($"INSERT INTO  telegram_messages (message_id, from_id, date, chat_id, text, forward_from, forward_date, reply_to_message_id, pinned_message_id, document_id, caption, audio_id, video_id, voice_id, sticker_id, issended) VALUES({message.MessageId}, {message.From?.Id.ToString() ?? "NULL"}, {message.Date.ToUnixTime()}, {message.Chat.Id}, '{message.Text?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {message.ForwardFrom?.Id.ToString() ?? "NULL"}, {message.ForwardDate?.ToUnixTime().ToString() ?? "NULL"}, {message.ReplyToMessage?.MessageId.ToString() ?? "NULL"}, {message.PinnedMessage?.MessageId.ToString() ?? "NULL"}, '{message.Document?.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{message.Caption?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{message.Audio?.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{message.Video?.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{message.Voice?.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{message.Sticker?.Thumb.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {isSended??true});", Connection);
-
+                var command = new SQLiteCommand("INSERT INTO  [telegram_messages] ([message_id], [from_id], [date], [chat_id], [text], [forward_from], [forward_date], [reply_to_message_id], [pinned_message_id], [document_id], [caption], [audio_id], [video_id], [voice_id], [sticker_id], [issended]) VALUES(@message_id, @from_id, @date, @chat_id, @text, @forward_from, @forward_date, @reply_to_message_id, @pinned_message_id, @document_id, @caption, @audio_id, @video_id, @voice_id, @sticker_id, @issended);", Connection);
+                command.Parameters.Add("@message_id", DbType.Int32);
+                command.Parameters["@message_id"].Value = message.MessageId;
+                command.Parameters.Add("@from_id", DbType.Int32);
+                command.Parameters["@from_id"].Value = message.From.Id;
+                command.Parameters.Add("@date", DbType.Int32);
+                command.Parameters["@date"].Value = message.Date.ToUnixTime();
+                command.Parameters.Add("@chat_id", DbType.Int64);
+                command.Parameters["@chat_id"].Value = message.Chat.Id;
+                command.Parameters.Add("@text", DbType.String);
+                command.Parameters["@text"].Value = message.Text;
+                command.Parameters.Add("@forward_from", DbType.Int64);
+                command.Parameters["@forward_from"].Value = message.ForwardFrom?.Id;
+                command.Parameters.Add("@forward_date", DbType.Int64);
+                command.Parameters["@forward_date"].Value = message.ForwardDate?.ToUnixTime();     
+                command.Parameters.Add("@reply_to_message_id", DbType.Int64);
+                command.Parameters["@reply_to_message_id"].Value = message.ReplyToMessage?.MessageId;
+                command.Parameters.Add("@pinned_message_id", DbType.Int64);
+                command.Parameters["@pinned_message_id"].Value = message.PinnedMessage?.MessageId;
+                command.Parameters.Add("@document_id", DbType.String);
+                command.Parameters["@document_id"].Value = message.Document?.FileId;
+                command.Parameters.Add("@caption", DbType.String);
+                command.Parameters["@caption"].Value = message.Caption;
+                command.Parameters.Add("@audio_id", DbType.String);
+                command.Parameters["@audio_id"].Value = message.Audio?.FileId;
+                command.Parameters.Add("@video_id", DbType.String);
+                command.Parameters["@video_id"].Value = message.Video?.FileId;
+                command.Parameters.Add("@voice_id", DbType.String);
+                command.Parameters["@voice_id"].Value = message.Voice?.FileId;
+                command.Parameters.Add("@sticker_id", DbType.String);
+                command.Parameters["@sticker_id"].Value = message.Sticker?.FileId;
+                command.Parameters.Add("@issended", DbType.Boolean);
+                command.Parameters["@issended"].Value = isSended ?? true;
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -528,9 +679,9 @@ namespace TelegramBot.DataConnection
             try
             {
                 var messages = new DataTable();
-                messages.Load(await new OdbcCommand($"SELECT message_id, from_id, date, chat_id, text FROM telegram_messages where not issended;", Connection).ExecuteReaderAsync());
+                messages.Load(await new SQLiteCommand($"SELECT [message_id], [from_id], [date], [chat_id], [text] FROM [telegram_messages] where not [issended];", Connection).ExecuteReaderAsync());
 
-                var command = new OdbcCommand("DELETE FROM telegram_messages WHERE message_id < 0;", Connection);
+                var command = new SQLiteCommand("DELETE FROM [telegram_messages] WHERE [message_id] < 0;", Connection);
                 await command.ExecuteNonQueryAsync();
 
                 return Enumerable.Select(messages.AsEnumerable(), row => new Message
@@ -557,10 +708,16 @@ namespace TelegramBot.DataConnection
             if (string.IsNullOrEmpty(token) || chat == null) return false;
             try
             {
-                var command = new OdbcCommand($"SELECT managerid, telegramchatid, token FROM telegram_managers where token='{token.Replace("\\", "\\\\").Replace("\'","\\\'")}';", Connection);
+                var command = new SQLiteCommand("SELECT [managerid], [telegramchatid], [token] FROM [telegram_managers] where [token]=@token;", Connection);
+                command.Parameters.Add("@token", DbType.String);
+                command.Parameters["@token"].Value = token;
                 var reader = await command.ExecuteReaderAsync();
                 if (!reader.Read()) return false;
-                var updcommand = new OdbcCommand($"UPDATE telegram_managers SET telegramchatid ={chat.Id}, token=null where token='{token?.Replace("\\", "\\\\").Replace("\'","\\\'")}'; ", Connection);
+                var updcommand = new SQLiteCommand("UPDATE [telegram_managers] SET [telegramchatid] =@telegramchatid, [token] is null where [token]=@token; ", Connection);
+                updcommand.Parameters.Add("@token", DbType.String);
+                updcommand.Parameters["@token"].Value = token;
+                updcommand.Parameters.Add("@telegramchatid", DbType.Int64);
+                updcommand.Parameters["@telegramchatid"].Value = chat.Id;
                 await updcommand.ExecuteNonQueryAsync();
                 return true;
             }
@@ -579,7 +736,11 @@ namespace TelegramBot.DataConnection
             if (string.IsNullOrEmpty(token)) return;
             try
             {
-                var command = new OdbcCommand($"UPDATE telegram_managers SET telegramchatid = NULL, token ='{token?.Replace("\\", "\\\\").Replace("\'","\\\'")}' WHERE managerid={managerId}; ", Connection);
+                var command = new SQLiteCommand("UPDATE [telegram_managers] SET [telegramchatid] = NULL, [token] =@token WHERE [managerid]=@managerId; ", Connection);
+                command.Parameters.Add("@token", DbType.String);
+                command.Parameters["@token"].Value = token;
+                command.Parameters.Add("@managerid", DbType.Int64);
+                command.Parameters["@managerid"].Value = managerId;
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -597,7 +758,7 @@ namespace TelegramBot.DataConnection
         {
             try
             {
-                var reader = await new OdbcCommand($"SELECT id, first_name, last_name, username FROM telegram_users WHERE id={id};", Connection).ExecuteReaderAsync();
+                var reader = await new SQLiteCommand($"SELECT [id], [first_name], [last_name], [username] FROM [telegram_users] WHERE [id]={id};", Connection).ExecuteReaderAsync();
                 reader.Read();
                 return new User
                 {
@@ -621,7 +782,7 @@ namespace TelegramBot.DataConnection
         {
             try
             {
-                var reader = await new OdbcCommand("SELECT id FROM telegram_currentbot;", Connection).ExecuteReaderAsync();
+                var reader = await new SQLiteCommand("SELECT [id] FROM [telegram_currentbot];", Connection).ExecuteReaderAsync();
                 if (!reader.Read()) return null;
                 return await GetUserByIdAsync(int.Parse(reader[0].ToString()));
             }
@@ -640,7 +801,7 @@ namespace TelegramBot.DataConnection
             var tables = new DataTable();
             try
             {
-                tables.Load(await new OdbcCommand("SELECT table_name FROM information_schema.tables where table_schema=\'public\' ORDER BY table_name;", Connection).ExecuteReaderAsync());
+                tables.Load(await new SQLiteCommand($"SELECT name FROM sqlite_master WHERE type='table' and not name='sqlite_sequence';", Connection).ExecuteReaderAsync());
             }
             catch (Exception e)
             {
@@ -658,7 +819,7 @@ namespace TelegramBot.DataConnection
             var offices = new DataTable();
             try
             {
-                offices.Load(await new OdbcCommand($"SELECT * FROM {name};", Connection).ExecuteReaderAsync());
+                offices.Load(await new SQLiteCommand($"SELECT * FROM {name};", Connection).ExecuteReaderAsync());
             }
             catch (Exception e)
             {
@@ -675,7 +836,7 @@ namespace TelegramBot.DataConnection
             var managerIds = new DataTable();
             try
             {
-                managerIds.Load(await new OdbcCommand($"SELECT managerid FROM telegram_managers;", Connection).ExecuteReaderAsync());
+                managerIds.Load(await new SQLiteCommand($"SELECT [managerid] FROM [telegram_managers];", Connection).ExecuteReaderAsync());
             }
             catch (Exception e)
             {
@@ -693,12 +854,12 @@ namespace TelegramBot.DataConnection
             var chatids = new DataTable();
             try
             {
-                chatids.Load(await new OdbcCommand($"SELECT telegramchatid FROM telegram_managers where telegramchatid IS NOT NULL;", Connection).ExecuteReaderAsync());
+                chatids.Load(await new SQLiteCommand($"SELECT [telegramchatid] FROM [telegram_managers] where [telegramchatid] IS NOT NULL;", Connection).ExecuteReaderAsync());
 
                 foreach (var chatid in chatids.AsEnumerable())
                 {
                     var chats = new DataTable();
-                    chats.Load(await new OdbcCommand($"SELECT id, type, title, username, first_name, last_name FROM telegram_chats where id={chatid[0]};", Connection).ExecuteReaderAsync());
+                    chats.Load(await new SQLiteCommand($"SELECT [id], [type], [title], [username], [first_name], [last_name] FROM [telegram_chats] where [id]={chatid[0]};", Connection).ExecuteReaderAsync());
 
                     result.AddRange(Enumerable.Select(chats.AsEnumerable(), row => new Chat
                     {
@@ -731,8 +892,8 @@ namespace TelegramBot.DataConnection
 
             try
             {
-                messages.Load(await new OdbcCommand($"SELECT message_id, from_id, date, text, sticker_id FROM telegram_messages where chat_id={chat.Id};", Connection).ExecuteReaderAsync());
-                users.Load(await new OdbcCommand("SELECT id, first_name, last_name, username FROM telegram_users;", Connection).ExecuteReaderAsync());
+                messages.Load(await new SQLiteCommand($"SELECT [message_id], [from_id], [date], [text] FROM [telegram_messages] where [chat_id]={chat.Id};", Connection).ExecuteReaderAsync());
+                users.Load(await new SQLiteCommand("SELECT [id], [first_name], [last_name], [username] FROM [telegram_users];", Connection).ExecuteReaderAsync());
 
             }
             catch (Exception e)
@@ -755,11 +916,7 @@ namespace TelegramBot.DataConnection
                 }).FirstOrDefault(r => r.Id == int.Parse(row[1].ToString())),
                 Date = startDateTime.AddSeconds(int.Parse(row[2].ToString())),
                 Chat = chat,
-                Text = row[3].ToString(),
-                Sticker = new Sticker
-                {
-                    FileId = row[4].ToString()
-                }
+                Text = row[3].ToString()
             }).ToList();
         }
 
@@ -769,7 +926,7 @@ namespace TelegramBot.DataConnection
             var chats = new DataTable();
             try
             {
-                chats.Load(await new OdbcCommand("SELECT id, type, title, username, first_name, last_name FROM telegram_chats where is_dialog_opened and not is_closed;", Connection).ExecuteReaderAsync());
+                chats.Load(await new SQLiteCommand("SELECT [id], [type], [title], [username], [first_name], [last_name] FROM [telegram_chats] where [is_dialog_opened] and not [is_closed];", Connection).ExecuteReaderAsync());
 
             }
             catch (Exception e)
@@ -796,7 +953,7 @@ namespace TelegramBot.DataConnection
             var chats = new DataTable();
             try
             {
-                chats.Load(await new OdbcCommand("SELECT id, type, title, username, first_name, last_name FROM telegram_chats where not is_closed;", Connection).ExecuteReaderAsync());
+                chats.Load(await new SQLiteCommand("SELECT [id], [type], [title], [username], [first_name], [last_name] FROM [telegram_chats] where not [is_closed];", Connection).ExecuteReaderAsync());
 
             }
             catch (Exception e)

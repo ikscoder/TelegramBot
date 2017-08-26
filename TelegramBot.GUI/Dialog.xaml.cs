@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,10 +17,17 @@ namespace TelegramBot.GUI
     {
         public volatile bool IsStop;
         public Chat Chat { get; }
+
+        public List<Telegram.Bot.Types.Message> Messages { get; }=new List<Telegram.Bot.Types.Message>();
+
+        public User Bot { get; set; }
+
         public Dialog(Chat chat)
         {
             Chat = chat;
+            Bot = Data.Current.GetBotAsync().Result;
             InitializeComponent();
+            Media.MediaEnded += (sender, e) => { Media.Position = new TimeSpan(0);Media.Pause(); };
             ShedulingUpdating();
             
         }
@@ -40,16 +49,21 @@ namespace TelegramBot.GUI
             try
             {  
                 var messages = await Data.Current.GetMessagesFromChatAsync(Chat);
-                ChatPanel.Children.Clear();
+                //ChatPanel.Children.Clear();
+                messages=messages.Skip(Messages.Count).ToList();
+                if (Messages.Any() && messages.Any(x => x.From.Id != Bot?.Id))
+                    Media.Play();
+                Messages.AddRange(messages);
                 foreach (var mes in messages)
                 {
                     if(mes?.From?.Id == null)continue;
-                    ChatPanel.Children.Add(new MessageInDialogView(mes, mes.From.Id == (await Data.Current.GetBotAsync())?.Id));
+                    ChatPanel.Children.Add(new MessageInDialogView(mes, mes.From.Id == Bot?.Id));
                 }
-                ChatScroll.ScrollToEnd();
+                ChatScroll.ScrollToEnd();        
             }
-            catch
+            catch(Exception e)
             {
+                //Message.Show(e.Message);
             }
         }
 
