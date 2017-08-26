@@ -1,0 +1,36 @@
+﻿    <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!--#region Settings-->
+    <SolidColorBrush x:Key="PrimaryLightColor" Color="#4f5b62" />
+    <SolidColorBrush x:Key="PrimaryColor" Color="#263238" />
+    <Color x:Key="PrimaryCColor">#263238</Color>
+    <SolidColorBrush x:Key="PrimaryDarkColor" Color="#000a12" />
+
+    <SolidColorBrush x:Key="SecondaryLightColor" Color="#ff5c8d" />
+    <SolidColorBrush x:Key="SecondaryColor" Color="#d81b60" />
+    <SolidColorBrush x:Key="SecondaryDarkColor" Color="#a00037" />
+
+    <SolidColorBrush x:Key="TextOnDarkColor" Color="#ffffff" />
+    <SolidColorBrush x:Key="TextOnLightColor" Color="#ffffff" />
+
+    <SolidColorBrush x:Key="BackgroundColor" Color="#37474f" />
+    <SolidColorBrush x:Key="AlternativeBackgroundColor" Color="#546e7a" />
+
+    <SolidColorBrush x:Key="DisabledColor" Color="#bdbdbd" />
+
+    <SolidColorBrush x:Key="CheckedColor" Color="#7cb342" />
+    <SolidColorBrush x:Key="UncheckedColor" Color="#f44336" />
+
+    <Color x:Key="ShadowColor" R="0" G="0" B="0" />
+
+    <FontFamily x:Key="FontFamilyMain">Segoe UI</FontFamily>
+    <FontFamily x:Key="FontFamilyHighlight">Cambria</FontFamily>
+    <sys:Double x:Key="FontSizeSmall">11</sys:Double>
+    <sys:Double x:Key="FontSizeNormal">12</sys:Double>
+    <sys:Double x:Key="FontSizeBig">16</sys:Double>
+
+    <sys:Double x:Key="ScrollWidth">8</sys:Double>
+    <!--#endregion-->
+</ResourceDictionary>

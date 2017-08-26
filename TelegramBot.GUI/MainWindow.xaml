@@ -1,0 +1,146 @@
+﻿<Window x:Name="window" x:Class="TelegramBot.GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TelegramBot.GUI"
+        mc:Ignorable="d"
+        Title="Bot" Height="600" Width="800" AllowsTransparency="True" WindowStyle="None" Background="#00000000" MinWidth="500" MinHeight="400" UseLayoutRounding="True" WindowStartupLocation="CenterScreen" Loaded="window_Loaded"  Icon="Resources/Robot.ico">
+    <Border BorderBrush="{DynamicResource PrimaryColor}" BorderThickness="2">
+        <Grid Background="{DynamicResource BackgroundColor}">
+            <Grid x:Name="HeaderGrid" Background="{DynamicResource PrimaryColor}" Height="40" VerticalAlignment="Top" MouseDown="Drag">
+                <Button x:Name="BExit" Width="24" Style="{DynamicResource TranspButton}" Margin="0,0,5,0" VerticalAlignment="Top" Height="40" HorizontalAlignment="Right" Click="BExit_Click">
+                    <Border>
+                        <Path Data="{StaticResource Exit}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
+                    </Border>
+                </Button>
+                <Button x:Name="BMaximize" Width="24" Style="{DynamicResource TranspButton}" Margin="0,0,34,0" VerticalAlignment="Top" Height="40" HorizontalAlignment="Right" Click="BMaximize_Click">
+                    <Border>
+                        <Path Data="{StaticResource Maximize}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
+                    </Border>
+                </Button>
+                <Button x:Name="BMinimize" Width="24" Style="{DynamicResource TranspButton}" Margin="0,0,63,0" VerticalAlignment="Top" Height="40" HorizontalAlignment="Right" Click="BMinimize_Click">
+                    <Border>
+                        <Path Data="{StaticResource Minimize}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
+                    </Border>
+                </Button>
+                <Button x:Name="BAlwaysOnTop" RenderTransformOrigin="0.5,0.5" Width="24" Style="{DynamicResource TranspButton}" Margin="0,0,92,0" VerticalAlignment="Top" Height="40" HorizontalAlignment="Right" Click="BAlwaysOnTop_Click">
+                    <Border>
+                        <Path Data="{StaticResource DrawingPin}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
+                    </Border>
+                </Button>
+                <Button x:Name="BSettings" Width="40" Style="{DynamicResource TranspButton}" Margin="10,0,5,0" VerticalAlignment="Top" Height="40" HorizontalAlignment="Left" Click="BSettings_Click">
+                    <Border>
+                        <Path Data="{StaticResource Settings}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
+                    </Border>
+                </Button>
+            </Grid>
+            <TabControl x:Name="TabControlMain" BorderThickness="0" Margin="0,40,0,0" TabStripPlacement="Left" Padding="0" Panel.ZIndex="5"  MouseDown="Drag">
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource Manager}" Height="30" Width="30" Fill="{DynamicResource SecondaryColor}" Stretch="Uniform" Margin="5,3,5,3" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock Text="Менеджеры" FontSize="{DynamicResource FontSizeBig}" FontFamily="{DynamicResource FontFamilyHighlight}"  Margin="5,7,22,7"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid Background="{DynamicResource BackgroundColor}" SnapsToDevicePixels="True" UseLayoutRounding="True">
+                        <ListBox x:Name="ManagersList" HorizontalAlignment="Left" Height="252" Margin="10,34,0,0" VerticalAlignment="Top" Width="144" SelectionChanged="ManagersList_SelectionChanged"/>
+                        <Button x:Name="GenerateToken" Content="Generate Token" HorizontalAlignment="Left" Margin="178,114,0,0" VerticalAlignment="Top" Width="106" Height="35" Click="GenerateToken_Click"/>
+                        <TextBox x:Name="TokenText" HorizontalAlignment="Left" Height="23" Margin="216,86,0,0" Text="" VerticalAlignment="Top" Width="198"/>
+                        <Label Content="Выбранный менеджер" HorizontalAlignment="Left" Margin="159,34,0,0" VerticalAlignment="Top" FontFamily="{DynamicResource FontFamilyHighlight}" FontSize="{DynamicResource FontSizeBig}"/>
+                        <Label Name="ManagerId" Content="{Binding SelectedItem, ElementName=ManagersList}" HorizontalAlignment="Left" Margin="338,44,0,0" VerticalAlignment="Top"/>
+                        <Label Content="Токен" HorizontalAlignment="Left" Margin="159,80,0,0" VerticalAlignment="Top" FontFamily="{DynamicResource FontFamilyHighlight}" FontSize="{DynamicResource FontSizeBig}"/>
+                        <TextBlock Margin="144,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="{DynamicResource FontFamilyHighlight}" FontSize="{DynamicResource FontSizeBig}">           
+                            <Hyperlink NavigateUri="https://www.t.me/iksManagerBot" RequestNavigate="Hyperlink_RequestNavigate">
+                                Этот бот
+                            </Hyperlink>
+                            занимается работой с менеджерами.
+                        </TextBlock>
+                        <TextBlock Text="Для авторизации менеджера надо сгенерировать ему токен. Он берет этот токен и в чате бота вводит '/login токен'. После чего этот токен удаляется из базы и вместо него заносится ид чата." HorizontalAlignment="Left" Margin="159,154,0,0" VerticalAlignment="Top" FontFamily="{DynamicResource FontFamilyHighlight}" FontSize="{DynamicResource FontSizeBig}" Height="104" Width="354" TextWrapping="Wrap"/>
+                        <DataGrid x:Name="TelegramManager" HorizontalAlignment="Left" Height="255" Margin="10,291,0,0" VerticalAlignment="Top" Width="323"/>
+                    </Grid>
+                </TabItem>
+
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource Messages}" Height="30" Width="30" Fill="{DynamicResource SecondaryColor}" Stretch="Uniform" Margin="5,3,5,3" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock Text="Сообщения Менеджерам" Width="95" TextWrapping="Wrap" FontSize="{DynamicResource FontSizeBig}" FontFamily="{DynamicResource FontFamilyHighlight}"  Margin="5,7,22,7"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid Background="{DynamicResource BackgroundColor}" SnapsToDevicePixels="True" UseLayoutRounding="True">
+                        <Border HorizontalAlignment="Left" Margin="10,56,0,10" Width="173" BorderBrush="{DynamicResource PrimaryColor}" BorderThickness="1">
+                            <DataGrid x:Name="ManagerChatList" SelectionChanged="ManagerChat_SelectionChanged" HeadersVisibility="None" Background="{DynamicResource AlternativeBackgroundColor}" AutoGenerateColumns="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ИД" Binding="{Binding Id}"/>
+                                    <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                        <Label Content="Chats" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="{DynamicResource FontSizeBig}" FontFamily="{DynamicResource FontFamilyHighlight}"/>
+                        <Label Content="Click on chat for activate ↓" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" FontSize="{DynamicResource FontSizeSmall}"/>
+                        <Button x:Name="SendAllManagers" Content="Отправить" HorizontalAlignment="Left" Margin="423,110,0,0" VerticalAlignment="Top" Width="96" Height="34" Click="SendAllManagers_Click"/>
+                        <TextBox x:Name="AllManText" HorizontalAlignment="Left" Height="23" Margin="281,121,0,0" Text="" VerticalAlignment="Top" Width="120"/>
+                        <Label Content="Отправить сообщение всем мeнеджерам" HorizontalAlignment="Left" Margin="281,78,0,0" VerticalAlignment="Top"/>
+
+                    </Grid>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Path Data="{StaticResource Messages}" Height="30" Width="30" Fill="{DynamicResource SecondaryColor}" Stretch="Uniform" Margin="5,3,5,3" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock Text="Сообщения Клиентов" FontSize="{DynamicResource FontSizeBig}" FontFamily="{DynamicResource FontFamilyHighlight}"  Margin="5,7,22,7" Width="85" TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid Background="{DynamicResource BackgroundColor}" SnapsToDevicePixels="True" UseLayoutRounding="True">
+                        <Border HorizontalAlignment="Left" Margin="10,56,0,10" Width="173" BorderBrush="{DynamicResource PrimaryColor}" BorderThickness="1">
+                            <DataGrid x:Name="ChatList" SelectionChanged="ChatList_SelectionChanged" HeadersVisibility="None" Background="{DynamicResource AlternativeBackgroundColor}" AutoGenerateColumns="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ИД" Binding="{Binding Id}"/>
+                                    <DataGridTextColumn Header="FirstName" Binding="{Binding FirstName}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Border>
+                        <Button Width="31" Style="{DynamicResource TranspButton}" Margin="152,10,0,0" VerticalAlignment="Top" Height="29" HorizontalAlignment="Left" ToolTip="Надо запустить бота для клиентов для отправки сообщений из чатов">
+                            <Border>
+                                <Path Data="{StaticResource Help}" Fill="{DynamicResource SecondaryColor}" Stretch="Uniform"/>
+                            </Border>
+                        </Button>
+                        <Label Content="Chats" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="{DynamicResource FontSizeBig}" FontFamily="{DynamicResource FontFamilyHighlight}"/>
+                        <Label Content="Click on chat for activate ↓" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" FontSize="{DynamicResource FontSizeSmall}"/>
+                        <DataGrid x:Name="MessagesList" Margin="188,56,10,10" AutoGenerateColumns="False">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="ИД" Binding="{Binding MessageId}"/>
+                                <DataGridTextColumn Header="Текст" Binding="{Binding Text}"/>
+                                <DataGridTextColumn Header="Время" Binding="{Binding Date, StringFormat=\{0:HH:mm\}}"/>
+                                <DataGridTextColumn Header="Отправитель" Binding="{Binding From.Username}"/>
+                                <DataGridTextColumn Header="ИД чата" Binding="{Binding Chat.Id}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBlock Margin="228,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="{DynamicResource FontFamilyHighlight}" FontSize="{DynamicResource FontSizeBig}">           
+                            <Hyperlink NavigateUri="https://www.t.me/iksTestBot" RequestNavigate="Hyperlink_RequestNavigate">
+                                Этот бот
+                            </Hyperlink>
+                            занимается работой с клиентами.
+                        </TextBlock>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+
+            <Popup x:Name="PopSettings" PopupAnimation="Fade" Width="400" Height="250" IsOpen="False" SnapsToDevicePixels="True" Panel.ZIndex="100" Placement="Center" StaysOpen="False">
+                <Popup.Effect>
+                    <DropShadowEffect ShadowDepth="2" BlurRadius="4" Color="#FF404040"/>
+                </Popup.Effect>
+                <Border BorderThickness="1" BorderBrush="{DynamicResource PrimaryColor}">
+                    <Grid Background="{DynamicResource AlternativeBackgroundColor}">
+                        <Label Content="Тема" HorizontalAlignment="Center" Margin="0,20" VerticalAlignment="Top"/>
+                        <CheckBox Content="Темная" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50" IsChecked="{Binding IsDarkTheme, Mode=TwoWay, Source={x:Static local:Settings.Current}}"/>
+                        <TextBox Text="{Binding APIKey, Mode=TwoWay, Source={x:Static local:Settings.Current}}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,90" Width="250"/>
+                        <TextBox Text="{Binding ConnectionString, Mode=TwoWay, Source={x:Static local:Settings.Current}}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,130" Width="250"/>
+                    </Grid>
+                </Border>
+            </Popup>
+            <Rectangle Fill="{DynamicResource PrimaryColor}" Margin="0,40,0,0" StrokeThickness="0"/>
+        </Grid>
+    </Border>
+</Window>

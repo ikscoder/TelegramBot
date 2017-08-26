@@ -1,0 +1,15 @@
+﻿<UserControl x:Name="userControl" x:Class="TelegramBot.GUI.MessageInDialogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TelegramBot.GUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="200">
+    <StackPanel Background="{DynamicResource BackgroundColor}" Orientation="Horizontal" FlowDirection="RightToLeft" >
+        <Label x:Name="TimeL" Content="{Binding Message.Date, ElementName=userControl, StringFormat=\{0:HH:mm\}}" VerticalContentAlignment="Bottom" HorizontalAlignment="Right" Margin="20,0,0,0" Padding="5,5,5,0" />
+        <Border x:Name="MessageBorder" Background="{DynamicResource PrimaryLightColor}" CornerRadius="15" Margin="5" BorderBrush="{DynamicResource PrimaryColor}">
+            <Label x:Name="MessageLabel" Content="{Binding Message.Text, ElementName=userControl}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="25,5"/>
+        </Border>
+    </StackPanel>
+</UserControl>

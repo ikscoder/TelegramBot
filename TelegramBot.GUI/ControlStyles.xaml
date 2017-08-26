@@ -1,0 +1,1479 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--#region Geometry-->
+    <Geometry x:Key="Settings">M9.3299972,10.196C7.4389917,10.196 5.9029972,11.733995 5.9029972,13.625001 5.9029972,15.513002 7.4389917,17.052004 9.3299972,17.052004 11.221995,17.052004 12.759988,15.513002 12.759988,13.625001 12.759988,11.733995 11.221995,10.196 9.3299972,10.196z M25.036991,4.377991C24.703983,4.3849948 24.367985,4.4579928 24.044987,4.6029971 22.758991,5.179993 22.180988,6.6969917 22.758991,7.9839943 23.335987,9.2709973 24.853993,9.8459943 26.141985,9.2700055 27.427981,8.6889966 28.005984,7.1759956 27.427981,5.8860024 26.994982,4.9219974 26.033983,4.3560031 25.036991,4.377991z M7.7989923,4.3000033L10.934,4.3000033 11.100001,7.1640022 11.100001,7.265992C11.617991,7.4080055,12.108988,7.6109932,12.566996,7.867997L12.626992,7.8079994 14.83799,5.9499977 17.055992,8.1689923 15.147988,10.311998 15.081993,10.378999C15.341988,10.836992,15.544991,11.330003,15.688988,11.847993L15.771996,11.847993 18.646994,12.097993 18.646994,15.233995 15.782997,15.401994 15.688988,15.401994C15.544991,15.918001,15.341988,16.410998,15.081993,16.867998L15.139992,16.927004 16.996987,19.136996 14.779,21.354998 12.635995,19.448 12.566996,19.379C12.108988,19.636996,11.617991,19.839007,11.100001,19.981997L11.100001,20.073 10.934,22.948 7.7989923,22.948 7.5469934,20.082995 7.5469934,19.979998C7.0319945,19.836001,6.5420043,19.632998,6.0870029,19.375002L6.0200016,19.440996 3.8690013,21.354998 1.6519919,19.136996 3.499998,16.935 3.5760021,16.860995C3.3189988,16.403994,3.1170029,15.914995,2.9730057,15.401994L2.8749985,15.401994 0,15.233995 0,12.097993 2.8639969,11.847993 2.9730057,11.847993C3.1170029,11.332994,3.3189988,10.843995,3.5760021,10.388002L3.5059947,10.319993 1.5939932,8.1689923 3.8099956,5.9499977 6.0140049,7.8000038 6.0870029,7.8719948C6.5420043,7.6159981,7.0319945,7.4129952,7.5469934,7.268998L7.5469934,7.1750038z M26.443987,0L28.629976,0.83000182 28.045992,2.8970037 28.017977,2.9689947C28.332979,3.1989902,28.619997,3.4709933,28.876986,3.7769933L28.938997,3.7469945 30.974976,3.0419927 31.932984,5.1770022 30.03598,6.1660011 29.96698,6.1959999C30.026978,6.5939949,30.037995,6.9889992,30.001984,7.3789986L30.060974,7.4019936 32,8.3410047 31.168976,10.526994 29.126986,9.8860028 29.06,9.8609937C28.827974,10.175996,28.556002,10.464006,28.247988,10.720994L28.274996,10.778993 28.98099,12.813997 26.84598,13.770997 25.85599,11.871995 25.826983,11.808C25.430988,11.867997,25.032993,11.880006,24.642994,11.843995L24.619984,11.899995 23.682987,13.839006 21.494986,13.009004 22.138996,10.964006 22.162983,10.899995C21.847996,10.666993,21.560995,10.392,21.302984,10.086L21.243994,10.112001 19.233984,10.877 18.276983,8.7429975 20.147986,7.6949928 20.220984,7.6640022C20.160986,7.2669991,20.149985,6.8719948,20.185995,6.4819954L20.121985,6.4579933 18.160986,5.578995 18.991995,3.3929906 21.056997,3.9770055 21.131994,4.0050052C21.363989,3.6920016,21.634983,3.4059909,21.939991,3.1519933L21.910984,3.0829931 21.144995,1.074997 23.280995,0.11499023 24.327992,1.9889985 24.360996,2.0639954C24.755985,2.0050049,25.149983,1.9920044,25.537983,2.0269928L25.563984,1.9609986z</Geometry>
+
+    <Geometry x:Key="Exit">M2.999979,0C3.8000264,0,4.4999763,0.30000305,5.1000115,0.90000927L15.999954,11.700012 26.899959,0.90000927C28.099967,-0.29998779 29.999927,-0.29998779 31.099961,0.90000927 32.299972,2.1000061 32.299972,4 31.099961,5.1000061L20.199958,16 31.099961,26.900009C32.299972,28.100006 32.299972,30 31.099961,31.100006 29.899951,32.300003 27.999931,32.300003 26.899959,31.100006L15.999954,20.200012 5.1000115,31.100006C3.9000017,32.300003 1.9999809,32.300003 0.90000743,31.100006 -0.30000248,29.900009 -0.30000248,28 0.90000743,26.900009L11.800011,16 0.90000743,5.1000061C-0.30000248,3.9000092 -0.30000248,2 0.90000743,0.90000927 1.4999818,0.30000305 2.1999928,0 2.999979,0z</Geometry>
+
+    <Geometry x:Key="Maximize">M2.2690125,11.757996L2.2690125,29.011002 23.076019,29.011002 23.076019,23.231995 6.6530151,23.231995 6.6530151,11.757996z M8.9230042,2.9889984L8.9230042,20.241989 29.730011,20.241989 29.730011,2.9889984z M6.6530151,0L32,0 32,23.231995 25.346008,23.231995 25.346008,32 0,32 0,8.7679901 6.6530151,8.7679901z</Geometry>
+
+    <Geometry x:Key="Minimize">M0,0L32,0 32,5.3 0,5.3z</Geometry>
+
+    <Geometry x:Key="Back">M21.575989,0L32,9.0769969 21.390991,17.842995 20.208008,16.409996 28.848999,9.2729961C8.6690063,4.3729998,1.967041,18.186997,1.6870117,18.790001L0,18.010994C0.072021484,17.856995,6.960022,3.4460021,26.697021,6.9219991L20.356995,1.4000011z</Geometry>
+
+    <Geometry x:Key="DrawingPin">M22.400024,0L32,9.8999939 29.200012,12.800018 27.300049,10.800018 18.800049,19.600006 19.200012,20 18.700012,26.5 14,21.800018 0,32 11.100037,18.800018 6.4000244,14 12.700012,13.5 13,13.800018 14,12.700012 14,12.600006 14.100037,12.600006 21.5,5 19.600037,3z</Geometry>
+
+    <Geometry x:Key="Sound">M15.998965,10.100972C15.447966,10.100972 14.998965,10.549972 14.998965,11.100972 14.998965,11.651973 15.447966,12.100972 15.998965,12.100972 16.549966,12.100972 16.998965,11.651973 16.998965,11.100972 16.998965,10.549972 16.549966,10.100972 15.998965,10.100972z M15.998965,8.100972C17.655966,8.100972 18.998966,9.4439725 18.998966,11.100972 18.998966,12.757973 17.655966,14.100972 15.998965,14.100972 14.341966,14.100972 12.998965,12.757973 12.998965,11.100972 12.998965,9.4439725 14.341966,8.100972 15.998965,8.100972z M21.170582,6.1211217C21.458938,6.1253956 21.742865,6.2533611 21.93693,6.4952301 23.043948,7.8771952 23.653959,9.6191519 23.653958,11.400107 23.653959,13.225061 23.016948,15.000017 21.858929,16.398983 21.661926,16.637976 21.375921,16.761974 21.087916,16.761974 20.862913,16.761974 20.637909,16.686975 20.450906,16.53298 20.025899,16.179989 19.966898,15.550004 20.317904,15.125014 21.179918,14.08304 21.653925,12.761073 21.653925,11.400107 21.653925,10.072141 21.199918,8.7741726 20.375905,7.7461985 20.029899,7.3152093 20.0999,6.6862253 20.529907,6.3402337 20.719347,6.1892999 20.946304,6.1177977 21.170582,6.1211217z M10.826211,6.1211208C11.050349,6.1175889 11.277061,6.1889533 11.466063,6.3403233 11.89707,6.6853117 11.967072,7.3142909 11.621066,7.7452763 10.798052,8.7742413 10.344045,10.072198 10.344045,11.400153 10.344045,12.761107 10.818052,14.083063 11.680067,15.125028 12.031073,15.550014 11.972072,16.179993 11.547065,16.532982 11.360062,16.686975 11.134058,16.761974 10.910054,16.761974 10.622049,16.761974 10.337045,16.637977 10.139041,16.398985 8.9810219,15.000032 8.3440113,13.225092 8.3440113,11.400153 8.3440113,9.619213 8.953022,7.8782719 10.06004,6.4953183 10.254106,6.2540139 10.538033,6.1256627 10.826211,6.1211208z M24.01215,3.389053C24.300038,3.3860077 24.586938,3.5071901 24.787767,3.7451259 26.58892,5.8801092 27.580004,8.5980881 27.580004,11.400065 27.580004,14.294043 26.526915,17.082022 24.614752,19.250004 24.417736,19.474003 24.140712,19.588001 23.864689,19.588001 23.629669,19.588001 23.392649,19.505003 23.203633,19.338003 22.789598,18.973007 22.749594,18.341011 23.114625,17.926014 24.70476,16.125028 25.579835,13.807047 25.579835,11.400065 25.579835,9.0700844 24.755765,6.8091019 23.258637,5.0341157 22.902607,4.6121191 22.956612,3.981124 23.378648,3.6251269 23.563726,3.4689406 23.788237,3.3914217 24.01215,3.389053z M7.9864979,3.389053C8.2105427,3.3914217 8.4352455,3.4689406 8.6203232,3.6251269 9.0423584,3.981124 9.0963631,4.6121191 8.7403336,5.0341157 7.243206,6.8091019 6.419136,9.0700844 6.419136,11.400065 6.419136,13.807047 7.2942104,16.125028 8.884346,17.926014 9.2493763,18.341011 9.2093735,18.973007 8.7953377,19.338003 8.6063213,19.505003 8.3693008,19.588001 8.1342812,19.588001 7.8582573,19.588001 7.581234,19.474003 7.3842182,19.250004 5.4720554,17.082022 4.4189663,14.294043 4.4189663,11.400065 4.4189663,8.5980881 5.4100494,5.8801092 7.2112026,3.7451259 7.4114704,3.5071901 7.6984406,3.3860077 7.9864979,3.389053z M26.898773,0.0025592074C27.154525,0.010932598 27.407027,0.11667523 27.596022,0.31816615 27.820998,0.55916159 28.039992,0.80616908 28.252028,1.0611719 30.66798,3.9751521 31.998972,7.6781281 31.998972,11.489105 31.998972,15.314058 30.659008,19.028051 28.227004,21.947006 28.015029,22.201033 27.795974,22.447002 27.570998,22.686014 27.373001,22.895027 27.109024,23.000007 26.843032,23.000007 26.597,23.000007 26.349991,22.910011 26.156021,22.728006 25.755021,22.348003 25.737016,21.715011 26.115006,21.314014 26.31398,21.104025 26.50502,20.887016 26.690995,20.66604 28.823988,18.10606 29.998974,14.847082 29.998974,11.489105 29.998974,8.1431206 28.831984,4.894152 26.713028,2.3381709 26.526993,2.1151498 26.334,1.8961574 26.135025,1.6841529 25.758012,1.2811717 25.779008,0.64818071 26.182022,0.27116965 26.384018,0.083182439 26.643021,-0.0058137984 26.898773,0.0025592074z M5.1026478,0.00049218466C5.3584175,-0.0075079431 5.6174393,0.081992059 5.8194542,0.27099226 6.2214851,0.64899205 6.242487,1.2819921 5.8644562,1.6849922 3.372263,4.338992 2.0001564,7.8209919 2.0001564,11.488992 2.0001564,15.084992 3.3642616,18.766992 5.6484394,21.334991 6.0154686,21.747991 5.978466,22.379991 5.566433,22.746992 5.3754196,22.916992 5.1373997,22.999992 4.9013824,22.999992 4.6263599,22.999992 4.3513393,22.886991 4.1543236,22.664991 1.5521202,19.739992 0,15.561993 0,11.488992 0,7.3109921 1.5641212,3.341992 4.405344,0.31499197 4.5943584,0.11399206 4.8468781,0.0084920577 5.1026478,0.00049218466z</Geometry>
+
+    <Geometry x:Key="Play">M11.000042,8.254014L11.000042,19.756014 15.006124,17.392014C16.912165,16.265015,18.819204,15.138014,20.727243,14.016014L17.70018,12.224013C15.466134,10.901013,13.234088,9.5800142,11.000042,8.254014z M10.689035,6.0050139C10.989041,6.0050139 11.289047,6.0930138 11.558053,6.2590137 13.946103,7.6770139 16.331152,9.0890141 18.720201,10.503014L22.175274,12.549014C22.960291,12.993013 23.239296,14.028014 22.780287,14.847013 22.626284,15.105014 22.46628,15.256014 22.313276,15.386014L22.172274,15.486013C20.122231,16.692015,18.071188,17.902014,16.023146,19.113014L11.529053,21.766014C11.284047,21.921013 10.984041,22.005014 10.677035,22.005014 10.537032,22.005014 10.396029,21.987013 10.257026,21.951014 9.8130169,21.836014 9.4320087,21.538013 9.2110043,21.135014 9.0660009,20.856014 9,20.590014 9,20.306013L9,7.7030139C9,6.7670135,9.7580156,6.0050139,10.689035,6.0050139z M3,2C2.447998,2,2,2.447998,2,3L2,25C2,25.552002,2.447998,26,3,26L29,26C29.552002,26,30,25.552002,30,25L30,3C30,2.447998,29.552002,2,29,2z M3,0L29,0C30.654053,0,32,1.3460083,32,3L32,25C32,26.653992,30.654053,28,29,28L3,28C1.3459473,28,0,26.653992,0,25L0,3C0,1.3460083,1.3459473,0,3,0z</Geometry>
+
+    <Geometry x:Key="Stop">M10.99997,10.999994L10.99997,20.999994 20.999971,20.999994 20.999971,10.999994z M8.9999704,8.9999943L22.999971,8.9999943 22.999971,22.999994 8.9999704,22.999994z M2,2L2,30 30,30 30,2z M0,0L32,0 32,32 0,32z</Geometry>
+
+    <Geometry x:Key="Pause">M19,8.0000038L21,8.0000038 21,20.000004 19,20.000004z M11,8.0000005L13,8.0000005 13,20 11,20z M3,2.0000005C2.448,2.0000005,2,2.4480004,2,3.0000005L2,25C2,25.552,2.448,26,3,26L29,26C29.552,26,30,25.552,30,25L30,3.0000005C30,2.4480004,29.552,2.0000005,29,2.0000005z M3,0L29,0C30.654,0,32,1.3460002,32,3.0000005L32,25C32,26.654001,30.654,28,29,28L3,28C1.3460007,28,0,26.654001,0,25L0,3.0000005C0,1.3460002,1.3460007,0,3,0z</Geometry>
+
+    <Geometry x:Key="Yes">M29.403992,0L32,3.5860286 8.3720093,21.479001 5.7740173,17.895017 5.776001,17.893002 0,9.9110087 3.5079956,7.2570179 9.2829895,15.23602z</Geometry>
+
+    <Geometry x:Key="No">M7.1999998,0L16,8.7999997 24.799999,0 32,7.1999998 23.2,16 32,24.799999 24.799999,32 16,23.2 7.1999998,32 0,24.799999 8.7999997,16 0,7.1999998z</Geometry>
+
+    <Geometry x:Key="Add">M12.126984,0L19.872009,0 19.872009,12.128 32,12.128 32,19.872999 19.872009,19.872999 19.872009,31.999 12.126984,31.999 12.126984,19.872999 0,19.872999 0,12.128 12.126984,12.128z</Geometry>
+
+    <Geometry x:Key="Messages">M20.869995,5.3660109L21.067993,5.3660109 29.515999,5.3660109C30.906998,5.3660109,32,6.460005,32,7.851011L32,16.497006C32,17.887997,30.906998,18.980997,29.515999,18.980997L24.546997,18.980997 24.546997,22.657999 19.577995,18.980997 14.608994,18.980997C13.217995,18.980997,12.123993,17.887997,12.123993,16.497006L12.123993,15.303997 12.720993,14.807003 17.192993,14.807003C19.279999,14.807003,20.869995,13.118008,20.869995,11.130002z M2.5839996,0L17.390999,0C18.782997,-2.2649692E-07,19.875999,1.0930018,19.875999,2.4840078L19.875999,11.130002C19.875999,12.522,18.782997,13.615002,17.390999,13.615002L12.422997,13.615002 7.4539948,17.292004 7.4539948,13.615002 2.484993,13.615002C1.0929947,13.615002,0,12.522,0,11.130002L0,2.4840078C0.099998474,1.0930018,1.1929932,-2.2649692E-07,2.5839996,0z</Geometry>
+
+    <Geometry x:Key="Help">M14.246002,23.394012L16.850006,23.394012 16.850006,26.235001 14.246002,26.235001z M15.785995,5.7660065C17.520004,5.7660065 18.862,6.2390137 19.809006,7.1880035 20.833008,8.2109985 21.347,9.5140076 21.347,11.090012 21.347,12.432007 20.872009,13.575012 19.927002,14.522003 19.374008,15.075012 18.624008,15.825012 17.677002,16.768005 16.970001,17.479004 16.613998,18.546005 16.613998,19.964005L14.483002,19.964005C14.483002,18.229004 14.759003,16.92601 15.311005,16.061005 15.706009,15.430008 16.456009,14.561005 17.559006,13.456009 18.190002,12.827011 18.507004,12.077011 18.507004,11.208008 18.507004,10.106003 18.229004,9.276001 17.677002,8.7230072 17.20401,8.25 16.535995,8.0140076 15.667007,8.0140076 14.956009,8.0140076 14.363998,8.25 13.893005,8.7230072 13.104004,9.5140076 12.710007,10.695999 12.710007,12.274002L9.9869995,12.274002C9.9869995,10.223007 10.658997,8.526001 11.999008,7.1880035 12.945999,6.2390137 14.208008,5.7660065 15.785995,5.7660065z M16,3.131012C8.8910065,3.131012 3.1290054,8.8930054 3.1290054,16 3.1290054,23.108002 8.8910065,28.869003 16,28.869003 23.104996,28.869003 28.867004,23.108002 28.867004,16 28.867004,8.8930054 23.104996,3.131012 16,3.131012z M16,0C24.820007,0 32,7.178009 32,16 32,24.822006 24.820007,32 16,32 7.1760025,32 0,24.822006 0,16 0,7.178009 7.1760025,0 16,0z</Geometry>
+
+    <Geometry x:Key="Manager">M10.000012,17.700012L10.800001,17.700012C10.899977,20,11.399977,26.300003,13.500016,28.600006L13.599992,28.700012 14.000017,21.700012 13.000016,20.900009 15.300007,18.900009 17.500021,20.800003 16.500021,21.700012 16.899984,29C17.099996,28.900009 17.200033,28.800003 17.399984,28.600006 17.399984,28.600006 20.500025,23.5 20.1,17.700012L20.399988,17.700012C25.899994,17.700012,30.399999,22.200012,30.399999,27.700012L30.399999,32 0,32 0,27.700012C2.2644235E-07,22.100006,4.5000055,17.700012,10.000012,17.700012z M15.300007,0C19.30001,0 22.500026,3.1000061 22.500026,6.9000092 22.500026,8.5 21.89999,10 21.000025,11.100006L21.000025,8.7000122C21.000025,8.7000122 20.700037,5.7000122 17.599996,6.3000031 17.599996,6.3000031 14.200029,8.5 10.500013,6.5 10.500013,6.5 9.299999,8.5 9.8,11.400009 8.7000225,10.200012 8.0000098,8.6000061 8.0000098,6.9000092 8.0000098,3.1000061 11.300002,0 15.300007,0z</Geometry>
+
+    <Geometry x:Key="PlusMinus">M18.000004,5.9999853L32.000004,5.9999853 32.000004,7.9999851 18.000004,7.9999851z M6.000001,0L8.000001,0 8.000001,5.9999996 14,5.9999996 14,8 8.000001,8 8.000001,14 6.000001,14 6.000001,8 0,8 0,5.9999996 6.000001,5.9999996z</Geometry>
+
+    <Geometry x:Key="iks">M14.8125,45.9856262207031L17.671875,45.9856262207031 17.671875,79.5012512207031 17.765625,82.9172668457031 18.046875,85.1028137207031 19.4765625,87.4934387207031 20.865234375,88.2610168457031 22.921875,88.9231262207031 22.921875,91.2200012207031 4.54687547683716,91.2200012207031 4.54687547683716,88.9231262207031 6.11132764816284,88.3957824707031 7.1484375,87.9387512207031 8.4609375,86.7668762207031 8.94140625,85.8176574707031 9.3046875,84.4700012207031 9.533203125,82.4895324707031 9.609375,79.6418762207031 9.609375,59.2043762207031 9.5859375,56.4973449707031 9.515625,54.3762512207031 8.859375,51.4465637207031 7.1484375,49.8059387207031 5.759765625,49.3078918457031 3.89062476158142,48.8918762207031 3.89062476158142,46.4075012207031 14.8125,45.9856262207031z M9.328125,28.0325012207031L17.953125,28.0325012207031 17.953125,37.1262512207031 9.328125,37.1262512207031 9.328125,28.0325012207031z M40.9233322143555,24.1418762207031L43.7358322143555,24.1418762207031 43.7358322143555,65.1106262207031 45.2358322143555,65.1106262207031 47.7670822143555,64.7825012207031 50.3452072143555,63.3528137207031 52.0444259643555,61.9992980957031 54.3295822143555,59.9543762207031 56.2221603393555,58.0910949707031 57.5873947143555,56.5325012207031 59.1108322143555,53.9543762207031 59.4858322143555,51.9856262207031 59.2690353393555,50.7317199707031 58.6186447143555,49.7825012207031 57.4760665893555,49.1145324707031 55.7827072143555,48.7043762207031 55.7827072143555,46.4075012207031 75.9858322143555,46.4075012207031 75.9858322143555,48.7043762207031 73.7592697143555,49.3957824707031 71.3920822143555,50.6262512207031 68.9194259643555,52.3606262207031 66.3764572143555,54.5637512207031 55.5952072143555,64.7825012207031 69.0952072143555,82.4075012207031 71.3276290893555,85.0969543457031 73.3373947143555,86.9778137207031 75.3237228393555,88.2024230957031 77.4858322143555,88.9231262207031 77.4858322143555,91.2200012207031 59.4858322143555,91.2200012207031 59.4858322143555,88.9231262207031 61.2905197143555,88.3840637207031 61.8764572143555,87.0481262207031 61.6186447143555,85.6653137207031 60.5639572143555,83.8137512207031 59.4389572143555,82.2082824707031 57.6577072143555,79.7356262207031 52.0795822143555,72.2356262207031 50.7143478393555,70.4895324707031 49.8061447143555,69.4700012207031 48.3764572143555,68.5325012207031 46.3608322143555,68.2512512207031 43.7358322143555,68.2512512207031 43.7358322143555,79.5012512207031 43.8295822143555,82.9172668457031 44.1108322143555,85.1028137207031 45.5405197143555,87.4934387207031 46.9291915893555,88.2610168457031 48.9858322143555,88.9231262207031 48.9858322143555,91.2200012207031 30.3764591217041,91.2200012207031 30.3764591217041,88.9231262207031 32.3627853393555,88.3020324707031 33.6342697143555,87.6575012207031 34.9467697143555,86.0871887207031 35.5092697143555,83.6028137207031 35.6323165893555,81.7922668457031 35.6733322143555,79.5012512207031 35.6733322143555,40.2668762207031 35.6557540893555,36.4465675354004 35.6030197143555,33.9856262207031 35.2280197143555,30.9621887207031 34.3842697143555,29.0168762207031 32.9311447143555,27.8918762207031 31.6479415893555,27.4700050354004 29.6264591217041,27.0481262207031 29.6264591217041,24.6106262207031 40.9233322143555,24.1418762207031z M99.0477066040039,45.6106262207031L105.024269104004,45.9153137207031 108.276222229004,46.3664855957031 112.266456604004,47.1106262207031 112.266456604004,56.6731262207031 107.766456604004,56.6731262207031 106.641456604004,54.1594543457031 105.328956604004,52.2434387207031 103.828956604004,50.8664855957031 102.141456604004,49.9700012207031 100.160987854004,49.4778137207031 97.7820816040039,49.3137512207031 94.4129409790039,49.7532043457031 91.8055191040039,51.0715637207031 90.1355972290039,53.1516418457031 89.5789566040039,55.8762512207031 89.8016128540039,57.8450012207031 90.4695816040039,59.4387512207031 91.6063003540039,60.7981262207031 93.2352066040039,62.0637512207031 95.8250503540039,63.4817199707031 99.8445816040039,65.2981262207031 104.080909729004,67.2785949707031 107.227394104004,69.0950012207031 109.547706604004,70.9700012207031 111.305519104004,73.1262512207031 112.412940979004,75.6457824707031 112.782081604004,78.6106262207031 112.465675354004,82.0207824707031 111.516456604004,84.8450012207031 109.993019104004,87.1418762207031 107.953956604004,88.9700012207031 105.440284729004,90.3410949707031 102.493019104004,91.2668762207031 95.5789566040039,91.9700012207031 87.9383316040039,91.3840637207031 80.7195816040039,89.8606262207031 80.7195816040039,80.0637512207031 85.3133316040039,80.0637512207031 86.8836441040039,83.7844543457031 89.0633316040039,86.3215637207031 92.0164566040039,87.7805480957031 95.9070816040039,88.2668762207031 99.2117691040039,87.9153137207031 102.094581604004,86.7434387207031 104.110206604004,84.5168762207031 104.860206604004,81.0012512207031 104.625831604004,78.8332824707031 103.922706604004,77.1106262207031 102.727394104004,75.6750793457031 101.016456604004,74.3684387207031 98.2977066040039,72.9094543457031 94.0789566040039,71.0168762207031 90.2352066040039,69.2590637207031 87.2352066040039,67.5481262207031 84.9324722290039,65.7082824707031 83.1805191040039,63.5637512207031 82.0730972290039,61.0559387207031 81.7039566040039,58.1262512207031 82.2254409790039,54.5344543457031 83.7898941040039,51.4465637207031 86.3387222290039,48.9446105957031 89.8133316040039,47.1106262207031 94.0906753540039,45.9856262207031 99.0477066040039,45.6106262207031z</Geometry>
+    <!--#endregion-->
+
+    <!--#region Button-->
+    <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}">
+        <Style.Setters>
+            <Setter Property="FontFamily" Value="{DynamicResource FontFamilyMain}"/>
+            <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Template" Value="{DynamicResource ButtonBaseControlTemplate}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextOnDarkColor}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SecondaryDarkColor}" />
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="{DynamicResource ShadowColor}" Opacity="0.5" />
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="{DynamicResource SecondaryColor}"/>
+        </Style.Setters>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="Button.PreviewMouseDown">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation
+               Storyboard.TargetProperty="Effect.BlurRadius"
+               To="0" Duration="0:0:0.2"
+               AutoReverse="True" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <ControlTemplate x:Key="ButtonBaseControlTemplate" TargetType="{x:Type ButtonBase}">
+        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" CornerRadius="16">
+            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Button.IsDefaulted" Value="True">
+                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" TargetName="border" Value="{DynamicResource SecondaryLightColor}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource SecondaryLightColor}"/>
+                <Setter Property="Cursor" Value="Hand"></Setter>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" TargetName="border" Value="{DynamicResource SecondaryDarkColor}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource SecondaryDarkColor}"/>
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="True">
+                <Setter Property="Background" TargetName="border" Value="{DynamicResource PrimaryColor}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource PrimaryColor}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" TargetName="border" Value="{DynamicResource DisabledColor}"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource DisabledColor}"/>
+                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{DynamicResource TextOnDarkColor}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <!--#endregion-->
+
+    <!--#region ListBox-->
+    <Style x:Key="{x:Type ListBoxItem}" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Background" Value="{DynamicResource PrimaryColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextOnDarkColor}"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bd"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            Padding="10,10,0,10"
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                            Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background"
+                                    TargetName="Bd"
+                                    Value="{DynamicResource SecondaryColor}" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="{x:Type ListBox}" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="{DynamicResource AlternativeBackgroundColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+        </Style.Resources>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region DataGrid-->
+    <Style TargetType="{x:Type DataGridColumnHeader}">
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource TextOnLightColor}" />
+        <Setter Property="Padding" Value="5,5,5,0"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TextOnLightColor}"/>
+    </Style>
+
+
+    <Style TargetType="{x:Type DataGrid}">
+        <Setter Property="CanUserAddRows" Value="False" />
+        <Setter Property="CanUserDeleteRows" Value="False" />
+        <Setter Property="GridLinesVisibility" Value="None" />
+        <Setter Property="Foreground" Value="{DynamicResource TextOnLightColor}"/>
+        <Setter Property="AlternatingRowBackground" Value="Transparent"/>
+        <Setter Property="RowBackground" Value="Transparent"/>
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HeadersVisibility" Value="Column"/>
+        <Setter Property="SelectionMode" Value="Single"/>
+        <Setter Property="CellStyle">
+            <Setter.Value>
+                <Style TargetType="DataGridCell">
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}" />
+                    <Setter Property="Background" Value="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type DataGridRow}">
+        <Setter Property="Foreground" Value="{DynamicResource TextOnLightColor}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamilyMain}"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeSmall}"/>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="true">
+                <Setter Property="Background" Value="{DynamicResource SecondaryColor}" />
+                <!--<Setter Property="Height" Value="40"/>-->
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Foreground" Value="{DynamicResource TextOnDarkColor}"/>
+                <Setter Property="DataGridTextColumn.Foreground" Value="{DynamicResource TextOnDarkColor}"/>
+                <Setter Property="DataGridTextColumn.FontSize" Value="{DynamicResource FontSizeNormal}"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="true" >
+                <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+                <Setter Property="DataGridTextColumn.Foreground" Value="{DynamicResource TextOnDarkColor}"/>
+                <!--<Setter Property="Height" Value="40"/>-->
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="DataGridTextColumn.FontSize" Value="{DynamicResource FontSizeNormal}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type DataGridCell}">
+        <Setter Property="Padding" Value="0,0,10,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="true" >
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="SellStyleRightAlign" TargetType="{x:Type DataGridCell}">
+        <Setter Property="Padding" Value="0,0,10,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FrameworkElement.HorizontalAlignment" Value="Right"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                    <Border Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="true" >
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderThickness" Value="0"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region Label-->
+    <Style x:Key="{x:Type Label}" TargetType="{x:Type Label}">
+        <Style.Setters>
+            <Setter Property="Foreground" Value="{DynamicResource TextOnLightColor}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="FontFamily" Value="{DynamicResource FontFamilyMain}"/>
+            <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style.Setters>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region TextBox-->
+    <Style x:Key="{x:Type TextBox}" TargetType="{x:Type TextBox}">
+        <Style.Setters>
+            <Setter Property="Foreground" Value="{DynamicResource TextOnLightColor}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource DisabledColor}" />
+            <Setter Property="Background" Value="{DynamicResource AlternativeBackgroundColor}" />
+            <Setter Property="SelectionBrush" Value="{DynamicResource SecondaryColor}"/>
+            <Setter Property="SelectionOpacity" Value="0.5"/>
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="FontFamily" Value="{DynamicResource FontFamilyMain}"/>
+            <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="bg" BorderBrush="{DynamicResource PrimaryColor}" BorderThickness="0,0,0,2">
+                            <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="bg" Value="{DynamicResource PrimaryColor}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" TargetName="bg" Value="{DynamicResource PrimaryColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" TargetName="bg" Value="{DynamicResource PrimaryColor}"/>
+                            </Trigger>
+                            <Trigger Property="Text" Value="{x:Null}">
+                                <Setter Property="BorderBrush" TargetName="bg" Value="{DynamicResource DisabledColor}"/>
+                                <Setter Property="BorderThickness" TargetName="bg" Value="0,0,0,2"/>
+                            </Trigger>
+                            <Trigger Property="Text" Value="">
+                                <Setter Property="BorderBrush" TargetName="bg" Value="{DynamicResource DisabledColor}"/>
+                                <Setter Property="BorderThickness" TargetName="bg" Value="0,0,0,2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region InfoTextBox-->
+    <Style x:Key="InfoTextBox" TargetType="{x:Type TextBox}">
+        <Style.Setters>
+            <Setter Property="Foreground" Value="{DynamicResource TextOnLightColor}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource SecondaryColor}" />
+            <Setter Property="Background" Value="{DynamicResource AlternativeBackgroundColor}" />
+            <Setter Property="SelectionBrush" Value="{DynamicResource SecondaryColor}"/>
+            <Setter Property="SelectionOpacity" Value="0.5"/>
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="FontFamily" Value="{DynamicResource FontFamilyMain}"/>
+            <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="2,4,0,4"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="bg" BorderBrush="{DynamicResource SecondaryColor}" BorderThickness="0,0,0,0">
+                            <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="bg" Value="{DynamicResource SecondaryColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" TargetName="bg" Value="{DynamicResource SecondaryColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" TargetName="bg" Value="{DynamicResource SecondaryColor}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region PasswordBox-->
+    <Style x:Key="{x:Type PasswordBox}" TargetType="{x:Type PasswordBox}">
+        <Style.Setters>
+            <Setter Property="Foreground" Value="{DynamicResource TextOnLightColor}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}" />
+            <Setter Property="Background" Value="{DynamicResource AlternativeBackgroundColor}" />
+            <Setter Property="FontFamily" Value="{DynamicResource FontFamilyMain}"/>
+            <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+            <Setter Property="SelectionBrush" Value="{DynamicResource SecondaryColor}"/>
+            <Setter Property="SelectionOpacity" Value="0.5"/>
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <Border x:Name="bg" BorderBrush="{DynamicResource PrimaryColor}" BorderThickness="0,0,0,2">
+                            <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="bg" Value="{DynamicResource PrimaryColor}"/>
+                            </Trigger>
+
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" TargetName="bg" Value="{DynamicResource PrimaryColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="BorderBrush" TargetName="bg" Value="{DynamicResource PrimaryColor}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region TabControl-->
+    <Style x:Key="TempTab" TargetType="{x:Type TabItem}">
+
+        <Setter Property="Foreground" Value="{DynamicResource TextOnDarkColor}"/>
+        <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamilyMain}"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+        <Setter Property="Margin" Value="0,0,4,0"/>
+        <Setter Property="Tag" Value="160"/>
+        <Setter Property="Template">
+            <!--{Binding RelativeSource={RelativeSource Self}, Path=Tag}-->
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Grid>
+                        <Border Name="Border" Margin="0,0,0,0" Background="{DynamicResource AlternativeBackgroundColor}"
+                  BorderBrush="Transparent" BorderThickness="0,0,0,0" CornerRadius="0" Width="55">
+                            <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center"
+                              HorizontalAlignment="Left"
+                              ContentSource="Header" Margin="0"
+                              RecognizesAccessKey="True">
+                            </ContentPresenter>
+                        </Border>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Panel.ZIndex" Value="100" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AlternativeBackgroundColor}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0" />
+                            <Setter Property="Background" Value="{DynamicResource AlternativeBackgroundColor}" />
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryColor}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource PrimaryColor}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,1" />
+                            <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextOnDarkColor}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource PrimaryColor}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource BackgroundColor}" />
+                            <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextOnDarkColor}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region Scroll-->
+    <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Grid x:Name="Grid">
+                        <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Fill="Transparent" />
+                        <Border x:Name="Rectangle1" CornerRadius="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto"  Background="{TemplateBinding Background}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Tag" Value="Horizontal">
+                            <Setter TargetName="Rectangle1" Property="Width" Value="Auto" />
+                            <Setter TargetName="Rectangle1" Property="Height" Value="7" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+        <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Width" Value="2" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollBar}">
+                    <Grid x:Name="GridRoot" Width="{DynamicResource ScrollWidth}" Background="{TemplateBinding Background}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.00001*" />
+                        </Grid.RowDefinitions>
+
+                        <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="false">
+                            <Track.Thumb>
+                                <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" Style="{DynamicResource ScrollThumbs}" />
+                            </Track.Thumb>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton x:Name="PageUp" Command="ScrollBar.PageDownCommand" Opacity="0" Focusable="false" />
+                            </Track.IncreaseRepeatButton>
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton x:Name="PageDown" Command="ScrollBar.PageUpCommand" Opacity="0" Focusable="false" />
+                            </Track.DecreaseRepeatButton>
+                        </Track>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
+                            <Setter Value="{DynamicResource ButtonSelectBrush}" TargetName="Thumb" Property="Background" />
+                        </Trigger>
+                        <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
+                            <Setter Value="{DynamicResource DarkBrush}" TargetName="Thumb" Property="Background" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Orientation" Value="Horizontal">
+                            <Setter TargetName="GridRoot" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="PART_Track" Property="LayoutTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="-90" />
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="Width" Value="Auto" />
+                            <Setter Property="Height" Value="5" />
+                            <Setter TargetName="Thumb" Property="Tag" Value="Horizontal" />
+                            <Setter TargetName="PageDown" Property="Command" Value="ScrollBar.PageLeftCommand" />
+                            <Setter TargetName="PageUp" Property="Command" Value="ScrollBar.PageRightCommand" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region ProgressBar-->
+    <Style x:Key="{x:Type ProgressBar}" TargetType="{x:Type ProgressBar}">
+        <Style.Setters>
+            <Setter Property="Foreground" Value="{DynamicResource SecondaryColor}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}" />
+            <Setter Property="Background" Value="{DynamicResource BackgroundColor}"/>
+            <Setter Property="IsIndeterminate" Value="True" />
+            <Setter Property="Panel.ZIndex" Value="100"/>
+        </Style.Setters>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region ComboBox-->
+    <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="20" />
+            </Grid.ColumnDefinitions>
+            <Border
+                  x:Name="Border" 
+                  Grid.ColumnSpan="2"
+                  CornerRadius="0"
+                  Background="{DynamicResource PrimaryColor}"
+                  BorderBrush="{DynamicResource PrimaryColor}"
+                  BorderThickness="1" />
+            <Border 
+                  Grid.Column="0"
+                  CornerRadius="0" 
+                  Margin="1" 
+                  Background="{DynamicResource PrimaryColor}" 
+                  BorderBrush="{DynamicResource PrimaryColor}"
+                  BorderThickness="0,0,1,0" />
+            <Path 
+                  x:Name="Arrow"
+                  Grid.Column="1"     
+                  Fill="White"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
+                />
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="ComboBoxTextBox" TargetType="{x:Type TextBox}">
+        <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}" />
+    </ControlTemplate>
+
+    <Style x:Key="{x:Type ComboBox}" TargetType="{x:Type ComboBox}">
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="MinWidth" Value="120"/>
+        <Setter Property="MinHeight" Value="20"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextOnDarkColor}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <Grid>
+                        <ToggleButton 
+                            Name="ToggleButton" 
+                            Template="{StaticResource ComboBoxToggleButton}" 
+                            Focusable="false"
+                            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                            ClickMode="Press">
+                        </ToggleButton>
+                        <ContentPresenter Name="ContentSite" IsHitTestVisible="False"  Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            Margin="3,3,23,3"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Left" />
+                        <TextBox x:Name="PART_EditableTextBox"
+                            Style="{x:Null}" 
+                            Template="{StaticResource ComboBoxTextBox}" 
+                            HorizontalAlignment="Left" 
+                            VerticalAlignment="Center" 
+                            Margin="3,3,23,3"
+                            Focusable="True" 
+                            Background="{DynamicResource PrimaryColor}"
+                            Foreground="Green"
+                            Visibility="Hidden"
+                            IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                        <Popup 
+                            Name="Popup"
+                            Placement="Bottom"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            AllowsTransparency="True" 
+                            Focusable="False"
+                            PopupAnimation="Slide">
+
+                            <Grid Name="DropDown"
+                              SnapsToDevicePixels="True"                
+                              MinWidth="{TemplateBinding ActualWidth}"
+                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                <Border 
+                                x:Name="DropDownBorder"
+                                Background="{DynamicResource SecondaryLightColor}"
+
+                                BorderThickness="1"
+                                BorderBrush="{DynamicResource PrimaryColor}"/>
+                                <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                </ScrollViewer>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasItems" Value="false">
+                            <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsGrouping" Value="true">
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </Trigger>
+                        <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                            <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0"/>
+                            <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsEditable"  Value="true">
+                            <Setter Property="IsTabStop" Value="false"/>
+                            <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="{x:Type ComboBoxItem}" TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="Foreground" Value="{StaticResource TextOnDarkColor}"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Border Name="Border"
+                              Padding="6"
+                              SnapsToDevicePixels="true">
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource PrimaryColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{DynamicResource PrimaryColor}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region TranspButton-->
+    <Style x:Key="TranspButton" TargetType="{x:Type Button}">
+        <Style.Setters>
+            <Setter Property="FontFamily" Value="{DynamicResource FontFamilyMain}"/>
+            <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Template" Value="{DynamicResource TranspButtonBaseControlTemplate}"/>
+            <Setter Property="Foreground" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="2" BlurRadius="4" Color="{DynamicResource ShadowColor}"  Opacity="0.5"/>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+        <Style.Triggers>
+            <EventTrigger RoutedEvent="Button.PreviewMouseDown">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation
+               Storyboard.TargetProperty="Effect.ShadowDepth"
+               To="0" Duration="0:0:0.2"
+               AutoReverse="True" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <!--Меньше анимаций богу анимаций-->
+            <!--<Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[0].ScaleX" To="1.15" Duration="0:0:0.2"/>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[0].ScaleY" To="1.15" Duration="0:0:0.2"/>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[1].X" To="-4" Duration="0:0:0.2"/>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[1].Y" To="-4" Duration="0:0:0.2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[0].ScaleX" To="1.0" Duration="0:0:0.2"/>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[0].ScaleY" To="1.0" Duration="0:0:0.2"/>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[1].X" To="0" Duration="0:0:0.2"/>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.Children[1].Y" To="0" Duration="0:0:0.2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>-->
+        </Style.Triggers>
+    </Style>
+
+    <ControlTemplate x:Key="TranspButtonBaseControlTemplate" TargetType="{x:Type ButtonBase}">
+        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="Button.IsDefaulted" Value="True">
+                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="Transparent"/>
+                <Setter Property="Cursor" Value="Hand"></Setter>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="Transparent"/>
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="True">
+                <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="Transparent"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" TargetName="border" Value="Transparent"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="Transparent"/>
+                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource TextOnDarkColor}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <!--#endregion-->
+
+    <!--#region CheckBox-->
+    <Style x:Key="CheckRadioFocusVisual">
+        <Style.Setters>
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="{x:Type CheckBox}" TargetType="{x:Type CheckBox}">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextOnLightColor}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamilyMain}"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="Cursor" Value="Hand"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <ControlTemplate.Resources>
+                        <Storyboard x:Key="StoryboardIsChecked">
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="CheckFlag">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.002" Value="14"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                        <Storyboard x:Key="StoryboardIsCheckedOff">
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="CheckFlag">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="14"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.002" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </ControlTemplate.Resources>
+                    <BulletDecorator Background="Transparent" SnapsToDevicePixels="true">
+                        <BulletDecorator.Bullet>
+                            <Border x:Name="ForegroundPanel" BorderThickness="1" Width="35" Height="20" CornerRadius="10">
+                                <Canvas>
+                                    <Border Background="White" x:Name="CheckFlag" CornerRadius="10" VerticalAlignment="Center" BorderThickness="1" Width="19" Height="18" RenderTransformOrigin="0.5,0.5">
+                                        <Border.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform/>
+                                                <SkewTransform/>
+                                                <RotateTransform/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </Border.RenderTransform>
+                                        <Border.Effect>
+                                            <DropShadowEffect ShadowDepth="1" Direction="180" />
+                                        </Border.Effect>
+                                    </Border>
+                                </Canvas>
+                            </Border>
+                        </BulletDecorator.Bullet>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
+                    </BulletDecorator>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource CheckRadioFocusVisual}"/>
+                            <Setter Property="Padding" Value="4,0,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter TargetName="ForegroundPanel" Property="Background" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="ForegroundPanel" Property="Background" Value="{DynamicResource CheckedColor}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="BeginStoryboardCheckedTrue" Storyboard="{StaticResource StoryboardIsChecked}" />
+                                <RemoveStoryboard BeginStoryboardName="BeginStoryboardCheckedFalse" />
+                            </Trigger.EnterActions>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="ForegroundPanel" Property="Background" Value="{DynamicResource UncheckedColor}" />
+                            <Trigger.EnterActions>
+                                <BeginStoryboard x:Name="BeginStoryboardCheckedFalse" Storyboard="{StaticResource StoryboardIsCheckedOff}" />
+                                <RemoveStoryboard BeginStoryboardName="BeginStoryboardCheckedTrue" />
+                            </Trigger.EnterActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region TreeView-->
+    <Style x:Key="{x:Type TreeView}" TargetType="{x:Type TreeView}">
+        <Style.Setters>
+            <Setter Property="Foreground" Value="{DynamicResource TextOnLightColor}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}" />
+            <Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
+            <Setter Property="FontFamily" Value="{DynamicResource FontFamilyMain}"/>
+            <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+        </Style.Setters>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region TreeViewItem-->
+    <Style x:Key="{x:Type TreeViewItem}" TargetType="{x:Type TreeViewItem}">
+        <Style.Setters>
+            <Setter Property="Foreground" Value="{DynamicResource TextOnLightColor}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="FontFamily" Value="{DynamicResource FontFamilyMain}"/>
+            <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+        </Style.Setters>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region Slider-->
+    <Style x:Key="SliderRepeatButtonStyle" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Rectangle Fill="Transparent"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="SliderThumbStyle" TargetType="{x:Type Thumb}">
+        <Setter Property="OverridesDefaultStyle" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Grid>
+                        <Border Name="outerBorder"
+                            Background="{DynamicResource DisabledColor}"
+                            BorderBrush="{DynamicResource DisabledColor}"
+                            Height="1" Width="1" Opacity="1" BorderThickness="2" CornerRadius="12"/>
+                        <Border Name="innerBorder"
+                            Background="{DynamicResource SecondaryDarkColor}"
+                            BorderBrush="{DynamicResource SecondaryDarkColor}"
+                            Height="16" Width="16" CornerRadius="8" Opacity="1" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="outerBorder" Property="BorderBrush" Value="{DynamicResource SecondaryLightColor}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="outerBorder" Property="Background" Value="#55ACACAC" />
+                            <Setter TargetName="outerBorder" Property="BorderBrush" Value="#55ACACAC" />
+                            <Setter TargetName="innerBorder" Property="Width" Value="4" />
+                            <Setter TargetName="innerBorder" Property="Height" Value="4" />
+                            <Setter TargetName="innerBorder" Property="CornerRadius" Value="2" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <ControlTemplate x:Key="VerticalSlider" TargetType="{x:Type Slider}">
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding MinWidth}"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TickBar x:Name="TopTick" Visibility="Collapsed" Fill="LightGray" Placement="Left" SnapsToDevicePixels="True"
+                 Width="4" Margin="0,0,2,0" />
+            <Border x:Name="TrackBackground"
+                Grid.Column="1"
+                Margin="0,10"
+                BorderThickness="2"
+                BorderBrush="LightGray"
+                HorizontalAlignment="Center" Width="4" />
+            <Track x:Name="PART_Track" Grid.Column="1">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}"  Style="{StaticResource SliderRepeatButtonStyle}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource SliderRepeatButtonStyle}"/>
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb x:Name="Thumb" Style="{StaticResource SliderThumbStyle}" />
+                </Track.Thumb>
+            </Track>
+            <TickBar x:Name="BottomTick" Grid.Column="2" Visibility="Collapsed" Fill="LightGray" Placement="Right"
+                 Width="4" Margin="2,0,0,0" SnapsToDevicePixels="True" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <ControlTemplate x:Key="HorizontalSlider" TargetType="{x:Type Slider}">
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TickBar x:Name="TopTick" Visibility="Collapsed" Fill="LightGray" Placement="Top" SnapsToDevicePixels="True"
+                 Height="4" Margin="0,0,0,2" />
+            <Border x:Name="TrackBackground"
+                Grid.Row="1"
+                Margin="10,0"
+                BorderThickness="2"
+                BorderBrush="{DynamicResource SecondaryLightColor}"
+                VerticalAlignment="Center" Height="4" />
+            <Track x:Name="PART_Track" Grid.Row="1">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}"  Style="{StaticResource SliderRepeatButtonStyle}" />
+                </Track.DecreaseRepeatButton>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource SliderRepeatButtonStyle}"/>
+                </Track.IncreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb x:Name="Thumb" Style="{StaticResource SliderThumbStyle}" />
+                </Track.Thumb>
+            </Track>
+            <TickBar x:Name="BottomTick" Grid.Row="2" Visibility="Collapsed" Fill="LightGray" Placement="Bottom"
+                 SnapsToDevicePixels="True" Height="4" Margin="0,2,0,0"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="TickPlacement" Value="TopLeft">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="BottomRight">
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="TickPlacement" Value="Both">
+                <Setter TargetName="TopTick" Property="Visibility" Value="Visible" />
+                <Setter TargetName="BottomTick" Property="Visibility" Value="Visible" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <Style x:Key="MyFocusVisualStyte" >
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle x:Name="FocusStyle" StrokeDashArray="4 4" RadiusX="5" RadiusY="5" Fill="Transparent"
+                           Stroke="{DynamicResource PrimaryColor}" StrokeThickness="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="{x:Type Slider}" TargetType="{x:Type Slider}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource MyFocusVisualStyte}" />
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="MinWidth" Value="104" />
+                <Setter Property="MinHeight" Value="21" />
+                <Setter Property="Template" Value="{StaticResource HorizontalSlider}" />
+            </Trigger>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="MinWidth" Value="21" />
+                <Setter Property="MinHeight" Value="104" />
+                <Setter Property="Template" Value="{StaticResource VerticalSlider}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="SliderRepeatButton" TargetType="RepeatButton">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="IsTabStop" Value="false" />
+        <Setter Property="Focusable" Value="false" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border  BorderThickness="1" BorderBrush="Black" Background="Black" Height="3"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SliderRepeatButton1" TargetType="RepeatButton">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border SnapsToDevicePixels="True" Background="Green"  BorderThickness="1" BorderBrush="YellowGreen" Height="3"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="SliderThumb" TargetType="Thumb">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Ellipse Height="10" Width="10" Fill="{DynamicResource PrimaryColor}"></Ellipse>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="Slider"  TargetType="Slider">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Track Grid.Row="1" x:Name="PART_Track"   >
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Style="{StaticResource SliderRepeatButton1}"  Command="Slider.DecreaseLarge" />
+                </Track.DecreaseRepeatButton>
+                <Track.Thumb>
+                    <Thumb Style="{StaticResource SliderThumb}"  />
+                </Track.Thumb>
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Style="{StaticResource SliderRepeatButton}" Command="Slider.IncreaseLarge" />
+                </Track.IncreaseRepeatButton>
+            </Track>
+        </Grid>
+    </ControlTemplate>
+
+    <Style x:Key="Horizontal_Slider" TargetType="Slider">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Horizontal">
+                <Setter Property="MinHeight" Value="21" />
+                <Setter Property="MinWidth" Value="104" />
+                <Setter Property="Template" Value="{StaticResource Slider}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region StaticCheckBox-->
+    <Style x:Key="StaticCheckBox" TargetType="{x:Type CheckBox}">
+        <Style.Setters>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextOnLightColor}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}" />
+            <Setter Property="Background" Value="{DynamicResource BackgroundColor}" />
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="SnapsToDevicePixels" Value="true"/>
+            <Setter Property="IsEnabled" Value="false"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Margin" Value="0,5,0,5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <BulletDecorator Background="Transparent">
+                            <BulletDecorator.Bullet>
+                                <Border x:Name="Border"
+                                         Background="Transparent"
+                                       BorderBrush="{TemplateBinding BorderBrush}"
+                                       BorderThickness="0"
+                                       ClipToBounds="True">
+                                    <Path x:Name="CheckMark"
+                                          HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                          Data="{DynamicResource Yes}"
+                                         Stretch="Uniform"
+                                         Stroke="{DynamicResource CheckedColor}"
+                                            Fill="{DynamicResource CheckedColor}"
+                                        StrokeThickness="0" />
+                                </Border>
+                            </BulletDecorator.Bullet>
+                            <ContentPresenter Margin="4,0,0,0"
+                                             HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                             RecognizesAccessKey="True" />
+                        </BulletDecorator>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="false">
+                                <Setter TargetName="CheckMark" Property="Data" Value="{DynamicResource No}" />
+                                <Setter TargetName="CheckMark" Property="Fill" Value="{DynamicResource UncheckedColor}" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="CheckMark" Property="Data" Value="{DynamicResource Yes}" />
+                                <Setter TargetName="CheckMark" Property="Fill" Value="{DynamicResource CheckedColor}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region NoPaddingTabControl-->
+    <Style TargetType="{x:Type TabItem}">
+
+        <Setter Property="Foreground" Value="{DynamicResource TextOnDarkColor}"/>
+        <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamilyMain}"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Grid>
+                        <Border Name="Border" Margin="0" Background="{DynamicResource AlternativeBackgroundColor}"
+                  BorderBrush="Transparent" BorderThickness="0" CornerRadius="0">
+                            <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center"
+                              HorizontalAlignment="Center"
+                              ContentSource="Header" Margin="0"
+                              RecognizesAccessKey="True">
+                            </ContentPresenter>
+                        </Border>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Panel.ZIndex" Value="100" />
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource AlternativeBackgroundColor}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0" />
+                            <Setter Property="Background" Value="{DynamicResource AlternativeBackgroundColor}" />
+                            <Setter Property="Foreground" Value="{DynamicResource SecondaryColor}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource PrimaryColor}" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,1" />
+                            <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextOnDarkColor}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource PrimaryColor}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource BackgroundColor}" />
+                            <Setter Property="Background" Value="{DynamicResource PrimaryColor}" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextOnDarkColor}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region Radiobutton-->
+    <Style x:Key="FocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="OptionMarkFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+        <Setter Property="Background" Value="{DynamicResource BackgroundColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextOnLightColor}"/>
+        <Setter Property="FontFamily" Value="{DynamicResource FontFamilyMain}"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="radioButtonBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="100" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="1,1,2,1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Grid x:Name="markGrid" Margin="2">
+                                <Ellipse x:Name="optionMark" Fill="{DynamicResource SecondaryColor}" MinWidth="10" MinHeight="10" Opacity="0"/>
+                            </Grid>
+                        </Border>
+                        <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}"/>
+                            <Setter Property="Padding" Value="5,0,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Opacity" TargetName="radioButtonBorder" Value="0.5"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="radioButtonBorder" Value="{DynamicResource DisabledColor}"/>
+                            <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="{DynamicResource DisabledColor}"/>
+                            <Setter Property="Fill" TargetName="optionMark" Value="{DynamicResource DisabledColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="{DynamicResource SecondaryDarkColor}"/>
+                            <Setter Property="Fill" TargetName="optionMark" Value="{DynamicResource SecondaryColor}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Opacity" TargetName="optionMark" Value="1"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter Property="Opacity" TargetName="optionMark" Value="0.56"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region Tooltip-->
+    <Style x:Key="{x:Type ToolTip}" TargetType="{x:Type ToolTip}">
+        <Style.Setters>
+            <Setter Property="Foreground" Value="{DynamicResource TextOnLightColor}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}" />
+            <Setter Property="Background" Value="{DynamicResource AlternativeBackgroundColor}" />
+            <Setter Property="FontFamily" Value="{DynamicResource FontFamilyMain}"/>
+            <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Margin" Value="8"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="{DynamicResource ShadowColor}" />
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region Popup-->
+    <Style x:Key="TextPopup" TargetType="{x:Type Popup}">
+        <Style.Setters>
+            <Setter Property="Placement" Value="Top"/>
+            <Setter Property="AllowsTransparency" Value="True"/>
+            <Setter Property="PopupAnimation" Value="Fade"/>
+            <Setter Property="StaysOpen" Value="False"/>
+            <Setter Property="Child">
+                <Setter.Value>
+                    <TextBlock Background="Transparent" Foreground="{DynamicResource TextOnLightColor}" FontSize="{DynamicResource FontSizeBig}" FontFamily="{DynamicResource FontFamilyHighlight}">
+                        <TextBlock.Effect>
+                            <DropShadowEffect ShadowDepth="1" BlurRadius="2" Color="{DynamicResource ShadowColor}" />
+                        </TextBlock.Effect>
+                    </TextBlock>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region ListBoxSimple-->
+    <Style x:Key="ListBoxSimpleItem" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextOnLightColor}"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeSmall}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="Bd"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            Padding="2,4,0,2"
+                            SnapsToDevicePixels="true">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected"
+                                            Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background"
+                                    TargetName="Bd"
+                                    Value="{DynamicResource SecondaryColor}" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ListBoxSimple" TargetType="{x:Type ListBox}">
+        <Setter Property="Background" Value="{DynamicResource AlternativeBackgroundColor}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource PrimaryColor}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+        <Setter Property="ItemContainerStyle" Value="{DynamicResource ListBoxSimpleItem}"/>
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+        </Style.Resources>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region GridDash-->
+    <Style x:Key="GridDash" TargetType="{x:Type Grid}">
+        <Style.Setters>
+            <Setter Property="Background" Value="{DynamicResource AlternativeBackgroundColor}"/>
+            <Setter Property="UseLayoutRounding" Value="True"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect ShadowDepth="0" BlurRadius="0" Color="{DynamicResource ShadowColor}" />
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Grid.Effect">
+                    <Setter.Value>
+                        <DropShadowEffect ShadowDepth="0" BlurRadius="16" Color="{DynamicResource ShadowColor}" Opacity="0.4"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region ContextMenu-->
+    <Style TargetType="{x:Type ContextMenu}">
+        <Setter Property="SnapsToDevicePixels"
+          Value="True" />
+        <Setter Property="OverridesDefaultStyle"
+          Value="True" />
+        <Setter Property="Grid.IsSharedSizeScope"
+          Value="true" />
+        <Setter Property="HasDropShadow"
+          Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <Border x:Name="Border"
+                Background="{DynamicResource AlternativeBackgroundColor}"
+                BorderThickness="2" BorderBrush="{DynamicResource PrimaryColor}">
+                      
+                        <StackPanel IsItemsHost="True"
+                      KeyboardNavigation.DirectionalNavigation="Cycle" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow"
+                   Value="true">
+                            <Setter TargetName="Border"
+                    Property="Padding"
+                    Value="0,3,0,3" />
+                            <Setter TargetName="Border"
+                    Property="CornerRadius"
+                    Value="0" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type MenuItem}">
+        <Setter Property="Background" Value="{DynamicResource AlternativeBackgroundColor}"/>
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.MenuHighlightBrushKey}" Color="Transparent" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="Transparent" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.HotTrackBrushKey}" Color="Transparent" />
+        </Style.Resources>
+        <!--<Setter Property="Template" Value="{StaticResource MenuItemTemplate}"/>-->
+    </Style>
+
+    <!--<ControlTemplate x:Key="MenuItemTemplate" TargetType="{x:Type MenuItem}">
+        <Grid Background="{TemplateBinding Background}">
+            <MenuItem Header="{TemplateBinding Header}" />
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource PrimaryLightColor}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource PrimaryLightColor}"/>
+                <Setter Property="Cursor" Value="Hand"></Setter>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="{DynamicResource PrimaryDarkColor}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource PrimaryDarkColor}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>-->
+
+    <!--#endregion-->
+
+</ResourceDictionary>
