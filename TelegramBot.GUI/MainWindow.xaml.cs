@@ -14,7 +14,6 @@ using System.Windows.Media.Effects;
 using System.Windows.Navigation;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.ReplyMarkups;
 using TelegramBot.DataConnection;
 
 namespace TelegramBot.GUI
@@ -25,7 +24,6 @@ namespace TelegramBot.GUI
     public partial class MainWindow : Window
     {
         //Для скачивания фалов из телеграма
-        public static TelegramBotClient Bot { get; private set; }
         public volatile bool IsStop;
 
         public MainWindow()
@@ -34,11 +32,10 @@ namespace TelegramBot.GUI
             if (!(Process.GetProcesses().Any(proc => proc.ProcessName == "TelegramBot")))
             {
                 Process.Start("TelegramBot.exe");
-                Thread.Sleep(2000);
             }         
             Settings.Load();
             BotSettings.Load();
-            Bot=new TelegramBotClient(BotSettings.Current.APIKey);
+            App.Bot=new TelegramBotClient(BotSettings.Current.APIKey);
             InitializeComponent();
 
             foreach (var com in BotSettings.Current.AvailableCommands)
@@ -80,7 +77,6 @@ namespace TelegramBot.GUI
             if (!(Process.GetProcesses().Any(proc => proc.ProcessName == "TelegramBot")))
             {
                 Process.Start("TelegramBot.exe");
-                Thread.Sleep(2000);
                 Message.Show("Бот упал и был перезапущен");
             }
   

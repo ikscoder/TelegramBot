@@ -817,6 +817,30 @@ namespace TelegramBot.DataConnection
             }).ToList();
         }
 
+        public async Task<PhotoSize> GetPhotoFromMessageAsync(Message message)
+        {
+            try
+            {
+                var reader = await new OdbcCommand($"SELECT file_id, width, height, file_size FROM telegram_photos where messageid={message.MessageId} and width=320;", Connection).ExecuteReaderAsync();
+                if (!reader.Read()) return null;
+                return new PhotoSize
+                {
+                    FileId = reader[0].ToString(),
+                    Width = int.Parse(reader[1].ToString()),
+                    Height = int.Parse(reader[2].ToString()),
+                    FileSize = string.IsNullOrWhiteSpace(reader[3].ToString())?0:int.Parse(reader[3].ToString())
+                };
+            }
+            catch (Exception e)
+            {
+                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "GetPhotoFromMessageAsync: " + e.Message));
+#if DEBUG
+                throw;
+#endif
+                return null;
+            }
+        }
+
         #endregion
     }
 }

@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using ImageProcessor.Plugins.WebP.Imaging.Formats;
+using TelegramBot.DataConnection;
 
 namespace TelegramBot.GUI
 {
@@ -16,32 +16,30 @@ namespace TelegramBot.GUI
         public Telegram.Bot.Types.Message Message { get; }
         public MessageInDialogView(Telegram.Bot.Types.Message message, bool isYour)
         {
-            Message = message;   
+            Message = message;
             InitializeComponent();
-            if (message.Sticker?.FileId != null)
+            var photoid = Data.Current.GetPhotoFromMessageAsync(message).Result;
+            if (photoid != null)
             {
-                MessageLabel.Content = "{Стикер}";
                 try
                 {
-                    var sticker = MainWindow.Bot.GetFileAsync(message.Sticker.FileId).Result;
-                    sticker.FileStream.Seek(0, SeekOrigin.Begin);
-                    using (var ms=new MemoryStream())
-                    {
-                        var webp = new WebPFormat().Load(sticker.FileStream);   
-                        webp.Save(ms, ImageFormat.MemoryBmp);
-                        ms.Position = 0;
-                        var img = new BitmapImage();
-                        img.BeginInit();
-                        img.StreamSource = ms;
-                        img.EndInit();
-                        MessageLabel.Content = new Image { Source = img };
-                    }
+                    var photo = App.Bot.GetFileAsync(photoid.FileId).Result;
+
+                    var img = new BitmapImage();
+                    img.BeginInit();
+                    img.StreamSource = photo.FileStream;
+                    img.EndInit();
+                    MessageLabel.Content = new Image { Source = img };
 
                 }
                 catch (Exception e)
                 {
                     GUI.Message.Show(e.Message + e.InnerException?.Message);
                 }
+            }
+            if (!string.IsNullOrWhiteSpace(message.Sticker?.FileId))
+            {
+                MessageLabel.Content = "{Стикер}";
             }
             if (isYour)
             {

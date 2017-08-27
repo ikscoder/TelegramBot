@@ -59,7 +59,8 @@ namespace TelegramBot.GUI
                     if(mes?.From?.Id == null)continue;
                     ChatPanel.Children.Add(new MessageInDialogView(mes, mes.From.Id == Bot?.Id));
                 }
-                ChatScroll.ScrollToEnd();        
+                if(messages.Any())
+                    ChatScroll.ScrollToEnd();        
             }
             catch(Exception e)
             {
