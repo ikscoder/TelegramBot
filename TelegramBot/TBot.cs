@@ -57,7 +57,7 @@ namespace TelegramBot
 
         private static void BotOnReceiveError(object sender, ReceiveErrorEventArgs receiveErrorEventArgs)
         {
-            Log.Add(new Log.LogMessage(Log.MessageType.ERROR, receiveErrorEventArgs.ApiRequestException.Message));
+            //Log.Add(new Log.LogMessage(Log.MessageType.ERROR, receiveErrorEventArgs.ApiRequestException.Message));
         }
 
 
@@ -68,7 +68,7 @@ namespace TelegramBot
 
             try
             {
-                if (message.Text==null&&(await Data.Current.IsDialogWhithManagerOpenedAsync(message.Chat)))
+                if (message.Text==null&&(await Data.Current.IsDialogWhithManagerOpenedAsync(message.Chat) || await Data.Current.IsAutorizedAsync(message.Chat)))
                 {
                     Data.Current.InsertMessage(message);
                 }
@@ -238,13 +238,13 @@ namespace TelegramBot
                 }
                 else
                 {
-                    if(!(await Data.Current.IsDialogWhithManagerOpenedAsync(message.Chat))) { 
+                    if(!(await Data.Current.IsDialogWhithManagerOpenedAsync(message.Chat))&&!await Data.Current.IsAutorizedAsync(message.Chat)) { 
                         await Bot.SendTextMessageAsync(message.Chat.Id, _help + (!await Data.Current.IsAutorizedAsync(message.Chat) ? "" : _helpManager), replyMarkup: new ReplyKeyboardRemove());
                     }
                     else
                     {
-                        Data.Current.InsertMessage(message);
-                    }
+                        Data.Current.InsertMessage(message); 
+                    }                    
                 }
             }
             catch (Exception e)

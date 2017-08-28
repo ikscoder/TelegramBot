@@ -3,6 +3,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using TelegramBot.DataConnection;
 
@@ -29,7 +30,7 @@ namespace TelegramBot.GUI
                     img.BeginInit();
                     img.StreamSource = photo.FileStream;
                     img.EndInit();
-                    MessageLabel.Content = new Image { Source = img };
+                    MessageLabel.Content = new Image { Source = img,Stretch = Stretch.Uniform,MaxWidth = 400};
 
                 }
                 catch (Exception e)

@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Data - sqlite.cs" />
+    <None Include="Data - postgres odbc.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Opportunity.cs" />

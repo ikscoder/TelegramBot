@@ -12,7 +12,7 @@ using Telegram.Bot.Types.Enums;
 
 namespace TelegramBot.DataConnection
 {
-    public class Dataold : IDisposable
+    public class Data : IDisposable
     {
 
         #region Main
@@ -26,7 +26,7 @@ namespace TelegramBot.DataConnection
                 connection.ConnectionString = connectionString;
                 connection.Open();
                 connection.Close();
-                Current=new Dataold(connectionString);
+                Current=new Data(connectionString);
                 return true;
             }
             catch (Exception e)
@@ -37,11 +37,11 @@ namespace TelegramBot.DataConnection
 
         }
 
-        public static Dataold Current { get; set; }
+        public static Data Current { get; set; }
 
         private SQLiteConnection Connection { get; }
 
-        private Dataold(string connectionString)
+        private Data(string connectionString)
         {
             var factory = (SQLiteFactory)DbProviderFactories.GetFactory("System.Data.SQLite");
             Connection = (SQLiteConnection)factory.CreateConnection();
