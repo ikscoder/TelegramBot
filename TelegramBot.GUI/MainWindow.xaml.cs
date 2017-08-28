@@ -28,7 +28,7 @@ namespace TelegramBot.GUI
 
         public MainWindow()
         {
-            if (!Directory.Exists("Files")) Directory.CreateDirectory("Files");
+            //if (!Directory.Exists("Files")) Directory.CreateDirectory("Files");
             if (!(Process.GetProcesses().Any(proc => proc.ProcessName == "TelegramBot")))
             {
                 Process.Start("TelegramBot.exe");
@@ -171,8 +171,8 @@ namespace TelegramBot.GUI
         private async void SendAllManagers_Click(object sender, RoutedEventArgs e)
         {
             if (CheckManager.IsChecked != true && CheckClient.IsChecked != true)return;
-            string richText = new TextRange(AllManText.Document.ContentStart, AllManText.Document.ContentEnd).Text.Trim();
-            if (string.IsNullOrEmpty(richText))return;
+            
+            if (string.IsNullOrEmpty(TextMessage.Text?.Trim()))return;
 
             var chats = new List<Chat>();
             if(CheckManager.IsChecked==true)
@@ -188,11 +188,11 @@ namespace TelegramBot.GUI
                             Date = DateTime.Now,
                             Chat = chat,
                             From = await Data.Current.GetBotAsync(),
-                            Text = richText
+                            Text = TextMessage.Text?.Trim()
                         }, false);     
                     }
-            
-            AllManText.Document = new FlowDocument();
+
+            TextMessage.Text = null;
         }
 
         private void ManagersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -223,6 +223,11 @@ namespace TelegramBot.GUI
                 }
             }
             BotSettings.Save();
+        }
+
+        private void window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 

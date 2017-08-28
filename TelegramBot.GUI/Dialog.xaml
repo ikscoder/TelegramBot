@@ -15,6 +15,11 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                <Button x:Name="BAlwaysOnTop" RenderTransformOrigin="0.5,0.5" Width="24" Style="{DynamicResource TranspButton}" Margin="0,0,35,0" VerticalAlignment="Top" Height="40" HorizontalAlignment="Right" Click="BAlwaysOnTop_Click" Grid.Column="3">
+                    <Border>
+                        <Path Data="{StaticResource DrawingPin}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
+                    </Border>
+                </Button>
                 <Button x:Name="BExit" Width="24" Style="{DynamicResource TranspButton}" Margin="0,0,5,0" VerticalAlignment="Top" Height="40" HorizontalAlignment="Right" Click="BExit_Click" Grid.Column="3">
                     <Border>
                         <Path Data="{StaticResource Exit}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
@@ -33,7 +38,9 @@
                 <Button Content="Отправить" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="93" Height="38" Click="Send_Click"/>
                 <MediaElement x:Name="Media" Visibility="Hidden" LoadedBehavior="Manual" Source="Resources/alert.wav" Volume="0.5" />
             </Grid>
-            <TextBox x:Name="TextMessage" Height="37" Margin="10,0,111,10" Text="" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom"/>
+            <Border Margin="10,449,111,10" Background="{DynamicResource AlternativeBackgroundColor}" BorderBrush="{DynamicResource PrimaryColor}" BorderThickness="1">
+                <TextBox x:Name="TextMessage" Text="" VerticalContentAlignment="Bottom" AcceptsReturn="True" AcceptsTab="True" Margin="0" SpellCheck.IsEnabled="True"/>
+            </Border>
         </Grid>
     </Border>
 </Window>

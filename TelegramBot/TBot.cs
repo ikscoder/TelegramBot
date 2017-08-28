@@ -100,6 +100,7 @@ namespace TelegramBot
                     {
                         await Bot.SendTextMessageAsync(message.Chat.Id, "Нет офисов.", replyMarkup: new ReplyKeyboardRemove());
                     }
+
                     
                 }
 

@@ -27,7 +27,7 @@ namespace TelegramBot.DataConnection
                 connection.ConnectionString = connectionString;
                 connection.Open();
                 connection.Close();
-                Current=new Data(connectionString);
+                Current = new Data(connectionString);
                 return true;
             }
             catch (Exception e)
@@ -70,7 +70,7 @@ namespace TelegramBot.DataConnection
             }
             catch (Exception e)
             {
-                Log.Add(new Log.LogMessage(Log.MessageType.ERROR,"InsertOrUpdateCurrentBot: " + e.Message));
+                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "InsertOrUpdateCurrentBot: " + e.Message));
 #if DEBUG
                 throw;
 #endif
@@ -84,11 +84,11 @@ namespace TelegramBot.DataConnection
             {
                 var test = new OdbcCommand($"select * from telegram_chats where id={chat.Id}", Connection);
                 bool isUpdate = test.ExecuteReader().Read();
-                var command = new OdbcCommand {Connection = Connection};
+                var command = new OdbcCommand { Connection = Connection };
                 if (isUpdate)
                 {
                     command.CommandText =
-                        $"UPDATE telegram_chats SET type = '{chat.Type}', title = '{chat.Title?.Replace("\\", "\\\\").Replace("\'","\\\'") }', username = '{chat.Username?.Replace("\\", "\\\\").Replace("\'","\\\'")}', first_name = '{chat.FirstName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', last_name = '{chat.LastName?.Replace("\\", "\\\\").Replace("\'","\\\'")}'";
+                        $"UPDATE telegram_chats SET type = '{chat.Type}', title = '{chat.Title?.Replace("\'", "\'\'") }', username = '{chat.Username?.Replace("\'", "\'\'")}', first_name = '{chat.FirstName?.Replace("\'", "\'\'")}', last_name = '{chat.LastName?.Replace("\'", "\'\'")}'".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'");
                     if (isClosed.HasValue)
                         command.CommandText += $", is_closed = {isClosed}";
                     if (isDialogOpened.HasValue)
@@ -97,7 +97,7 @@ namespace TelegramBot.DataConnection
                 }
                 else
                 {
-                    command.CommandText = $"INSERT INTO telegram_chats (id ,type ,title ,username ,first_name ,last_name ,is_closed, is_dialog_opened) VALUES ({chat.Id}, '{chat.Type}', '{chat.Title?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{chat.Username?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{chat.FirstName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{chat.LastName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {isClosed??false}, {isDialogOpened??false});";
+                    command.CommandText = $"INSERT INTO telegram_chats (id ,type ,title ,username ,first_name ,last_name ,is_closed, is_dialog_opened) VALUES ({chat.Id}, '{chat.Type}', '{chat.Title?.Replace("\'", "\'\'")}', '{chat.Username?.Replace("\'", "\'\'")}', '{chat.FirstName?.Replace("\'", "\'\'")}', '{chat.LastName?.Replace("\'", "\'\'")}', {isClosed ?? false}, {isDialogOpened ?? false});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'");
                 }
                 await command.ExecuteNonQueryAsync();
             }
@@ -118,17 +118,17 @@ namespace TelegramBot.DataConnection
                 var test = new OdbcCommand($"select * from telegram_users where id={user.Id};", Connection);
                 var command = new OdbcCommand()
                 {
-                    Connection= Connection,
+                    Connection = Connection,
                     CommandText =
                         test.ExecuteReader().Read()
-                            ? $"UPDATE telegram_users SET first_name = '{user.FirstName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', last_name = '{user.LastName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', username = '{user.Username?.Replace("\\", "\\\\").Replace("\'","\\\'")}' WHERE id = {user.Id};"
-                            : $"INSERT INTO telegram_users (id, first_name, last_name, username) VALUES ({user.Id}, '{user.FirstName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{user.LastName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{user.Username?.Replace("\\", "\\\\").Replace("\'","\\\'")}');"
+                            ? $"UPDATE telegram_users SET first_name = '{user.FirstName?.Replace("\'", "\'\'")}', last_name = '{user.LastName?.Replace("\'", "\'\'")}', username = '{user.Username?.Replace("\'", "\'\'")}' WHERE id = {user.Id};".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'")
+                            : $"INSERT INTO telegram_users (id, first_name, last_name, username) VALUES ({user.Id}, '{user.FirstName?.Replace("\'", "\'\'")}', '{user.LastName?.Replace("\'", "\'\'")}', '{user.Username?.Replace("\'", "\'\'")}');".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'")
                 };
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
             {
-                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, $"InsertOrUpdateUser: {e.Message}" ));
+                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, $"InsertOrUpdateUser: {e.Message}"));
 #if DEBUG
                 throw;
 #endif
@@ -145,11 +145,11 @@ namespace TelegramBot.DataConnection
                 var test = new OdbcCommand($"select * from telegram_clients where telegramuserid={user.Id}", Connection);
                 var command = new OdbcCommand()
                 {
-                    Connection= Connection,
+                    Connection = Connection,
                     CommandText =
                         (test.ExecuteReader().Read() && contact != null)
-                            ? $"UPDATE telegram_clients SET phone = '{contact?.PhoneNumber?.Replace("\\", "\\\\").Replace("\'","\\\'")}' WHERE telegramuserid = {user.Id};"
-                            : $"INSERT INTO telegram_clients (phone,telegramuserid) VALUES('{contact?.PhoneNumber?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {user.Id});"
+                            ? $"UPDATE telegram_clients SET phone = '{contact?.PhoneNumber?.Replace("\'", "\'\'")}' WHERE telegramuserid = {user.Id};".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'")
+                            : $"INSERT INTO telegram_clients (phone,telegramuserid) VALUES('{contact?.PhoneNumber?.Replace("\'", "\'\'")}', {user.Id});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'")
                 };
                 await command.ExecuteNonQueryAsync();
             }
@@ -169,7 +169,7 @@ namespace TelegramBot.DataConnection
             {
                 var reader = await new OdbcCommand($"SELECT id FROM telegram_clients where telegramuserid={user.Id};", Connection).ExecuteReaderAsync();
                 if (!reader.Read()) return;
-                var command = new OdbcCommand($"INSERT INTO opportunities (clientid,description) VALUES({reader[0]}, '{description?.Replace("\\", "\\\\").Replace("\'","\\\'")}');", Connection);
+                var command = new OdbcCommand($"INSERT INTO opportunities (clientid,description) VALUES({reader[0]}, '{description?.Replace("\'", "\'\'")}');".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -267,7 +267,7 @@ namespace TelegramBot.DataConnection
             }
             catch (Exception e)
             {
-                Log.Add(new Log.LogMessage(Log.MessageType.ERROR,  "IsChatClosedAsync: " + e.Message));
+                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "IsChatClosedAsync: " + e.Message));
 #if DEBUG
                 throw;
 #endif
@@ -322,12 +322,12 @@ namespace TelegramBot.DataConnection
             if (audio == null) return;
             try
             {
-                var command = new OdbcCommand($"INSERT INTO telegram_audios (file_id, duration, performer, title, mime_type, file_size) VALUES ('{audio.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {audio.Duration}, '{audio.Performer?.Replace("\\", "\\\\").Replace("\'", "\\\'")}', '{audio.Title?.Replace("\\", "\\\\").Replace("\'", "\\\'")}', '{audio.MimeType?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {audio.FileSize});", Connection);
+                var command = new OdbcCommand($"INSERT INTO telegram_audios (file_id, duration, performer, title, mime_type, file_size) VALUES ('{audio.FileId?.Replace("\'", "\'\'")}', {audio.Duration}, '{audio.Performer?.Replace("\'", "\'\'")}', '{audio.Title?.Replace("\'", "\'\'")}', '{audio.MimeType?.Replace("\'", "\'\'")}', {audio.FileSize});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
             {
-                Log.Add(new Log.LogMessage(Log.MessageType.ERROR,  "InsertAudio: " + e.Message));
+                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "InsertAudio: " + e.Message));
 #if DEBUG
                 throw;
 #endif
@@ -340,12 +340,12 @@ namespace TelegramBot.DataConnection
             if (document == null) return;
             try
             {
-                var command = new OdbcCommand($"INSERT INTO telegram_documents (file_id, file_name, mime_type, file_size) VALUES ('{document.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{document.FileName?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{document.MimeType?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {document.FileSize});", Connection);
+                var command = new OdbcCommand($"INSERT INTO telegram_documents (file_id, file_name, mime_type, file_size) VALUES ('{document.FileId?.Replace("\'", "\'\'")}', '{document.FileName?.Replace("\'", "\'\'")}', '{document.MimeType?.Replace("\'", "\'\'")}', {document.FileSize});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
             {
-                Log.Add(new Log.LogMessage(Log.MessageType.ERROR,  "InsertDocument: " + e.Message));
+                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "InsertDocument: " + e.Message));
 #if DEBUG
                 throw;
 #endif
@@ -364,7 +364,7 @@ namespace TelegramBot.DataConnection
             }
             catch (Exception e)
             {
-                Log.Add(new Log.LogMessage(Log.MessageType.ERROR,  "InsertLocation: " + e.Message));
+                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "InsertLocation: " + e.Message));
 #if DEBUG
                 throw;
 #endif
@@ -379,12 +379,12 @@ namespace TelegramBot.DataConnection
             {
                 try
                 {
-                    var command = new OdbcCommand($"INSERT INTO telegram_messageentities (message_id, type, \"offset\", length, url) VALUES ({message.MessageId},'{entity.Type}', {entity.Offset}, {entity.Length},'{entity.Url?.Replace("\\", "\\\\").Replace("\'","\\\'")}');", Connection);
+                    var command = new OdbcCommand($"INSERT INTO telegram_messageentities (message_id, type, \"offset\", length, url) VALUES ({message.MessageId},'{entity.Type}', {entity.Offset}, {entity.Length},'{entity.Url?.Replace("\'", "\'\'")}');".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
                     await command.ExecuteNonQueryAsync();
                 }
                 catch (Exception e)
                 {
-                    Log.Add(new Log.LogMessage(Log.MessageType.ERROR,  "InsertMessageEntities: " + e.Message));
+                    Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "InsertMessageEntities: " + e.Message));
 #if DEBUG
                     throw;
 #endif
@@ -401,12 +401,12 @@ namespace TelegramBot.DataConnection
             {
                 try
                 {
-                    var command = new OdbcCommand($"INSERT INTO telegram_photos (messageid, file_id, width, height, file_size) VALUES ({message.MessageId}, '{photo.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {photo.Width}, {photo.Height},{photo.FileSize});", Connection);
+                    var command = new OdbcCommand($"INSERT INTO telegram_photos (messageid, file_id, width, height, file_size) VALUES ({message.MessageId}, '{photo.FileId?.Replace("\'", "\'\'")}', {photo.Width}, {photo.Height},{photo.FileSize});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
                     await command.ExecuteNonQueryAsync();
                 }
                 catch (Exception e)
                 {
-                    Log.Add(new Log.LogMessage(Log.MessageType.ERROR,  "InsertPhotos: " + e.Message));
+                    Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "InsertPhotos: " + e.Message));
 #if DEBUG
                     throw;
 #endif
@@ -420,12 +420,12 @@ namespace TelegramBot.DataConnection
             if (sticker == null) return;
             try
             {
-                var command = new OdbcCommand($"INSERT INTO telegram_stickers ( file_id, width, height, file_size) VALUES ('{sticker.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {sticker.Width}, {sticker.Height},{sticker.FileSize});", Connection);
+                var command = new OdbcCommand($"INSERT INTO telegram_stickers ( file_id, width, height, file_size) VALUES ('{sticker.FileId?.Replace("\'", "\'\'")}', {sticker.Width}, {sticker.Height},{sticker.FileSize});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
             {
-                Log.Add(new Log.LogMessage(Log.MessageType.ERROR,  "InsertSticker: " + e.Message));
+                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "InsertSticker: " + e.Message));
 #if DEBUG
                 throw;
 #endif
@@ -437,12 +437,12 @@ namespace TelegramBot.DataConnection
             if (message?.Venue == null) return;
             try
             {
-                var command = new OdbcCommand($"INSERT INTO telegram_venues ( message_id, latitude, longitude, title, address, foursquare_id) VALUES ({message.MessageId}, {message.Venue.Location.Latitude}, {message.Venue.Location.Longitude}, '{message.Venue.Title?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{message.Venue.Address?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{message.Venue.FoursquareId?.Replace("\\", "\\\\").Replace("\'","\\\'")}');", Connection);
+                var command = new OdbcCommand($"INSERT INTO telegram_venues ( message_id, latitude, longitude, title, address, foursquare_id) VALUES ({message.MessageId}, {message.Venue.Location.Latitude}, {message.Venue.Location.Longitude}, '{message.Venue.Title?.Replace("\'", "\'\'")}', '{message.Venue.Address?.Replace("\'", "\'\'")}', '{message.Venue.FoursquareId?.Replace("\'", "\'\'")}');".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
             {
-                Log.Add(new Log.LogMessage(Log.MessageType.ERROR,  "InsertVenue: " + e.Message));
+                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "InsertVenue: " + e.Message));
 #if DEBUG
                 throw;
 #endif
@@ -453,14 +453,14 @@ namespace TelegramBot.DataConnection
         {
             if (video == null) return;
 
-            var command = new OdbcCommand($"INSERT INTO telegram_videos ( file_id, width, height, duration, mime_type, file_size) VALUES ( '{video.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {video.Width}, {video.Height}, {video.Duration}, '{video.MimeType?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {video.FileSize});", Connection);
+            var command = new OdbcCommand($"INSERT INTO telegram_videos ( file_id, width, height, duration, mime_type, file_size) VALUES ( '{video.FileId?.Replace("\'", "\'\'")}', {video.Width}, {video.Height}, {video.Duration}, '{video.MimeType?.Replace("\'", "\'\'")}', {video.FileSize});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
             try
             {
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
             {
-                Log.Add(new Log.LogMessage(Log.MessageType.ERROR,  "InsertVideo: " + e.Message));
+                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "InsertVideo: " + e.Message));
 #if DEBUG
                 throw;
 #endif
@@ -473,12 +473,12 @@ namespace TelegramBot.DataConnection
 
             try
             {
-                var command = new OdbcCommand($"INSERT INTO telegram_voices ( file_id, duration, mime_type, file_size) VALUES ( '{voice.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {voice.Duration}, '{voice.MimeType?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {voice.FileSize});", Connection);
+                var command = new OdbcCommand($"INSERT INTO telegram_voices ( file_id, duration, mime_type, file_size) VALUES ( '{voice.FileId?.Replace("\'", "\'\'")}', {voice.Duration}, '{voice.MimeType?.Replace("\'", "\'\'")}', {voice.FileSize});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
             {
-                Log.Add(new Log.LogMessage(Log.MessageType.ERROR,  "InsertVoice: " + e.Message));
+                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "InsertVoice: " + e.Message));
 #if DEBUG
                 throw;
 #endif
@@ -504,10 +504,10 @@ namespace TelegramBot.DataConnection
                 InsertVenue(message);
                 InsertVideo(message.Video);
                 InsertVoice(message.Voice);
-                if(message.ForwardFrom!=null)InsertOrUpdateUser(message.ForwardFrom);
-                if(message.ReplyToMessage!=null)InsertMessage(message.ReplyToMessage);
-                if(message.PinnedMessage!=null)InsertMessage(message.PinnedMessage);
-                var command = new OdbcCommand($"INSERT INTO  telegram_messages (message_id, from_id, date, chat_id, text, forward_from, forward_date, reply_to_message_id, pinned_message_id, document_id, caption, audio_id, video_id, voice_id, sticker_id, issended) VALUES({message.MessageId}, {message.From?.Id.ToString() ?? "NULL"}, {message.Date.ToUnixTime()}, {message.Chat.Id}, '{message.Text?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {message.ForwardFrom?.Id.ToString() ?? "NULL"}, {message.ForwardDate?.ToUnixTime().ToString() ?? "NULL"}, {message.ReplyToMessage?.MessageId.ToString() ?? "NULL"}, {message.PinnedMessage?.MessageId.ToString() ?? "NULL"}, '{message.Document?.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{message.Caption?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{message.Audio?.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{message.Video?.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{message.Voice?.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', '{message.Sticker?.Thumb.FileId?.Replace("\\", "\\\\").Replace("\'","\\\'")}', {isSended??true});", Connection);
+                if (message.ForwardFrom != null) InsertOrUpdateUser(message.ForwardFrom);
+                if (message.ReplyToMessage != null) InsertMessage(message.ReplyToMessage);
+                if (message.PinnedMessage != null) InsertMessage(message.PinnedMessage);
+                var command = new OdbcCommand($"INSERT INTO  telegram_messages (message_id, from_id, date, chat_id, text, forward_from, forward_date, reply_to_message_id, pinned_message_id, document_id, caption, audio_id, video_id, voice_id, sticker_id, issended) VALUES({message.MessageId}, {message.From?.Id.ToString() ?? "NULL"}, {message.Date.ToUnixTime()}, {message.Chat.Id}, '{message.Text?.Replace("\'", "\'\'")}', {message.ForwardFrom?.Id.ToString() ?? "NULL"}, {message.ForwardDate?.ToUnixTime().ToString() ?? "NULL"}, {message.ReplyToMessage?.MessageId.ToString() ?? "NULL"}, {message.PinnedMessage?.MessageId.ToString() ?? "NULL"}, '{message.Document?.FileId?.Replace("\'", "\'\'")}', '{message.Caption?.Replace("\'", "\'\'")}', '{message.Audio?.FileId?.Replace("\'", "\'\'")}', '{message.Video?.FileId?.Replace("\'", "\'\'")}', '{message.Voice?.FileId?.Replace("\'", "\'\'")}', '{message.Sticker?.Thumb.FileId?.Replace("\'", "\'\'")}', {isSended ?? true});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
 
                 await command.ExecuteNonQueryAsync();
             }
@@ -542,7 +542,7 @@ namespace TelegramBot.DataConnection
             }
             catch (Exception e)
             {
-                Log.Add(new Log.LogMessage(Log.MessageType.ERROR,  "GetUnsendedMessages: " + e.Message));
+                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "GetUnsendedMessages: " + e.Message));
 #if DEBUG
                 throw;
 #endif
@@ -557,10 +557,10 @@ namespace TelegramBot.DataConnection
             if (string.IsNullOrEmpty(token) || chat == null) return false;
             try
             {
-                var command = new OdbcCommand($"SELECT managerid, telegramchatid, token FROM telegram_managers where token='{token.Replace("\\", "\\\\").Replace("\'","\\\'")}';", Connection);
+                var command = new OdbcCommand($"SELECT managerid, telegramchatid, token FROM telegram_managers where token='{token.Replace("\'", "\'\'")}';".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
                 var reader = await command.ExecuteReaderAsync();
                 if (!reader.Read()) return false;
-                var updcommand = new OdbcCommand($"UPDATE telegram_managers SET telegramchatid ={chat.Id}, token=null where token='{token?.Replace("\\", "\\\\").Replace("\'","\\\'")}'; ", Connection);
+                var updcommand = new OdbcCommand($"UPDATE telegram_managers SET telegramchatid ={chat.Id}, token=null where token='{token?.Replace("\'", "\'\'")}'; ".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
                 await updcommand.ExecuteNonQueryAsync();
                 return true;
             }
@@ -579,7 +579,7 @@ namespace TelegramBot.DataConnection
             if (string.IsNullOrEmpty(token)) return;
             try
             {
-                var command = new OdbcCommand($"UPDATE telegram_managers SET telegramchatid = NULL, token ='{token?.Replace("\\", "\\\\").Replace("\'","\\\'")}' WHERE managerid={managerId}; ", Connection);
+                var command = new OdbcCommand($"UPDATE telegram_managers SET telegramchatid = NULL, token ='{token?.Replace("\'", "\'\'")}' WHERE managerid={managerId}; ".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -637,19 +637,39 @@ namespace TelegramBot.DataConnection
 
         public async Task<List<string>> GetTablesAsync()
         {
-            var tables = new DataTable();
-            try
-            {
-                tables.Load(await new OdbcCommand("SELECT table_name FROM information_schema.tables where table_schema=\'public\' ORDER BY table_name;", Connection).ExecuteReaderAsync());
-            }
-            catch (Exception e)
-            {
-                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "GetTablesAsync: " + e.Message));
-#if DEBUG
-                throw;
-#endif
-            }
-            return Enumerable.Select(tables.AsEnumerable(), row => row[0].ToString()).ToList();
+            //            var tables = new DataTable();
+            //            try
+            //            {
+            //                tables.Load(await new OdbcCommand("SELECT table_name FROM information_schema.tables where table_schema=\'public\' ORDER BY table_name;", Connection).ExecuteReaderAsync());
+            //            }
+            //            catch (Exception e)
+            //            {
+            //                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "GetTablesAsync: " + e.Message));
+            //#if DEBUG
+            //                throw;
+            //#endif
+            //            }
+            //            return Enumerable.Select(tables.AsEnumerable(), row => row[0].ToString()).ToList();
+            return new List<string>
+                            {
+                             "opportunities",
+                             "telegram_audios",
+                             "telegram_chats",
+                             "telegram_clients",
+                             "telegram_currentbot",
+                             "telegram_documents",
+                             "telegram_locations",
+                             "telegram_managers",
+                             "telegram_messageentities",
+                             "telegram_messages",
+                             "telegram_offices",
+                             "telegram_photos",
+                             "telegram_stickers",
+                             "telegram_users",
+                             "telegram_venues",
+                             "telegram_videos",
+                             "telegram_voices",
+                            };
         }
 
         public async Task<DataTable> GetTableByNameAsync(string name)
@@ -828,7 +848,7 @@ namespace TelegramBot.DataConnection
                     FileId = reader[0].ToString(),
                     Width = int.Parse(reader[1].ToString()),
                     Height = int.Parse(reader[2].ToString()),
-                    FileSize = string.IsNullOrWhiteSpace(reader[3].ToString())?0:int.Parse(reader[3].ToString())
+                    FileSize = string.IsNullOrWhiteSpace(reader[3].ToString()) ? 0 : int.Parse(reader[3].ToString())
                 };
             }
             catch (Exception e)

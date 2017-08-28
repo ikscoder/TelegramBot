@@ -145,6 +145,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BotSettings.cs" />
+    <Compile Include="Converters.cs" />
     <Compile Include="Dialog.xaml.cs" />
     <Compile Include="MainWindow.xaml.cs" />
     <Compile Include="MessageInDialogView.xaml.cs" />

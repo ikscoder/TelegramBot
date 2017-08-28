@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 using Telegram.Bot.Types;
 using TelegramBot.DataConnection;
 
@@ -66,6 +67,12 @@ namespace TelegramBot.GUI
             {
                 //Message.Show(e.Message);
             }
+        }
+
+        private void BAlwaysOnTop_Click(object sender, RoutedEventArgs e)
+        {
+            BAlwaysOnTop.RenderTransform = Topmost ? null : new RotateTransform { Angle = -45 };
+            Topmost = !Topmost;
         }
 
         private void BExit_Click(object sender, RoutedEventArgs e)
