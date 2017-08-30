@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="TelegramBot.GUI.ChatView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TelegramBot.GUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="40" d:DesignWidth="200">
+    <Border Background="{DynamicResource PrimaryColor}" CornerRadius="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="2" x:Name="Label" Content="Label" Foreground="{DynamicResource TextOnDarkColor}" VerticalContentAlignment="Center"/>
+            <Path Grid.Column="3" x:Name="LabelPath" Data="{DynamicResource Client}" Fill="{DynamicResource SecondaryColor}" Stretch="Uniform" Width="{Binding Height, RelativeSource={RelativeSource Self}}" Margin="0,5,10,5"/>
+            <Border x:Name="IsChecked" Grid.Column="1" Background="{DynamicResource SecondaryColor}" CornerRadius="10,0,0,10" Visibility="Hidden" />
+        </Grid>
+    </Border>
+</UserControl>

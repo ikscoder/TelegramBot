@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!--#region Settings-->
+    <SolidColorBrush x:Key="PrimaryLightColor" Color="#9c4dcc" />
+    <SolidColorBrush x:Key="PrimaryColor" Color="#FF6A1B9A" />
+    <Color x:Key="PrimaryCColor">#FF6A1B9A</Color>
+    <SolidColorBrush x:Key="PrimaryDarkColor" Color="#38006b" />
+
+    <SolidColorBrush x:Key="SecondaryLightColor" Color="#ffad42" />
+    <SolidColorBrush x:Key="SecondaryColor" Color="#FFF57C00" />
+    <SolidColorBrush x:Key="SecondaryDarkColor" Color="#bb4d00" />
+
+    <SolidColorBrush x:Key="TextOnDarkColor" Color="#ffffff" />
+    <SolidColorBrush x:Key="TextOnLightColor" Color="#000000" />
+
+    <SolidColorBrush x:Key="BackgroundColor" Color="#ffffff" />
+    <SolidColorBrush x:Key="AlternativeBackgroundColor" Color="#ffffff" />
+
+    <SolidColorBrush x:Key="DisabledColor" Color="#3F9c27b0" />
+
+    <SolidColorBrush x:Key="CheckedColor" Color="LightGreen" />
+    <SolidColorBrush x:Key="UncheckedColor" Color="Red" />
+    
+    <Color x:Key="ShadowColor" R="97" G="97" B="97" />
+
+    <FontFamily x:Key="FontFamilyMain">Segoe UI</FontFamily>
+    <FontFamily x:Key="FontFamilyHighlight">Lucida Sans Unicode</FontFamily>
+    <sys:Double x:Key="FontSizeSmall">10</sys:Double>
+    <sys:Double x:Key="FontSizeNormal">12</sys:Double>
+    <sys:Double x:Key="FontSizeBig">16</sys:Double>
+
+    <sys:Double x:Key="ScrollWidth">8</sys:Double>
+    <!--#endregion-->
+</ResourceDictionary>

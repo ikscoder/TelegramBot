@@ -4,36 +4,36 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         
-        mc:Ignorable="d" Height="250" Width="342" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen" Topmost="True" Background="{x:Null}">
+        mc:Ignorable="d" Height="212" Width="312" ResizeMode="NoResize" AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen" Topmost="True" Icon="../Resources/Dialog.png" Background="{x:Null}" Title="{Binding Text, ElementName=Label}">
     <Grid Margin="6">
         <Grid.Effect>
             <DropShadowEffect ShadowDepth="0" BlurRadius="10" Color="{DynamicResource ShadowColor}" />
         </Grid.Effect>
-        <Border BorderThickness="1" BorderBrush="{DynamicResource PrimaryColor}" >
+        <Border BorderThickness="2" BorderBrush="{DynamicResource PrimaryColor}" >
             <Grid Background="{DynamicResource BackgroundColor}" MouseDown="Drag">
                 <Grid  Background="{DynamicResource PrimaryColor}" Height="30" VerticalAlignment="Top">
-                    <Button x:Name="BExit" Width="35" Style="{DynamicResource TranspButton}" Margin="0,2,4,0" VerticalAlignment="Top" Height="25" HorizontalAlignment="Right" Click="BExit_Click">
+                    <Button x:Name="BExit" Width="35" Style="{DynamicResource TranspButton}" Margin="0,2,4,3" HorizontalAlignment="Right" Click="BExit_Click">
                         <Border>
                             <Path Data="{StaticResource Exit}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform">
                             </Path>
                         </Border>
                     </Button>
-                    <TextBox x:Name="Label" Style="{DynamicResource InfoTextBox}" Text="" Margin="10,0,44,3" VerticalContentAlignment="Center" Foreground="{DynamicResource TextOnDarkColor}" FontSize="14" Background="{DynamicResource PrimaryColor}" BorderBrush="{DynamicResource PrimaryColor}" IsEnabled="False"/>
+                    <TextBox x:Name="Label" Text="" Margin="10,0,44,0" VerticalContentAlignment="Center" Foreground="{DynamicResource TextOnDarkColor}" FontSize="14" Background="{DynamicResource PrimaryColor}" BorderBrush="{DynamicResource PrimaryDarkColor}" IsEnabled="False"/>
                 </Grid>
-                <TextBox x:Name="TextBox" Text="" Margin="10,35,10,0" Style="{DynamicResource InfoTextBox}" FontSize="20" VerticalScrollBarVisibility="Visible" Height="193" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
-                <Button x:Name="Yes" Width="45" Style="{DynamicResource TranspButton}" VerticalAlignment="Bottom" Height="45" HorizontalAlignment="Left" Click="Yes_Click" Margin="10,0,0,8">
+                <TextBox x:Name="TextBox" Text="" Margin="10,35,10,0" Style="{DynamicResource InfoTextBox}" FontSize="20" VerticalScrollBarVisibility="Visible" Height="111" VerticalAlignment="Top" HorizontalContentAlignment="Center"/>
+                <Button x:Name="Yes" Width="45" Style="{DynamicResource TranspButton}" VerticalAlignment="Bottom" Height="45" Click="Yes_Click">
                     <Border>
                         <Path Data="{StaticResource Yes}" Fill="{DynamicResource PrimaryColor}" Stretch="Uniform">
                         </Path>
                     </Border>
                 </Button>
-                <Button x:Name="No" Width="35" Style="{DynamicResource TranspButton}" Margin="0,0,10,8" VerticalAlignment="Bottom" Height="35" HorizontalAlignment="Right" Click="No_Click">
+                <Button x:Name="No" Width="45" Style="{DynamicResource TranspButton}" VerticalAlignment="Bottom" Height="45" HorizontalAlignment="Right" Click="No_Click">
                     <Border>
                         <Path Data="{StaticResource No}" Fill="{DynamicResource PrimaryColor}" Stretch="Uniform">
                         </Path>
                     </Border>
                 </Button>
-                <Button x:Name="Ok" Style="{DynamicResource TranspButton}" Margin="0,0,0,8" VerticalAlignment="Bottom" Height="45" HorizontalAlignment="Center" Click="Ok_Click" Width="45">
+                <Button x:Name="Ok" Style="{DynamicResource TranspButton}" Margin="0,0,0,0" VerticalAlignment="Bottom" Height="45" Width="45" Click="Ok_Click" HorizontalAlignment="Center">
                     <Border>
                         <Path Data="{StaticResource Yes}" Fill="{DynamicResource PrimaryColor}" Stretch="Uniform">
                         </Path>

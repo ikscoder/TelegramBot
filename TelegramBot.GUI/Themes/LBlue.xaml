@@ -3,35 +3,35 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <!--#region Settings-->
-    <SolidColorBrush x:Key="PrimaryLightColor" Color="#4f5b62" />
-    <SolidColorBrush x:Key="PrimaryColor" Color="#263238" />
-    <Color x:Key="PrimaryCColor">#263238</Color>
-    <SolidColorBrush x:Key="PrimaryDarkColor" Color="#000a12" />
+    <SolidColorBrush x:Key="PrimaryLightColor" Color="#599ef3" />
+    <SolidColorBrush x:Key="PrimaryColor" Color="#FF0070C0" />
+    <Color x:Key="PrimaryCColor">#FF0070C0</Color>
+    <SolidColorBrush x:Key="PrimaryDarkColor" Color="#00468f" />
 
-    <SolidColorBrush x:Key="SecondaryLightColor" Color="#e35183" />
-    <SolidColorBrush x:Key="SecondaryColor" Color="#FFAD1457" />
-    <SolidColorBrush x:Key="SecondaryDarkColor" Color="#78002e" />
+    <SolidColorBrush x:Key="SecondaryLightColor" Color="#ff844c" />
+    <SolidColorBrush x:Key="SecondaryColor" Color="#FFF4511E" />
+    <SolidColorBrush x:Key="SecondaryDarkColor" Color="#b91400" />
 
     <SolidColorBrush x:Key="TextOnDarkColor" Color="#ffffff" />
     <SolidColorBrush x:Key="TextOnLightColor" Color="#000000" />
 
-    <SolidColorBrush x:Key="BackgroundColor" Color="#f4f4f4" />
+    <SolidColorBrush x:Key="BackgroundColor" Color="#fafafa" />
     <SolidColorBrush x:Key="AlternativeBackgroundColor" Color="#ffffff" />
 
-    <SolidColorBrush x:Key="DisabledColor" Color="#FFd8d8d8" />
+    <SolidColorBrush x:Key="DisabledColor" Color="#FFF8F8F8" />
 
     <SolidColorBrush x:Key="CheckedColor" Color="#7cb342" />
     <SolidColorBrush x:Key="UncheckedColor" Color="#f44336" />
 
-    <Color x:Key="ShadowColor" R="0" G="0" B="0" />
+    <Color x:Key="ShadowColor" R="97" G="97" B="97" />
 
     <FontFamily x:Key="FontFamilyMain">Segoe UI</FontFamily>
-    <FontFamily x:Key="FontFamilyHighlight">Cambria</FontFamily>
-    <sys:Double x:Key="FontSizeSmall">11</sys:Double>
+    <FontFamily x:Key="FontFamilyHighlight">Lucida Sans Unicode</FontFamily>
+    <sys:Double x:Key="FontSizeSmall">10</sys:Double>
     <sys:Double x:Key="FontSizeNormal">12</sys:Double>
     <sys:Double x:Key="FontSizeBig">16</sys:Double>
 
     <sys:Double x:Key="ScrollWidth">8</sys:Double>
     <!--#endregion-->
-    
+
 </ResourceDictionary>

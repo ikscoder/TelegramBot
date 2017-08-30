@@ -1,13 +1,13 @@
 ﻿<Application x:Class="TelegramBot.GUI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:TelegramBot.GUI"
-             StartupUri="MainWindow.xaml">
+             StartupUri="LoadingScreen.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Themes/Light.xaml"/>
-                <ResourceDictionary Source="ControlStyles.xaml"/>
+                <ResourceDictionary Source="Themes/LDarkBlue.xaml"/>
+                <ResourceDictionary Source="Languages/English.xaml" />
+                <ResourceDictionary Source="Template/ControlStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

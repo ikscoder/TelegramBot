@@ -111,12 +111,12 @@ namespace TelegramBot
                     Data.Current.InsertOrUpdateChat(message.Chat);
                     Data.Current.InsertOrUpdateClient(message.From);
                     await Bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);  
-                    await Bot.SendTextMessageAsync(message.Chat.Id, $"Здравствуйте, {message.From.FirstName}!\n\n \n{_help + (!await Data.Current.IsAutorizedAsync(message.Chat) ? "" : _helpManager)}",replyMarkup: new ReplyKeyboardRemove());
+                    await Bot.SendTextMessageAsync(message.Chat.Id, $"Здравствуйте, {message.From?.FirstName ?? message.From?.Username ?? "Незнакомец"}!\n\n \n{_help + (!await Data.Current.IsAutorizedAsync(message.Chat) ? "" : _helpManager)}",replyMarkup: new ReplyKeyboardRemove());
                 }
                 else if (message.Text.StartsWith("/stop"))
                 {
                     Data.Current.InsertOrUpdateChat(message.Chat,isClosed:true);
-                    await Bot.SendTextMessageAsync(message.Chat.Id, $"Bye, {message.From.FirstName}!",
+                    await Bot.SendTextMessageAsync(message.Chat.Id, $"Прощайте, {message.From?.FirstName ?? message.From?.Username ?? "Незнакомец"}!",
                         replyMarkup: new ReplyKeyboardRemove());
                 }
                 else if (Settings.Current.AvailableCommands["officelist"]&&(message.Text.StartsWith("/officelist")|| message.Text.StartsWith("/officeslist")))
@@ -124,7 +124,7 @@ namespace TelegramBot
                     if (await Data.Current.IsChatClosedAsync(message.Chat))
                     {
                         Data.Current.InsertOrUpdateChat(message.Chat, isClosed: false);
-                        await Bot.SendTextMessageAsync(message.Chat.Id, $"Добро пожаловать снова, {message.From.FirstName}!", replyMarkup: new ReplyKeyboardRemove());
+                        await Bot.SendTextMessageAsync(message.Chat.Id, $"Добро пожаловать снова, {message.From?.FirstName ?? message.From?.Username ?? "Незнакомец"}!", replyMarkup: new ReplyKeyboardRemove());
                     }
                     string offices = (await Data.Current.GetOfficesAsync()).Aggregate("", (current, office) => current + $"{office.Title}\n{office.Address}\n\n");
                     if (string.IsNullOrEmpty(offices))
@@ -138,7 +138,7 @@ namespace TelegramBot
                     if (await Data.Current.IsChatClosedAsync(message.Chat))
                     {
                         Data.Current.InsertOrUpdateChat(message.Chat, isClosed: false);
-                        await Bot.SendTextMessageAsync(message.Chat.Id, $"Добро пожаловать снова, {message.From.FirstName}!", replyMarkup: new ReplyKeyboardRemove());
+                        await Bot.SendTextMessageAsync(message.Chat.Id, $"Добро пожаловать снова, {message.From?.FirstName ?? message.From?.Username ?? "Незнакомец"}!", replyMarkup: new ReplyKeyboardRemove());
                     }
                     var keyboard = new ReplyKeyboardMarkup(new[]
                     {
@@ -161,7 +161,7 @@ namespace TelegramBot
                     if (await Data.Current.IsChatClosedAsync(message.Chat))
                     {
                         Data.Current.InsertOrUpdateChat(message.Chat, isClosed: false,isDialogOpened:true);
-                        await Bot.SendTextMessageAsync(message.Chat.Id, $"Добро пожаловать снова, {message.From.FirstName}!", replyMarkup: new ReplyKeyboardRemove());
+                        await Bot.SendTextMessageAsync(message.Chat.Id, $"Добро пожаловать снова, {message.From?.FirstName ?? message.From?.Username ?? "Незнакомец"}!", replyMarkup: new ReplyKeyboardRemove());
                     }
                     else Data.Current.InsertOrUpdateChat(message.Chat, isDialogOpened: true);
 
@@ -171,7 +171,7 @@ namespace TelegramBot
                 {
                     if (await Data.Current.IsChatClosedAsync(message.Chat)) {
                         Data.Current.InsertOrUpdateChat(message.Chat,isClosed:false);
-                        await Bot.SendTextMessageAsync(message.Chat.Id, $"Добро пожаловать снова, {message.From.FirstName}!", replyMarkup: new ReplyKeyboardRemove());
+                        await Bot.SendTextMessageAsync(message.Chat.Id, $"Добро пожаловать снова, {message.From?.FirstName ?? message.From?.Username ?? "Незнакомец"}!", replyMarkup: new ReplyKeyboardRemove());
                     }
                     var keyboard = new ReplyKeyboardMarkup(new[]
                     {
@@ -190,7 +190,7 @@ namespace TelegramBot
                     if (await Data.Current.IsChatClosedAsync(message.Chat))
                     {
                         Data.Current.InsertOrUpdateChat(message.Chat, isClosed: false);
-                        await Bot.SendTextMessageAsync(message.Chat.Id, $"Добро пожаловать снова, {message.From.FirstName}!", replyMarkup: new ReplyKeyboardRemove());
+                        await Bot.SendTextMessageAsync(message.Chat.Id, $"Добро пожаловать снова, {message.From?.FirstName ?? message.From?.Username ?? "Незнакомец"}!", replyMarkup: new ReplyKeyboardRemove());
                     }
 
                     string description = message.Text.Remove(0, "/opportunity".Length).Trim();

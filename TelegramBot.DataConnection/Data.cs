@@ -489,6 +489,22 @@ namespace TelegramBot.DataConnection
         #endregion
 
 
+        public async Task DeleteMessageAsync(int messageId)
+        {
+            try
+            {
+                var command = new OleDbCommand($"DELETE FROM telegram_messages WHERE message_id={messageId};", Connection);
+                await command.ExecuteNonQueryAsync();
+            }
+            catch (Exception e)
+            {
+                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, "DeleteMessage: " + e.Message));
+#if DEBUG
+                throw;
+#endif
+            }
+        }
+
         //TODO убрать превью из стикера
         public async void InsertMessage(Message message, bool? isSended = null, bool? isReply =null,bool? isPinned = null)
         {
@@ -747,6 +763,7 @@ namespace TelegramBot.DataConnection
         //TODO: полноценная загрузка сообщений
         public async Task<List<Message>> GetMessagesFromChatAsync(Chat chat)
         {
+            if (chat == null) return new List<Message>(0);
             var messages = new DataTable();
             var users = new DataTable();
 

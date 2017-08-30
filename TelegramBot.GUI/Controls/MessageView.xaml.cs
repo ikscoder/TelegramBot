@@ -12,15 +12,15 @@ namespace TelegramBot.GUI
     /// <summary>
     /// Логика взаимодействия для MessageInDialogView.xaml
     /// </summary>
-    public partial class MessageInDialogView
+    public partial class MessageView
     {
         public Telegram.Bot.Types.Message Message { get; }
-        public MessageInDialogView(Telegram.Bot.Types.Message message, bool isYour)
+        public MessageView(Telegram.Bot.Types.Message message, bool isYour)
         {
             Message = message;
             InitializeComponent();
             var photoid = Data.Current.GetPhotoFromMessageAsync(message).Result;
-            if (photoid != null)
+            if (photoid?.FileId != null)
             {
                 try
                 {
@@ -30,12 +30,12 @@ namespace TelegramBot.GUI
                     img.BeginInit();
                     img.StreamSource = photo.FileStream;
                     img.EndInit();
-                    MessageLabel.Content = new Image { Source = img,Stretch = Stretch.Uniform,MaxWidth = 400};
+                    MessageLabel.Content = new Image { Source = img, Stretch = Stretch.Uniform, MaxWidth = 400 };
 
                 }
-                catch (Exception e)
+                catch
                 {
-                    GUI.Message.Show(e.Message + e.InnerException?.Message);
+                    MessageLabel.Content ="{Ссылка на файл уже не действительна}";
                 }
             }
             if (!string.IsNullOrWhiteSpace(message.Sticker?.FileId))
@@ -54,10 +54,23 @@ namespace TelegramBot.GUI
                 Pane.FlowDirection = FlowDirection.RightToLeft;
                 MessageLabel.SetResourceReference(ForegroundProperty, "TextOnDarkColor");
                 MessageBorder.SetResourceReference(BackgroundProperty, "PrimaryLightColor");
-                //MessageBorder.Margin=new Thickness(150, 5,5,5);
             }
         }
 
+        private void CopyMessage(object sender, RoutedEventArgs e)
+        {
+            if(Message.Text!=null)
+                Clipboard.SetText(Message.Text);
+            if(MessageLabel.Content is Image)
+                Clipboard.SetImage(((Image)MessageLabel.Content).Source as BitmapImage);
+        }
+
+
+        private async void DeleteMessage(object sender, RoutedEventArgs e)
+        {
+            if (await App.Bot.DeleteMessageAsync(Message.Chat.Id, Message.MessageId))
+                await Data.Current.DeleteMessageAsync(Message.MessageId);
+        }
     }
 
 }

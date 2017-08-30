@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:System;assembly=mscorlib">
+    <!--#region Template-->
+    <v:String x:Key="LangLoading">Loading</v:String>
+    <v:String x:Key="LangLanguages">Languages</v:String>
+    <v:String x:Key="LangSyles">Styles</v:String>
+    <v:String x:Key="LangError">Error</v:String>
+    <v:String x:Key="LangMessage">Message</v:String>
+    <v:String x:Key="LangFile">File</v:String>
+    <v:String x:Key="LangOptions">Options</v:String>
+    <v:String x:Key="LangExit">Exit</v:String>
+
+    <v:String x:Key="LangPrimarycolor">Primary color</v:String>
+    <v:String x:Key="LangSecondarycolor">Secondary color</v:String>
+    <v:String x:Key="LangBackground">Background</v:String>
+    <v:String x:Key="LangAlternativebackground">Alternative background</v:String>
+    <v:String x:Key="LangTextondark">Text on dark</v:String>
+    <v:String x:Key="LangTextonlight">Text on light</v:String>
+    <v:String x:Key="LangShadow">Shadow</v:String>
+    <v:String x:Key="LangFontBig">Big font size</v:String>
+    <v:String x:Key="LangFontNormal">Normal font size</v:String>
+    <v:String x:Key="LangFontSmall">Small font size</v:String>
+    <v:String x:Key="LangFontMain">Main font family</v:String>
+    <v:String x:Key="LangFontHighlight">Highlight font family</v:String>
+    <!--#endregion-->
+</ResourceDictionary>

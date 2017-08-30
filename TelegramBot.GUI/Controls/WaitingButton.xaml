@@ -1,0 +1,18 @@
+﻿<UserControl x:Name="UserControl" x:Class="TelegramBot.GUI.WaitingButton"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TelegramBot.GUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="300">
+    <UserControl.Resources>
+        <local:BoolToInvisibilityConverter x:Key="BoolToInvisibilityConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid Width="{Binding ActualWidth, ElementName=UserControl, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=UserControl, Mode=OneWay}">
+        <Button Click="button_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="6" Visibility="{Binding IsWaiting, ElementName=UserControl, Converter={StaticResource BoolToInvisibilityConverter}, Mode=OneWay}" Content="{Binding ButtonContent, ElementName=UserControl, Mode=OneWay}"/>
+        <Path x:Name="Waiting" Fill="{DynamicResource SecondaryColor}" Margin="6" HorizontalAlignment="Center" Width="{Binding ActualHeight, ElementName=UserControl, Mode=OneWay}" Stretch="Uniform" Initialized="Path_Initialized" Stroke="{DynamicResource SecondaryColor}" Visibility="{Binding IsWaiting, ElementName=UserControl, Converter={StaticResource BooleanToVisibilityConverter}, Mode=OneWay}" Data="{DynamicResource Wait1}"/>
+    </Grid>
+</UserControl>
+

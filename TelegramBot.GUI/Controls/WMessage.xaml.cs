@@ -3,9 +3,6 @@ using System.Windows.Input;
 
 namespace TelegramBot.GUI
 {
-    /// <summary>
-    /// Логика взаимодействия для WMessage.xaml
-    /// </summary>
     public partial class WMessage
     {
         internal WMessage()

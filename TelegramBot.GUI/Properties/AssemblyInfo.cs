@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("TelegramBot.GUI")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("iks")]
 [assembly: AssemblyProduct("TelegramBot.GUI")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]

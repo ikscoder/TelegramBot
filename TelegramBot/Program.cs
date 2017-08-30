@@ -35,7 +35,6 @@ namespace TelegramBot
                 Environment.Exit(0);
             };
             icon.ContextMenu = new ContextMenu(new[] { exit });
-
             Application.Run();
 
             Log.Add(new Log.LogMessage(Log.MessageType.OK, "Bot started"));

@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:System;assembly=mscorlib">
+    <!--#region Template-->
+    <v:String x:Key="LangLoading">Загрузка</v:String>
+    <v:String x:Key="LangLanguages">Языки</v:String>
+    <v:String x:Key="LangSyles">Стили</v:String>
+    <v:String x:Key="LangError">Ошибка</v:String>
+    <v:String x:Key="LangMessage">Сообщение</v:String>
+    <v:String x:Key="LangFile">Файл</v:String>
+    <v:String x:Key="LangOptions">Настройки</v:String>
+    <v:String x:Key="LangExit">Выход</v:String>
+    
+    <v:String x:Key="LangPrimarycolor">Первичный цвет</v:String>
+    <v:String x:Key="LangSecondarycolor">Вторичный цвет</v:String>
+    <v:String x:Key="LangBackground">Фон</v:String>
+    <v:String x:Key="LangAlternativebackground">Альтернативный фон</v:String>
+    <v:String x:Key="LangTextondark">Текст на темном</v:String>
+    <v:String x:Key="LangTextonlight">Текст на светлом</v:String>
+    <v:String x:Key="LangShadow">Тень</v:String>
+    <v:String x:Key="LangFontBig">Большой размер шрифта</v:String>
+    <v:String x:Key="LangFontNormal">Обычный размер шрифта</v:String>
+    <v:String x:Key="LangFontSmall">Маленький размер шрифта</v:String>
+    <v:String x:Key="LangFontMain">Основной шрифт</v:String>
+    <v:String x:Key="LangFontHighlight">Шрифт выделения</v:String>
+    <!--#endregion-->
+  
+</ResourceDictionary>
