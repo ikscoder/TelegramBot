@@ -151,4 +151,23 @@ namespace TelegramBot.GUI
 
         #endregion
     }
+
+    public class InverseVisibilityConverter : IValueConverter
+    {
+        #region IValueConverter Members
+
+        public object Convert(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            return value is Visibility&&(Visibility)value == Visibility.Hidden?Visibility.Visible:Visibility.Hidden;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter,
+            System.Globalization.CultureInfo culture)
+        {
+            return value is Visibility && (Visibility)value == Visibility.Hidden ? Visibility.Visible : Visibility.Hidden;
+        }
+
+        #endregion
+    }
 }

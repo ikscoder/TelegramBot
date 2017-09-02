@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using TelegramBot.DataConnection;
+using TelegramBot.DAL;
 
 namespace TelegramBot
 {

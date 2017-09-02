@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace TelegramBot.DataConnection
+namespace TelegramBot.DAL
 {
     public static class Log
     {

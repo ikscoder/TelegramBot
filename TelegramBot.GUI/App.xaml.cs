@@ -1,4 +1,5 @@
 ﻿using Telegram.Bot;
+using Telegram.Bot.Types;
 
 namespace TelegramBot.GUI
 {
@@ -8,5 +9,6 @@ namespace TelegramBot.GUI
     public partial class App
     {
         public static TelegramBotClient Bot { get; set; }
+        public static User BUser { get; set; }
     }
 }

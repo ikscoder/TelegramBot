@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramBot.DataConnection", "TelegramBot.DataConnection\TelegramBot.DataConnection.csproj", "{1B58370F-001B-4FA2-A106-25083B103F97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramBot.DAL", "TelegramBot.DataConnection\TelegramBot.DAL.csproj", "{1B58370F-001B-4FA2-A106-25083B103F97}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramBot", "TelegramBot\TelegramBot.csproj", "{7187DC65-D12E-4074-96F9-54208FB36760}"
 EndProject

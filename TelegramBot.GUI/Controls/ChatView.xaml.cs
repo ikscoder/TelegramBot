@@ -1,8 +1,11 @@
-﻿using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Shapes;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
 using Telegram.Bot.Types;
-using TelegramBot.DataConnection;
+using TelegramBot.DAL;
 
 namespace TelegramBot.GUI
 {
@@ -11,31 +14,84 @@ namespace TelegramBot.GUI
     /// </summary>
     public partial class ChatView
     {
-        public Chat Chat { get; set; }
-        public ChatView(Chat chat,bool isClient=true)
+        public volatile bool IsStop;
+        private Chat _currentChat;
+
+        public Chat CurrentChat
         {
-            Chat = chat;
+            get { return _currentChat; }
+            set
+            {
+                if(_currentChat == value) return;
+                _currentChat = value;
+                Visibility = _currentChat == null ? Visibility.Hidden : Visibility.Visible;
+                Messages.Clear();
+                ChatPanel.Children.Clear();
+                UpdateView();
+            }
+        }
+
+        public List<Telegram.Bot.Types.Message> Messages { get; } = new List<Telegram.Bot.Types.Message>();
+        public ChatView()
+        {
             InitializeComponent();
-            if (!isClient)
+            Media.MediaEnded += (sender, e) => { Media.Position = new TimeSpan(0); Media.Pause(); };
+        }
+
+        private void Send_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(ChatTextMessage.Text) || CurrentChat == null) return;
+            Data.Current.InsertMessage(new Telegram.Bot.Types.Message
             {
-                LabelPath.SetResourceReference(Path.DataProperty, "Manager");
-                LabelPath.SetResourceReference(Shape.FillProperty, "TextOnDarkColor");
-            }
-            else
+                MessageId = -1,
+                Date = DateTime.Now,
+                Chat = CurrentChat,
+                From = App.BUser,
+                Text = ChatTextMessage.Text
+            }, false);
+
+            ChatTextMessage.Text = "";
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            StartUpdating();
+        }
+
+        private async void StartUpdating()
+        {
+            await Task.Run(async () =>
             {
-                var item = new MenuItem
+                while (!IsStop)
                 {
-                    Header = "Закрыть чат",
-                };
-                item.Click +=(s,e) => { Data.Current.InsertOrUpdateChat(Chat, isDialogOpened: false); };
-                ContextMenu =new ContextMenu
+                    await Dispatcher.BeginInvoke(new Action(UpdateView));
+                    Thread.Sleep(2000);
+                }
+            });
+        }
+
+        private async void UpdateView()
+        {
+            try
+            {
+                if(CurrentChat==null)return;
+                var messages = await Data.Current.GetMessagesFromChatAsync(CurrentChat);
+                messages = messages.Skip(Messages.Count - ChatPanel.Children.Cast<UIElement>().Count(x => x.Visibility == Visibility.Collapsed)).ToList();
+                if (Messages.Any() && messages.Any(x => x.From.Id != App.BUser?.Id))
+                    Media.Play();
+                Messages.AddRange(messages);
+                foreach (var mes in messages)
                 {
-                    Items = { item }
-                };
+                    if (mes?.From?.Id == null) continue;
+                    ChatPanel.Children.Add(new MessageView(mes, mes.From.Id == App.BUser?.Id));
+                }
+                if (messages.Any())
+                    ChatScroll.ScrollToEnd();
             }
-            Label.Content = string.IsNullOrWhiteSpace(Chat.LastName + Chat.FirstName)
-                    ? Chat.Username ?? Chat.Id.ToString()
-                    : Chat.LastName + " " + Chat.FirstName;
+            catch
+            {
+
+            }
         }
     }
 }

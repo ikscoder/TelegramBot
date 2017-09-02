@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Media;
 using System.Xml.Serialization;
+using TelegramBot.DAL;
 using Brushes = System.Windows.Media.Brushes;
 using Color = System.Windows.Media.Color;
 

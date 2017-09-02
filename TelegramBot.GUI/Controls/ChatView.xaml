@@ -5,18 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TelegramBot.GUI"
              mc:Ignorable="d" 
-             d:DesignHeight="40" d:DesignWidth="200">
-    <Border Background="{DynamicResource PrimaryColor}" CornerRadius="10">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="2" x:Name="Label" Content="Label" Foreground="{DynamicResource TextOnDarkColor}" VerticalContentAlignment="Center"/>
-            <Path Grid.Column="3" x:Name="LabelPath" Data="{DynamicResource Client}" Fill="{DynamicResource SecondaryColor}" Stretch="Uniform" Width="{Binding Height, RelativeSource={RelativeSource Self}}" Margin="0,5,10,5"/>
-            <Border x:Name="IsChecked" Grid.Column="1" Background="{DynamicResource SecondaryColor}" CornerRadius="10,0,0,10" Visibility="Hidden" />
-        </Grid>
-    </Border>
+             d:DesignHeight="400" d:DesignWidth="300" Loaded="UserControl_Loaded">
+    <Grid>
+        <Border Margin="5,5,5,53" BorderThickness="0" BorderBrush="{DynamicResource PrimaryColor}" >
+            <ScrollViewer x:Name="ChatScroll">
+                <StackPanel x:Name="ChatPanel" CanVerticallyScroll="True" UseLayoutRounding="True"/>
+            </ScrollViewer>
+        </Border>
+        <Button Content="Отправить" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="93" Height="38" Click="Send_Click"/>
+        <MediaElement x:Name="Media" Visibility="Hidden" LoadedBehavior="Manual" Source="../Resources/alert.wav" Volume="0.5" />
+        <Border Margin="10,0,111,10" Background="{DynamicResource AlternativeBackgroundColor}" BorderBrush="{DynamicResource PrimaryColor}" BorderThickness="1" Height="38" VerticalAlignment="Bottom">
+            <TextBox x:Name="ChatTextMessage" Text="" VerticalContentAlignment="Bottom" AcceptsReturn="True" AcceptsTab="True" Margin="0" SpellCheck.IsEnabled="True"/>
+        </Border>
+    </Grid>
 </UserControl>

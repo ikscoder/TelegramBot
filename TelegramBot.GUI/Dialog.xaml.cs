@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using Telegram.Bot.Types;
-using TelegramBot.DataConnection;
 
 namespace TelegramBot.GUI
 {
@@ -15,60 +9,14 @@ namespace TelegramBot.GUI
     /// Логика взаимодействия для Dialog.xaml
     /// </summary>
     public partial class Dialog
-    {
-        public volatile bool IsStop;
-        public Chat Chat { get; }
-
-        public List<Telegram.Bot.Types.Message> Messages { get; } = new List<Telegram.Bot.Types.Message>();
-
-        public User Bot { get; set; }
-
+    {     
         public Dialog(Chat chat)
         {
-            Chat = chat;
-            Bot = Data.Current.GetBotAsync().Result;
             InitializeComponent();
-            Media.MediaEnded += (sender, e) => { Media.Position = new TimeSpan(0); Media.Pause(); };
-            ShedulingUpdating();
-            Title = string.IsNullOrWhiteSpace(Chat.LastName + Chat.FirstName)
-                ? Chat.Username ?? Chat.Id.ToString()
-                : Chat.LastName +" "+ Chat.FirstName;
-        }
-
-        private async void ShedulingUpdating()
-        {
-            await Task.Run(async () =>
-            {
-                while (!IsStop)
-                {
-                    await Dispatcher.BeginInvoke(new Action(UpdateView));
-                    Thread.Sleep(2000);
-                }
-            });
-        }
-
-        private async void UpdateView()
-        {
-            try
-            {
-                var messages = await Data.Current.GetMessagesFromChatAsync(Chat);
-                //ChatPanel.Children.Clear();
-                messages = messages.Skip(Messages.Count).ToList();
-                if (Messages.Any() && messages.Any(x => x.From.Id != Bot?.Id))
-                    Media.Play();
-                Messages.AddRange(messages);
-                foreach (var mes in messages)
-                {
-                    if (mes?.From?.Id == null) continue;
-                    ChatPanel.Children.Add(new MessageView(mes, mes.From.Id == Bot?.Id));
-                }
-                if (messages.Any())
-                    ChatScroll.ScrollToEnd();
-            }
-            catch
-            {
-                
-            }
+            ChatView.CurrentChat = chat;
+            Title = string.IsNullOrWhiteSpace(chat.LastName + chat.FirstName)
+                ? chat.Username ?? chat.Id.ToString()
+                : chat.LastName +" "+ chat.FirstName;
         }
 
         private void BAlwaysOnTop_Click(object sender, RoutedEventArgs e)
@@ -79,7 +27,7 @@ namespace TelegramBot.GUI
 
         private void BExit_Click(object sender, RoutedEventArgs e)
         {
-            IsStop = true;
+            ChatView.IsStop = true;
             Close();
         }
 
@@ -89,21 +37,6 @@ namespace TelegramBot.GUI
             Opacity = 0.5;
             DragMove();
             Opacity = 1;
-        }
-
-        private void Send_Click(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(TextMessage.Text)) return;
-            Data.Current.InsertMessage(new Telegram.Bot.Types.Message
-            {
-                MessageId = -1,
-                Date = DateTime.Now,
-                Chat = Chat,
-                From = Bot,
-                Text = TextMessage.Text
-            }, false);
-
-            TextMessage.Text = null;
         }
     }
 }

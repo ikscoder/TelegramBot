@@ -27,18 +27,7 @@
                 </Button>
                 <Label Content="{Binding Title, ElementName=window}"  Grid.Column="0" Foreground="{DynamicResource TextOnDarkColor}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" FontFamily="{DynamicResource FontFamilyHighlight}" FontSize="{DynamicResource FontSizeBig}"/>
             </Grid>
-            <Grid Margin="0,40,0,0">
-                <Border Margin="5,5,5,53" BorderThickness="0" BorderBrush="{DynamicResource PrimaryColor}" >
-                    <ScrollViewer x:Name="ChatScroll">
-                        <StackPanel x:Name="ChatPanel" Background="{DynamicResource BackgroundColor}" CanVerticallyScroll="True" UseLayoutRounding="True"/>
-                    </ScrollViewer>
-                </Border>
-                <Button Content="Отправить" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="93" Height="38" Click="Send_Click"/>
-                <MediaElement x:Name="Media" Visibility="Hidden" LoadedBehavior="Manual" Source="Resources/alert.wav" Volume="0.5" />
-                <Border Margin="10,0,111,10" Background="{DynamicResource AlternativeBackgroundColor}" BorderBrush="{DynamicResource PrimaryColor}" BorderThickness="1" Height="38" VerticalAlignment="Bottom">
-                    <TextBox x:Name="TextMessage" Text="" VerticalContentAlignment="Bottom" AcceptsReturn="True" AcceptsTab="True" Margin="0" SpellCheck.IsEnabled="True"/>
-                </Border>
-            </Grid>
+            <local:ChatView x:Name="ChatView" Margin="0,35,0,0"/>
 
         </Grid>
     </Border>

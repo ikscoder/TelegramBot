@@ -8,14 +8,7 @@
              d:DesignHeight="60" d:DesignWidth="200">
     <StackPanel x:Name="Pane" Background="{DynamicResource BackgroundColor}" Orientation="Horizontal" FlowDirection="RightToLeft" >
         <Border x:Name="MessageBorder" Background="{DynamicResource PrimaryLightColor}" CornerRadius="15" Margin="5" BorderBrush="{DynamicResource PrimaryColor}">
-            <Label x:Name="MessageLabel" FlowDirection="LeftToRight" Content="{Binding Message.Text, ElementName=userControl}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="25,5" ToolTip="{Binding Message.Date, ElementName=userControl, StringFormat=\{0:HH:mm\}}">
-                <Label.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Копировать" Click="CopyMessage"/>
-                        <MenuItem Header="Удалить" Click="DeleteMessage"/>
-                    </ContextMenu>
-                </Label.ContextMenu>
-            </Label>
+            <Label x:Name="MessageLabel" FlowDirection="LeftToRight" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="25,5" ToolTip="{Binding Message.Date, ElementName=userControl, StringFormat=\{0:HH:mm\}}"/>
         </Border>
     </StackPanel>
 </UserControl>

@@ -11,15 +11,12 @@ using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Shapes;
 using Telegram.Bot.Types;
-using TelegramBot.DataConnection;
+using TelegramBot.DAL;
 
 namespace TelegramBot.GUI
 {
     public partial class MainWindow
     {
-        public Chat CurrentChat { get; set; }
-        public User Bot { get; set; }
-
         public volatile bool IsStop;
         public MainWindow()
         {
@@ -40,9 +37,7 @@ namespace TelegramBot.GUI
                     Margin = new Thickness(5)
                 });
             }
-            if (Data.InitConnection(BotSettings.Current.ConnectionString)) return;
-            Message.Show("Cannot connect to database");
-            Close();
+
         }
 
         #region GUI 
@@ -177,7 +172,34 @@ namespace TelegramBot.GUI
         }
         #endregion
 
-        private async void ShedulingUpdatingAsync()
+
+
+        private async void UpdateView()
+        {
+            Chats.Children.Clear();
+            var chats = new List<ChatLabelView>();
+            if(ClientCheckChat.IsChecked==true)
+                chats.AddRange(from t in await Data.Current.GetOpenedDialogChatsAsync() select new ChatLabelView(t){Margin = new Thickness(5)});
+            if (ManagerCheckChat.IsChecked == true)
+                chats.AddRange(from t in await Data.Current.GetManagerChatsAsync() select new ChatLabelView(t,false) { Margin = new Thickness(5) });
+            chats.ForEach(x=> {
+                if(ChatView.CurrentChat?.Id==x.Chat?.Id) x.IsChecked.Visibility = Visibility.Visible;
+                x.MouseDown+= (s, e) =>
+                {
+                    ChatView.CurrentChat = x.Chat;
+                };
+                Chats.Children.Add(x); });        
+            ManagersList.ItemsSource = await Data.Current.GetAllManagerIdsAsync();
+        }
+
+        private void window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ListTables.ItemsSource = Data.Current.GetTables();
+
+            StartUpdating();
+        }
+
+        private async void StartUpdating()
         {
             await Task.Run(async () =>
             {
@@ -188,65 +210,15 @@ namespace TelegramBot.GUI
                         await Dispatcher.BeginInvoke(new Action(UpdateView));
                     }
                     catch { }
-                    Thread.Sleep(1500);
+                    Thread.Sleep(1000);
                 }
             });
         }
-
-        private async void UpdateView()
-        {
-            Chats.Children.Clear();
-            var chats = new List<ChatView>();
-            if(ClientCheckChat.IsChecked==true)
-                chats.AddRange(from t in await Data.Current.GetOpenedDialogChatsAsync() select new ChatView(t){Margin = new Thickness(5)});
-            if (ManagerCheckChat.IsChecked == true)
-                chats.AddRange(from t in await Data.Current.GetManagerChatsAsync() select new ChatView(t,false) { Margin = new Thickness(5) });
-            chats.ForEach(x=> {
-                if(CurrentChat?.Id==x.Chat?.Id) x.IsChecked.Visibility = Visibility.Visible;
-                x.MouseDown+= (s, e) =>
-                {
-                    CurrentChat = x.Chat;
-                };
-                Chats.Children.Add(x); });
-            CChatView.Visibility = CurrentChat == null ? Visibility.Hidden : Visibility.Visible;
-            ManagersList.ItemsSource = await Data.Current.GetAllManagerIdsAsync();
-            try
-            {
-                ChatPanel.Children.Clear();
-                if (CurrentChat != null)
-                {
-                    var messages = await Data.Current.GetMessagesFromChatAsync(CurrentChat);
-                    foreach (var mes in messages)
-                    {
-                        if (mes?.From?.Id == null) continue;
-                        ChatPanel.Children.Add(new MessageView(mes, mes.From.Id == Bot?.Id));
-                    }
-                }
-            }
-            catch
-            {
-
-            }
-            if (!(Process.GetProcesses().Any(proc => proc.ProcessName == "TelegramBot")))
-            {
-                Process.Start("TelegramBot.exe");
-                Message.Show("Бот упал и был перезапущен");
-            }
-
-        }
-
-        private async void window_Loaded(object sender, RoutedEventArgs e)
-        {
-            ListTables.ItemsSource = await Data.Current.GetTablesAsync();
-            Bot = Data.Current.GetBotAsync().Result;
-            ShedulingUpdatingAsync();
-        }
-
         private void GenerateToken_Click(object sender, RoutedEventArgs e)
         {
             if (!(ManagersList.SelectedItem is int))
             {
-                Message.Show("Надо выбрать мэнеджера");
+                Message.Show("Надо выбрать менеджера");
                 return;
             }
             string t = RandomString(5);
@@ -284,17 +256,17 @@ namespace TelegramBot.GUI
                         MessageId = -1,
                         Date = DateTime.Now,
                         Chat = chat,
-                        From = await Data.Current.GetBotAsync(),
+                        From = App.BUser,
                         Text = TextMessage.Text?.Trim()
                     }, false);
                 }
 
-            TextMessage.Text = null;
+            TextMessage.Text = "";
         }
 
         private void ManagersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            TokenText.Text = null;
+            TokenText.Text = "";
         }
 
         private async void Refresh_OnClick(object sender, RoutedEventArgs e)
@@ -344,24 +316,10 @@ namespace TelegramBot.GUI
             SendSpam.IsOpen = true;
         }
 
-        private void Send_Click(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(ChatTextMessage.Text)|| CurrentChat == null) return;
-            Data.Current.InsertMessage(new Telegram.Bot.Types.Message
-            {
-                MessageId = -1,
-                Date = DateTime.Now,
-                Chat = CurrentChat,
-                From = Bot,
-                Text = ChatTextMessage.Text
-            }, false);
-
-            TextMessage.Text = null;
-        }
-
         private void BOpenChat_Click(object sender, RoutedEventArgs e)
         {
-            if(CurrentChat!=null)new Dialog(CurrentChat).Show();
+            if(ChatView.CurrentChat!=null)new Dialog(ChatView.CurrentChat).Show();
+            ChatView.CurrentChat = null;
         }
     }
 }

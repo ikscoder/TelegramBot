@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="Bot" Height="600" Width="800" AllowsTransparency="True" WindowStyle="None" Background="#00000000" MinWidth="500" MinHeight="400" UseLayoutRounding="True" WindowStartupLocation="CenterScreen" Loaded="window_Loaded" Icon="Resources/Robot.ico" Closing="window_Closing">
     <Window.Resources>
+        <local:InverseVisibilityConverter x:Key="InverseVisibilityConverter"/>
         <local:NullToInvisibilityConverter x:Key="NullToInvisibilityConverter"/>
         <local:BoolToInvisibilityConverter x:Key="BooleanToInvisibilityConverter"/>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -78,7 +79,7 @@
                 </Border>
             </Button>
             <Menu Grid.Column="1" HorizontalAlignment="Left" Padding="5" Background="{DynamicResource PrimaryColor}">
-                <MenuItem Header="{DynamicResource LangFile}" Style="{DynamicResource PrimaryMenuItem}" SubmenuOpened="OnMenuOpening" SubmenuClosed="OnMenuClosing">
+                <MenuItem Header="{DynamicResource LangFile}" Style="{DynamicResource PrimaryMenuItem}" SubmenuOpened="OnMenuOpening" SubmenuClosed="OnMenuClosing" Margin="0,0,40,0">
                     <MenuItem Header="Новый токен" InputGestureText="Ctrl+N" Command="New"/>
                     <MenuItem Header="Новая рассылка" InputGestureText="Ctrl+S" Command="CancelPrint"/>
                     <Separator/>
@@ -105,7 +106,7 @@
                                     <StackPanel x:Name="Chats" Background="{DynamicResource BackgroundColor}"/>
                                 </ScrollViewer>
                             </Border>
-                            <Button x:Name="BOpenChat" Style="{DynamicResource TranspButton}" Margin="0,8,10,0" Click="BOpenChat_Click" HorizontalAlignment="Right" Visibility="{Binding Visibility, ElementName=CChatView}" Panel.ZIndex="5" Grid.Column="1">
+                            <Button x:Name="BOpenChat" Style="{DynamicResource TranspButton}" Margin="10,10,505,0" Click="BOpenChat_Click" HorizontalAlignment="Stretch" Visibility="{Binding Visibility, ElementName=ChatView}" Panel.ZIndex="5" Grid.Column="1">
                                 <Border Width="40">
                                     <Path Data="{StaticResource Chat}" Fill="{DynamicResource SecondaryColor}" Stretch="Uniform"/>
                                 </Border>
@@ -113,19 +114,8 @@
                             <Label Grid.Column="0" Content="Чаты" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" FontSize="{DynamicResource FontSizeBig}" FontFamily="{DynamicResource FontFamilyHighlight}"/>
                             <CheckBox Grid.Column="0" x:Name="ClientCheckChat" Content="Клиенты" HorizontalAlignment="Left" Margin="63,35,0,0" VerticalAlignment="Top" IsChecked="True" IsEnabled="{Binding IsChecked, ElementName=ManagerCheckChat}"/>
                             <CheckBox Grid.Column="0" x:Name="ManagerCheckChat" Content="Менеджеры" HorizontalAlignment="Left" Margin="63,10,0,0" VerticalAlignment="Top" IsChecked="True" IsEnabled="{Binding IsChecked, ElementName=ClientCheckChat}"/>
-                            <Label Content="Необходимо выбрать чат" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeBig}" Grid.Column="1" HorizontalAlignment="Center"/>
-                            <Grid x:Name="CChatView" Margin="6,10,0,0" Visibility="Hidden" Grid.Column="1">
-                                <Border Margin="5,5,5,53" BorderThickness="0" BorderBrush="{DynamicResource PrimaryColor}" >
-                                    <ScrollViewer x:Name="ChatScroll">
-                                        <StackPanel x:Name="ChatPanel" Background="{DynamicResource BackgroundColor}" CanVerticallyScroll="True" UseLayoutRounding="True"/>
-                                    </ScrollViewer>
-                                </Border>
-                                <Button Content="Отправить" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="93" Height="38" Click="Send_Click"/>
-                                <Border Margin="10,0,111,10" Background="{DynamicResource AlternativeBackgroundColor}" BorderBrush="{DynamicResource PrimaryColor}" BorderThickness="1" Height="38" VerticalAlignment="Bottom">
-                                    <TextBox x:Name="ChatTextMessage" Text="" VerticalContentAlignment="Bottom" AcceptsReturn="True" AcceptsTab="True" Margin="0" SpellCheck.IsEnabled="True"/>
-                                </Border>
-
-                            </Grid>
+                            <Label Content="Необходимо выбрать чат" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeBig}" Grid.Column="1" HorizontalAlignment="Center" Visibility="{Binding Visibility, Converter={StaticResource InverseVisibilityConverter}, ElementName=ChatView}"/>
+                            <local:ChatView x:Name="ChatView" Panel.ZIndex="3"  Grid.Column="1"/>
 
                         </Grid>
                     </TabItem>

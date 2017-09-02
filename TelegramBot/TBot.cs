@@ -6,7 +6,7 @@ using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
-using TelegramBot.DataConnection;
+using TelegramBot.DAL;
 
 namespace TelegramBot
 {
@@ -41,7 +41,6 @@ namespace TelegramBot
             Me = Bot.GetMeAsync().Result;
 
             Data.Current.InsertOrUpdateUser(Me);
-            Data.Current.InsertOrUpdateCurrentBot(Me);
 
             _help += Settings.Current.AvailableCommands["dialog"]? "/dialog - Начать диалог с менеджером\n" :"";
             _help += Settings.Current.AvailableCommands["officelist"] ? "/officelist - Получить список офисов\n" : "";
@@ -60,25 +59,27 @@ namespace TelegramBot
             //Log.Add(new Log.LogMessage(Log.MessageType.ERROR, receiveErrorEventArgs.ApiRequestException.Message));
         }
 
+        private static readonly HashSet<long> Waiters=new HashSet<long>();
 
         private static async void BotOnMessageReceived(object sender, MessageEventArgs messageEventArgs)
         {
             var message = messageEventArgs.Message;
-            if (message == null) return;
 
+            if (message == null) return;
             try
             {
                 if (message.Text==null&&(await Data.Current.IsDialogWhithManagerOpenedAsync(message.Chat) || await Data.Current.IsAutorizedAsync(message.Chat)))
                 {
                     Data.Current.InsertMessage(message);
                 }
-                if (message.Contact != null)
+                if (message.Contact != null && Waiters.Contains(message.Chat.Id))
                 {
                     Data.Current.InsertOrUpdateClient(message.From,message.Contact);
                     Data.Current.InsertOpportunity(message.From,"Перезвонить");
+                    Waiters.Remove(message.Chat.Id);
                     await Bot.SendTextMessageAsync(message.Chat.Id, $"Наш менеджер перезвонит вам на: +{message.Contact.PhoneNumber}, {message.Contact.LastName} {message.Contact.FirstName}", replyMarkup: new ReplyKeyboardRemove());
                 }
-                else if (message.Location != null)
+                else if (message.Location != null && Waiters.Contains(message.Chat.Id))
                 {
                     Venue office = null;
                     double min = double.MaxValue;
@@ -101,7 +102,7 @@ namespace TelegramBot
                         await Bot.SendTextMessageAsync(message.Chat.Id, "Нет офисов.", replyMarkup: new ReplyKeyboardRemove());
                     }
 
-                    
+                    Waiters.Remove(message.Chat.Id);
                 }
 
                 if (string.IsNullOrEmpty(message.Text)) return;
@@ -150,6 +151,7 @@ namespace TelegramBot
                             },
                         }
                     });
+                    Waiters.Add(message.Chat.Id);
                     await Bot.SendTextMessageAsync(message.Chat.Id, "Пожалуйста, отправьте ваше месторасположение для определения ближайшего офиса", replyMarkup: keyboard);
                 }
                 else if (message.Text.StartsWith("/help")|| message.Text.StartsWith("/hlep"))
@@ -183,6 +185,7 @@ namespace TelegramBot
                             },
                         }
                     });
+                    Waiters.Add(message.Chat.Id);
                     await Bot.SendTextMessageAsync(message.Chat.Id, "Пожалуйста, отправьте нам ваши контактные данные:", replyMarkup: keyboard);
                 }
                 else if (Settings.Current.AvailableCommands["opportunity"] && message.Text.StartsWith("/opportunity"))

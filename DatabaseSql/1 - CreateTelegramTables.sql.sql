@@ -6,10 +6,6 @@ CREATE TABLE opportunities (
 );
 --Bot tables
 
-CREATE TABLE telegram_currentbot (
-  id bigint NOT NULL
-);
-
 CREATE TABLE telegram_offices (
   latitude real NOT NULL
 , longitude real NOT NULL
@@ -20,8 +16,8 @@ CREATE TABLE telegram_offices (
 
 CREATE TABLE telegram_clients (
   id INTEGER IDENTITY(1,1) PRIMARY KEY
-, phone varchar(1024) NULL
-, telegramuserid bigint NULL
+, phone varchar(20) NULL
+, telegram_user_id bigint NULL
 );
 
 CREATE TABLE telegram_managers (
@@ -53,6 +49,11 @@ CREATE TABLE telegram_messages (
 , audio_id varchar(1024) NULL
 , video_id varchar(1024) NULL
 , voice_id varchar(1024) NULL
+, venue_id uniqueidentifier NULL
+, location_id uniqueidentifier NULL
+, have_photos bit default 0
+, have_message_entities bit default 0
+, phone varchar(20) null
 , sticker_id varchar(1024) NULL
 , isreply bit default 0 not null
 , ispinned bit default 0 not null
@@ -70,7 +71,7 @@ CREATE TABLE telegram_chats (
 , is_dialog_opened bit DEFAULT 1 NOT NULL
 );
 
-CREATE TABLE telegram_messageentities (
+CREATE TABLE telegram_message_entities (
   message_id bigint NOT NULL
 , type varchar(1024) NOT NULL
 , "offset" integer NOT NULL
@@ -79,7 +80,7 @@ CREATE TABLE telegram_messageentities (
 );
 
 CREATE TABLE telegram_venues (
-  message_id bigint NOT NULL
+  id uniqueidentifier NOT NULL
 , latitude real NOT NULL
 , longitude real NOT NULL
 , title varchar(1024) NOT NULL
@@ -88,13 +89,13 @@ CREATE TABLE telegram_venues (
 );
 
 CREATE TABLE telegram_locations (
-  message_id bigint NOT NULL
+  id uniqueidentifier NOT NULL
 , latitude real NOT NULL
 , longitude real NOT NULL
 );
 
 CREATE TABLE telegram_documents (
-	file_id varchar(1024) NOT NULL
+  file_id varchar(1024) NOT NULL
 , file_name varchar(1024) NULL
 , mime_type varchar(1024) NULL
 , file_size bigint NULL
@@ -138,4 +139,11 @@ CREATE TABLE telegram_stickers (
 , width bigint NOT NULL
 , height bigint NOT NULL
 , file_size bigint NULL
+);
+
+CREATE TABLE telegram_contacts (
+  phone_number varchar(20) PRIMARY KEY
+, user_id bigint NULL
+, first_name varchar(1024) NOT NULL
+, last_name varchar(1024) NULL
 );

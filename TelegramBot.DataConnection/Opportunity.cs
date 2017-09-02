@@ -1,6 +1,6 @@
 ﻿using Telegram.Bot.Types;
 
-namespace TelegramBot.DataConnection
+namespace TelegramBot.DAL
 {
     public class Opportunity
     {

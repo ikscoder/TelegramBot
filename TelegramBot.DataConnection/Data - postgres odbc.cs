@@ -11,7 +11,7 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
 
-namespace TelegramBot.DataConnection
+namespace TelegramBot.DAL
 {
     public class Data : IDisposable
     {

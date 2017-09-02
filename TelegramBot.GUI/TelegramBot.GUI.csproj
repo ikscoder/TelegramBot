@@ -45,6 +45,12 @@
       <HintPath>..\packages\Costura.Fody.1.6.2\lib\dotnet\Costura.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="GMap.NET.Core, Version=1.7.5.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <HintPath>..\packages\GMap.NET.Presentation.1.7.5\lib\net40\GMap.NET.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GMap.NET.WindowsPresentation, Version=1.7.5.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <HintPath>..\packages\GMap.NET.Presentation.1.7.5\lib\net40\GMap.NET.WindowsPresentation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
     </Reference>
@@ -55,7 +61,6 @@
     <Reference Include="System.AppContext, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.AppContext.4.3.0\lib\net46\System.AppContext.dll</HintPath>
     </Reference>
-    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
     </Reference>
@@ -71,7 +76,6 @@
       <HintPath>..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
     </Reference>
@@ -87,7 +91,6 @@
     <Reference Include="System.Net.Sockets, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Sockets.4.3.0\lib\net46\System.Net.Sockets.dll</HintPath>
     </Reference>
-    <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
       <Private>True</Private>
@@ -109,7 +112,6 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
     </Reference>
@@ -144,6 +146,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BotSettings.cs" />
+    <Compile Include="Controls\ChatLabelView.xaml.cs">
+      <DependentUpon>ChatLabelView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ChatView.xaml.cs">
       <DependentUpon>ChatView.xaml</DependentUpon>
     </Compile>
@@ -157,7 +162,6 @@
       <DependentUpon>MessageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Template\ColorCollections.cs" />
-    <Compile Include="Template\Log.cs" />
     <Compile Include="Template\Converters.cs" />
     <Compile Include="Template\CustomTheme.cs" />
     <Compile Include="Template\Settings.cs" />
@@ -167,6 +171,10 @@
     <Compile Include="Controls\WMessage.xaml.cs">
       <DependentUpon>WMessage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\ChatLabelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ChatView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -292,7 +300,7 @@
     <Resource Include="Resources\Loading.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\alert.wav" />
+    <Resource Include="Resources\alert.wav" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Messages.ico" />
@@ -304,9 +312,9 @@
     <Resource Include="Robot.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TelegramBot.DataConnection\TelegramBot.DataConnection.csproj">
+    <ProjectReference Include="..\TelegramBot.DataConnection\TelegramBot.DAL.csproj">
       <Project>{1B58370F-001B-4FA2-A106-25083B103F97}</Project>
-      <Name>TelegramBot.DataConnection</Name>
+      <Name>TelegramBot.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
