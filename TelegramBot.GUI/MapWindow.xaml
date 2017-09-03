@@ -1,0 +1,69 @@
+﻿<Window x:Name="Window" x:Class="TelegramBot.GUI.MapWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:windowsPresentation="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+        mc:Ignorable="d"
+        Title="Карта" Height="600" Width="900" AllowsTransparency="True" WindowStyle="None" Background="#00000000" MinWidth="200" MinHeight="100" UseLayoutRounding="True" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Style x:Key="RectBorderStyle" TargetType="{x:Type Rectangle}">
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Visibility" Value="Visible" />
+            <Setter Property="Fill" Value="Transparent" />
+            <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+            <EventSetter Event="MouseLeftButtonDown" Handler="Resize_Init"/>
+            <EventSetter Event="MouseLeftButtonUp" Handler="Resize_End"/>
+            <EventSetter Event="MouseMove" Handler="Resizeing_Form"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Rectangle x:Name="LeftSizeGrip" Width="8" HorizontalAlignment="Left" Cursor="SizeWE" Style="{StaticResource RectBorderStyle}" Panel.ZIndex="200" />
+        <Rectangle x:Name="RightSizeGrip" Width="8" HorizontalAlignment="Right" Cursor="SizeWE" Style="{StaticResource RectBorderStyle}"  Panel.ZIndex="200"/>
+        <Rectangle x:Name="TopSizeGrip" Height="8" VerticalAlignment="Top" Cursor="SizeNS" Style="{StaticResource RectBorderStyle}"  Panel.ZIndex="200"/>
+        <Rectangle x:Name="BottomSizeGrip" Height="8" VerticalAlignment="Bottom" Cursor="SizeNS" Style="{StaticResource RectBorderStyle}"  Panel.ZIndex="200"/>
+        <Rectangle x:Name="TopLeftSizeGrip" Width="8" Height="8" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="SizeNWSE" Style="{StaticResource RectBorderStyle}"  Panel.ZIndex="200"/>
+        <Rectangle x:Name="BottomRightSizeGrip" Width="8" Height="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Cursor="SizeNWSE" Style="{StaticResource RectBorderStyle}"  Panel.ZIndex="200"/>
+        <Rectangle x:Name="TopRightSizeGrip" Width="8" Height="8" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="SizeNESW" Style="{StaticResource RectBorderStyle}" Panel.ZIndex="200" />
+        <Rectangle x:Name="BottomLeftSizeGrip" Width="8" Height="8" HorizontalAlignment="Left" VerticalAlignment="Bottom" Cursor="SizeNESW" Style="{StaticResource RectBorderStyle}"  Panel.ZIndex="200"/>
+        <Grid x:Name="HeaderGrid" Background="{DynamicResource PrimaryColor}" Height="30" VerticalAlignment="Top" MouseDown="Drag">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="5" x:Name="BExit" Style="{DynamicResource MenuIconedDanger}" Margin="0,0,0,0" HorizontalAlignment="Stretch" Click="BExit_Click" VerticalAlignment="Stretch">
+                <Border Width="16">
+                    <Path Data="{StaticResource Exit}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
+                </Border>
+            </Button>
+            <Button Grid.Column="4" x:Name="BMaximize" Style="{DynamicResource MenuIconed}" Margin="0,0,0,0" HorizontalAlignment="Stretch" Click="BMaximize_Click" VerticalAlignment="Stretch">
+                <Border Width="16">
+                    <Path Data="{StaticResource Maximize}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
+                </Border>
+            </Button>
+            <Button Grid.Column="3" x:Name="BMinimize" Style="{DynamicResource MenuIconed}" Margin="0,0,0,0" HorizontalAlignment="Stretch" Click="BMinimize_Click" VerticalAlignment="Stretch">
+                <Border Width="16">
+                    <Path Data="{StaticResource Minimize}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
+                </Border>
+            </Button>
+            <Button Grid.Column="2" Style="{DynamicResource MenuIconed}" Margin="0,0,0,0"
+                     HorizontalAlignment="Stretch" Click="BAlwaysOnTop_Click" VerticalAlignment="Stretch">
+                <Border x:Name="BAlwaysOnTop" Width="18" RenderTransformOrigin="0.5,0.5">
+                    <Path Data="{StaticResource DrawingPin}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
+                </Border>
+            </Button>
+            <Label Grid.Column="1" Content="{Binding Title, ElementName=Window}" HorizontalAlignment="Left" Margin="0,0,0,0" Foreground="{DynamicResource TextOnDarkColor}" FontFamily="{DynamicResource FontFamilyHighlight}" FontSize="{DynamicResource FontSizeBig}" VerticalContentAlignment="Center"/>
+        </Grid>
+        <Border  Margin="0,29,0,0" BorderBrush="{DynamicResource PrimaryColor}" BorderThickness="2,0,2,2">
+            <Grid x:Name="BodyGrid" Background="{DynamicResource BackgroundColor}">
+                <windowsPresentation:GMapControl x:Name="Gmap" Zoom="17" MaxZoom="21" MinZoom="2" CanDragMap="True" MouseWheelZoomEnabled="True"/>
+                <Slider x:Name="ZoomSlider" HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" AutoToolTipPlacement="TopLeft" IsDirectionReversed="True" LargeChange="3" Maximum="21" Minimum="2" Orientation="Vertical" SmallChange="1" TickPlacement="TopLeft" ValueChanged="ZoomSlider_ValueChanged" Value="17" Height="229" Width="39" Foreground="{DynamicResource TextOnLightColor}"/>
+            </Grid>
+        </Border>
+
+    </Grid>
+</Window>

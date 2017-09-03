@@ -69,16 +69,16 @@ namespace TelegramBot.DAL
                 if (isUpdate)
                 {
                     command.CommandText =
-                        $"UPDATE telegram_chats SET type = '{chat.Type}', title = '{chat.Title?.Replace("\'", "\'\'") }', username = '{chat.Username?.Replace("\'", "\'\'")}', first_name = '{chat.FirstName?.Replace("\'", "\'\'")}', last_name = '{chat.LastName?.Replace("\'", "\'\'")}'".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'");
+                        $"UPDATE telegram_chats SET type = '{chat.Type}', title = '{chat.Title?.Replace("\'", "\'\'") }', username = '{chat.Username?.Replace("\'", "\'\'")}', first_name = '{chat.FirstName?.Replace("\'", "\'\'")}', last_name = '{chat.LastName?.Replace("\'", "\'\'")}'".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'");
                     if (isClosed.HasValue)
-                        command.CommandText += $", is_closed = {(isClosed.Value?1:0)}";
+                        command.CommandText += $", is_closed = {(isClosed.Value ? 1 : 0)}";
                     if (isDialogOpened.HasValue)
-                        command.CommandText += $", is_dialog_opened = {(isDialogOpened.Value ? 1:0)}";
+                        command.CommandText += $", is_dialog_opened = {(isDialogOpened.Value ? 1 : 0)}";
                     command.CommandText += $" WHERE id={chat.Id};";
                 }
                 else
                 {
-                    command.CommandText = $"INSERT INTO telegram_chats (id ,type ,title ,username ,first_name ,last_name ,is_closed, is_dialog_opened) VALUES ({chat.Id}, '{chat.Type}', '{chat.Title?.Replace("\'", "\'\'")}', '{chat.Username?.Replace("\'", "\'\'")}', '{chat.FirstName?.Replace("\'", "\'\'")}', '{chat.LastName?.Replace("\'", "\'\'")}', {((isClosed ?? false) ? 1:0)}, {((isDialogOpened ?? false) ? 1:0)});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'");
+                    command.CommandText = $"INSERT INTO telegram_chats (id ,type ,title ,username ,first_name ,last_name ,is_closed, is_dialog_opened) VALUES ({chat.Id}, '{chat.Type}', '{chat.Title?.Replace("\'", "\'\'")}', '{chat.Username?.Replace("\'", "\'\'")}', '{chat.FirstName?.Replace("\'", "\'\'")}', '{chat.LastName?.Replace("\'", "\'\'")}', {((isClosed ?? false) ? 1 : 0)}, {((isDialogOpened ?? false) ? 1 : 0)});".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'");
                 }
 
                 await command.ExecuteNonQueryAsync();
@@ -103,8 +103,8 @@ namespace TelegramBot.DAL
                     Connection = Connection,
                     CommandText =
                         test.ExecuteReader()?.Read() ?? false
-                            ? $"UPDATE telegram_users SET first_name = '{user.FirstName?.Replace("\'", "\'\'")}', last_name = '{user.LastName?.Replace("\'", "\'\'")}', username = '{user.Username?.Replace("\'", "\'\'")}' WHERE id = {user.Id};".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'")
-                            : $"INSERT INTO telegram_users (id, first_name, last_name, username) VALUES ({user.Id}, '{user.FirstName?.Replace("\'", "\'\'")}', '{user.LastName?.Replace("\'", "\'\'")}', '{user.Username?.Replace("\'", "\'\'")}');".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'")
+                            ? $"UPDATE telegram_users SET first_name = '{user.FirstName?.Replace("\'", "\'\'")}', last_name = '{user.LastName?.Replace("\'", "\'\'")}', username = '{user.Username?.Replace("\'", "\'\'")}' WHERE id = {user.Id};".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'")
+                            : $"INSERT INTO telegram_users (id, first_name, last_name, username) VALUES ({user.Id}, '{user.FirstName?.Replace("\'", "\'\'")}', '{user.LastName?.Replace("\'", "\'\'")}', '{user.Username?.Replace("\'", "\'\'")}');".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'")
                 };
                 await command.ExecuteNonQueryAsync();
             }
@@ -131,8 +131,8 @@ namespace TelegramBot.DAL
                     Connection = Connection,
                     CommandText =
                         ((test.ExecuteReader()?.Read() ?? false) && contact != null)
-                            ? $"UPDATE telegram_clients SET phone = '{contact.PhoneNumber?.Replace("\'", "\'\'")}' WHERE telegram_user_id = {user.Id};".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'")
-                            : $"INSERT INTO telegram_clients (phone,telegram_user_id) VALUES('{contact?.PhoneNumber?.Replace("\'", "\'\'")}', {user.Id});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'")
+                            ? $"UPDATE telegram_clients SET phone = '{contact.PhoneNumber?.Replace("\'", "\'\'")}' WHERE telegram_user_id = {user.Id};".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'")
+                            : $"INSERT INTO telegram_clients (phone,telegram_user_id) VALUES('{contact?.PhoneNumber?.Replace("\'", "\'\'")}', {user.Id});".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'")
                 };
                 await command.ExecuteNonQueryAsync();
             }
@@ -152,7 +152,7 @@ namespace TelegramBot.DAL
             {
                 var reader = await new OleDbCommand($"SELECT id FROM telegram_clients where telegram_user_id={user.Id};", Connection).ExecuteReaderAsync();
                 if (!reader.Read()) return;
-                var command = new OleDbCommand($"INSERT INTO opportunities (clientid,description) VALUES({reader[0]}, '{description.Replace("\'", "\'\'")}');".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
+                var command = new OleDbCommand($"INSERT INTO opportunities (clientid,description) VALUES({reader[0]}, '{description.Replace("\'", "\'\'")}');".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'"), Connection);
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -320,7 +320,7 @@ namespace TelegramBot.DAL
             if (audio == null) return;
             try
             {
-                var command = new OleDbCommand($"INSERT INTO telegram_audios (file_id, duration, performer, title, mime_type, file_size) VALUES ('{audio.FileId?.Replace("\'", "\'\'")}', {audio.Duration}, '{audio.Performer?.Replace("\'", "\'\'")}', '{audio.Title?.Replace("\'", "\'\'")}', '{audio.MimeType?.Replace("\'", "\'\'")}', {audio.FileSize});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
+                var command = new OleDbCommand($"INSERT INTO telegram_audios (file_id, duration, performer, title, mime_type, file_size) VALUES ('{audio.FileId?.Replace("\'", "\'\'")}', {audio.Duration}, '{audio.Performer?.Replace("\'", "\'\'")}', '{audio.Title?.Replace("\'", "\'\'")}', '{audio.MimeType?.Replace("\'", "\'\'")}', {audio.FileSize});".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'"), Connection);
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -338,7 +338,7 @@ namespace TelegramBot.DAL
             if (document == null) return;
             try
             {
-                var command = new OleDbCommand($"INSERT INTO telegram_documents (file_id, file_name, mime_type, file_size) VALUES ('{document.FileId?.Replace("\'", "\'\'")}', '{document.FileName?.Replace("\'", "\'\'")}', '{document.MimeType?.Replace("\'", "\'\'")}', {document.FileSize});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
+                var command = new OleDbCommand($"INSERT INTO telegram_documents (file_id, file_name, mime_type, file_size) VALUES ('{document.FileId?.Replace("\'", "\'\'")}', '{document.FileName?.Replace("\'", "\'\'")}', '{document.MimeType?.Replace("\'", "\'\'")}', {document.FileSize});".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'"), Connection);
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -357,8 +357,8 @@ namespace TelegramBot.DAL
             try
             {
                 var id = Guid.NewGuid();
-                var command = new OleDbCommand($"INSERT INTO telegram_locations (id, latitude, longitude) VALUES ({id}, {location.Latitude.ToString().Replace(',','.')}, {location.Longitude.ToString().Replace(',', '.')});", Connection);
-                Log.Add(new Log.LogMessage(Log.MessageType.ERROR, command.CommandText));
+                var command = new OleDbCommand($"INSERT INTO telegram_locations (id, latitude, longitude) VALUES ('{id}', {location.Latitude.ToString().Replace(',', '.')}, {location.Longitude.ToString().Replace(',', '.')});", Connection);
+
                 await command.ExecuteNonQueryAsync();
                 return id;
             }
@@ -380,7 +380,7 @@ namespace TelegramBot.DAL
             {
                 try
                 {
-                    var command = new OleDbCommand($"INSERT INTO telegram_message_entities (message_id, type, \"offset\", length, url) VALUES ({message.MessageId},'{entity.Type}', {entity.Offset}, {entity.Length},'{entity.Url?.Replace("\'", "\'\'")}');".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
+                    var command = new OleDbCommand($"INSERT INTO telegram_message_entities (message_id, type, \"offset\", length, url) VALUES ({message.MessageId},'{entity.Type}', {entity.Offset}, {entity.Length},'{entity.Url?.Replace("\'", "\'\'")}');".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'"), Connection);
                     await command.ExecuteNonQueryAsync();
                 }
                 catch (Exception e)
@@ -402,7 +402,7 @@ namespace TelegramBot.DAL
             {
                 try
                 {
-                    var command = new OleDbCommand($"INSERT INTO telegram_photos (messageid, file_id, width, height, file_size) VALUES ({message.MessageId}, '{photo.FileId?.Replace("\'", "\'\'")}', {photo.Width}, {photo.Height},{photo.FileSize});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
+                    var command = new OleDbCommand($"INSERT INTO telegram_photos (messageid, file_id, width, height, file_size) VALUES ({message.MessageId}, '{photo.FileId?.Replace("\'", "\'\'")}', {photo.Width}, {photo.Height},{photo.FileSize});".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'"), Connection);
                     await command.ExecuteNonQueryAsync();
                 }
                 catch (Exception e)
@@ -421,7 +421,7 @@ namespace TelegramBot.DAL
             if (sticker == null) return;
             try
             {
-                var command = new OleDbCommand($"INSERT INTO telegram_stickers ( file_id, width, height, file_size) VALUES ('{sticker.FileId?.Replace("\'", "\'\'")}', {sticker.Width}, {sticker.Height},{sticker.FileSize});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
+                var command = new OleDbCommand($"INSERT INTO telegram_stickers ( file_id, width, height, file_size) VALUES ('{sticker.FileId?.Replace("\'", "\'\'")}', {sticker.Width}, {sticker.Height},{sticker.FileSize});".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'"), Connection);
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -439,7 +439,7 @@ namespace TelegramBot.DAL
             try
             {
                 var id = Guid.NewGuid();
-                var command = new OleDbCommand($"INSERT INTO telegram_venues ( id, latitude, longitude, title, address, foursquare_id) VALUES ({id}, {venue.Location.Latitude.ToString().Replace(',', '.')}, {venue.Location.Longitude.ToString().Replace(',', '.')}, '{venue.Title?.Replace("\'", "\'\'")}', '{venue.Address?.Replace("\'", "\'\'")}', '{venue.FoursquareId?.Replace("\'", "\'\'")}');".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
+                var command = new OleDbCommand($"INSERT INTO telegram_venues ( id, latitude, longitude, title, address, foursquare_id) VALUES ('{id}', {venue.Location.Latitude.ToString().Replace(',', '.')}, {venue.Location.Longitude.ToString().Replace(',', '.')}, '{venue.Title?.Replace("\'", "\'\'")}', '{venue.Address?.Replace("\'", "\'\'")}', '{venue.FoursquareId?.Replace("\'", "\'\'")}');".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'"), Connection);
                 await command.ExecuteNonQueryAsync();
                 return id;
             }
@@ -457,7 +457,7 @@ namespace TelegramBot.DAL
         {
             if (video == null) return;
 
-            var command = new OleDbCommand($"INSERT INTO telegram_videos ( file_id, width, height, duration, mime_type, file_size) VALUES ( '{video.FileId?.Replace("\'", "\'\'")}', {video.Width}, {video.Height}, {video.Duration}, '{video.MimeType?.Replace("\'", "\'\'")}', {video.FileSize});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
+            var command = new OleDbCommand($"INSERT INTO telegram_videos ( file_id, width, height, duration, mime_type, file_size) VALUES ( '{video.FileId?.Replace("\'", "\'\'")}', {video.Width}, {video.Height}, {video.Duration}, '{video.MimeType?.Replace("\'", "\'\'")}', {video.FileSize});".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'"), Connection);
             try
             {
                 await command.ExecuteNonQueryAsync();
@@ -477,7 +477,7 @@ namespace TelegramBot.DAL
 
             try
             {
-                var command = new OleDbCommand($"INSERT INTO telegram_voices ( file_id, duration, mime_type, file_size) VALUES ( '{voice.FileId?.Replace("\'", "\'\'")}', {voice.Duration}, '{voice.MimeType?.Replace("\'", "\'\'")}', {voice.FileSize});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
+                var command = new OleDbCommand($"INSERT INTO telegram_voices ( file_id, duration, mime_type, file_size) VALUES ( '{voice.FileId?.Replace("\'", "\'\'")}', {voice.Duration}, '{voice.MimeType?.Replace("\'", "\'\'")}', {voice.FileSize});".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'"), Connection);
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -509,7 +509,7 @@ namespace TelegramBot.DAL
         }
 
         //TODO убрать превью из стикера
-        public async void InsertMessage(Message message, bool? isSended = null, bool? isReply =null,bool? isPinned = null)
+        public async void InsertMessage(Message message, bool? isSended = null, bool? isReply = null, bool? isPinned = null)
         {
             if (message == null) return;
 
@@ -517,19 +517,19 @@ namespace TelegramBot.DAL
             {
                 InsertAudio(message.Audio);
                 InsertDocument(message.Document);
-                var locationId=await InsertLocation(message.Location);
-                bool haveME= await InsertMessageEntities(message);
+                var locationId = await InsertLocation(message.Location);
+                bool haveME = await InsertMessageEntities(message);
                 bool havePhotos = await InsertPhotos(message);
                 InsertSticker(message.Sticker);
-                var venueId= await InsertVenue(message.Venue);
+                var venueId = await InsertVenue(message.Venue);
                 InsertVideo(message.Video);
                 InsertVoice(message.Voice);
                 InsertContact(message.Contact);
 
                 if (message.ForwardFrom != null) InsertOrUpdateUser(message.ForwardFrom);
-                if (message.ReplyToMessage != null) InsertMessage(message.ReplyToMessage,isReply:true);
-                if (message.PinnedMessage != null) InsertMessage(message.PinnedMessage,isPinned:true);
-                var command = new OleDbCommand($"INSERT INTO  telegram_messages (message_id, from_id, date, chat_id, text, forward_from, forward_date, reply_to_message_id, pinned_message_id, document_id, caption, audio_id, video_id, voice_id, venue_id, location_id, have_photos, have_message_entities, phone, sticker_id, isreply, ispinned, issended) VALUES({message.MessageId}, {message.From?.Id.ToString() ?? "NULL"}, {message.Date.ToUnixTime()}, {message.Chat.Id}, '{message.Text?.Replace("\'", "\'\'")}', {message.ForwardFrom?.Id.ToString() ?? "NULL"}, {message.ForwardDate?.ToUnixTime().ToString() ?? "NULL"}, {message.ReplyToMessage?.MessageId.ToString() ?? "NULL"}, {message.PinnedMessage?.MessageId.ToString() ?? "NULL"}, '{message.Document?.FileId?.Replace("\'", "\'\'")}', '{message.Caption?.Replace("\'", "\'\'")}', '{message.Audio?.FileId?.Replace("\'", "\'\'")}', '{message.Video?.FileId?.Replace("\'", "\'\'")}', '{message.Voice?.FileId?.Replace("\'", "\'\'")}',{venueId?.ToString() ?? "NULL"},{locationId?.ToString() ?? "NULL"},{(havePhotos ? 1 : 0)},{(haveME ? 1 : 0)},'{message?.Contact?.PhoneNumber?.Replace("\'", "\'\'")}', '{message.Sticker?.Thumb.FileId?.Replace("\'", "\'\'")}', {((isReply ?? false) ? 1 : 0)}, {((isPinned ?? false) ? 1 : 0)}, {((isSended ?? true) ? 1:0)});".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
+                if (message.ReplyToMessage != null) InsertMessage(message.ReplyToMessage, isReply: true);
+                if (message.PinnedMessage != null) InsertMessage(message.PinnedMessage, isPinned: true);
+                var command = new OleDbCommand($"INSERT INTO  telegram_messages (message_id, from_id, date, chat_id, text, forward_from, forward_date, reply_to_message_id, pinned_message_id, document_id, caption, audio_id, video_id, voice_id, venue_id, location_id, have_photos, have_message_entities, phone, sticker_id, isreply, ispinned, issended) VALUES({message.MessageId}, {message.From?.Id.ToString() ?? "NULL"}, {message.Date.ToUnixTime()}, {message.Chat.Id}, '{message.Text?.Replace("\'", "\'\'")}', {message.ForwardFrom?.Id.ToString() ?? "NULL"}, {message.ForwardDate?.ToUnixTime().ToString() ?? "NULL"}, {message.ReplyToMessage?.MessageId.ToString() ?? "NULL"}, {message.PinnedMessage?.MessageId.ToString() ?? "NULL"}, '{message.Document?.FileId?.Replace("\'", "\'\'")}', '{message.Caption?.Replace("\'", "\'\'")}', '{message.Audio?.FileId?.Replace("\'", "\'\'")}', '{message.Video?.FileId?.Replace("\'", "\'\'")}', '{message.Voice?.FileId?.Replace("\'", "\'\'")}','{venueId}','{locationId}',{(havePhotos ? 1 : 0)},{(haveME ? 1 : 0)},'{message?.Contact?.PhoneNumber?.Replace("\'", "\'\'")}', '{message.Sticker?.Thumb.FileId?.Replace("\'", "\'\'")}', {((isReply ?? false) ? 1 : 0)}, {((isPinned ?? false) ? 1 : 0)}, {((isSended ?? true) ? 1 : 0)});".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'"), Connection);
 
                 await command.ExecuteNonQueryAsync();
             }
@@ -579,10 +579,10 @@ namespace TelegramBot.DAL
             if (string.IsNullOrEmpty(token) || chat == null) return false;
             try
             {
-                var command = new OleDbCommand($"SELECT managerid, telegramchatid, token FROM telegram_managers where token='{token.Replace("\'", "\'\'")}';".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
+                var command = new OleDbCommand($"SELECT managerid, telegramchatid, token FROM telegram_managers where token='{token.Replace("\'", "\'\'")}';".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'"), Connection);
                 var reader = await command.ExecuteReaderAsync();
                 if (!reader.Read()) return false;
-                var updcommand = new OleDbCommand($"UPDATE telegram_managers SET telegramchatid ={chat.Id}, token=null where token='{token?.Replace("\'", "\'\'")}'; ".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
+                var updcommand = new OleDbCommand($"UPDATE telegram_managers SET telegramchatid ={chat.Id}, token=null where token='{token?.Replace("\'", "\'\'")}'; ".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'"), Connection);
                 await updcommand.ExecuteNonQueryAsync();
                 return true;
             }
@@ -601,7 +601,7 @@ namespace TelegramBot.DAL
             if (string.IsNullOrEmpty(token)) return;
             try
             {
-                var command = new OleDbCommand($"UPDATE telegram_managers SET telegramchatid = NULL, token ='{token?.Replace("\'", "\'\'")}' WHERE managerid={managerId}; ".Replace("\'\'","NULL").Replace("NULLNULL","\'\'\'\'"), Connection);
+                var command = new OleDbCommand($"UPDATE telegram_managers SET telegramchatid = NULL, token ='{token?.Replace("\'", "\'\'")}' WHERE managerid={managerId}; ".Replace("\'\'", "NULL").Replace("NULLNULL", "\'\'\'\'"), Connection);
                 await command.ExecuteNonQueryAsync();
             }
             catch (Exception e)
@@ -756,14 +756,14 @@ namespace TelegramBot.DAL
                     await new OleDbCommand(
                             $"SELECT file_name, mime_type, file_size FROM telegram_documents where file_id='{fileid}';", Connection)
                         .ExecuteReaderAsync();
-                
-                return docrow.Read()?new Document
+
+                return docrow.Read() ? new Document
                 {
                     FileId = fileid,
                     FileName = docrow[0].ToString(),
                     MimeType = docrow[1].ToString(),
-                    FileSize = string.IsNullOrWhiteSpace(docrow[2].ToString())?0:int.Parse(docrow[2].ToString())
-                } :null;
+                    FileSize = string.IsNullOrWhiteSpace(docrow[2].ToString()) ? 0 : int.Parse(docrow[2].ToString())
+                } : null;
             }
             catch (Exception e)
             {
@@ -775,18 +775,91 @@ namespace TelegramBot.DAL
             }
         }
 
-        //TODO: полноценная загрузка сообщений
         public async Task<List<Message>> GetMessagesFromChatAsync(Chat chat)
         {
             if (chat == null) return new List<Message>(0);
             var messages = new DataTable();
-            var users = new DataTable();
+
 
             try
             {
-                messages.Load(await new OleDbCommand($"SELECT message_id, from_id, date, text, sticker_id, have_photos, phone, document_id FROM telegram_messages where chat_id={chat.Id} and isreply=0;", Connection).ExecuteReaderAsync());
-                users.Load(await new OleDbCommand("SELECT id, first_name, last_name, username FROM telegram_users;", Connection).ExecuteReaderAsync());
+                messages.Load(await new OleDbCommand($@"SELECT telegram_messages.message_id
+      ,telegram_messages.from_id
+	  ,telegram_users.first_name as user_first_name
+	  ,telegram_users.last_name as user_last_name
+	  ,telegram_users.username as user_username
 
+      ,telegram_messages.date
+      ,telegram_messages.text
+      ,telegram_messages.forward_from
+      ,telegram_messages.forward_date
+      ,telegram_messages.reply_to_message_id
+      ,telegram_messages.pinned_message_id
+      ,telegram_messages.caption
+
+      ,telegram_messages.have_photos
+      ,telegram_messages.have_message_entities
+
+
+      ,telegram_messages.audio_id as aud_fileid
+	  ,telegram_audios.mime_type as aud_mime_type
+	  ,telegram_audios.performer as aud_performer
+	  ,telegram_audios.title as aud_title
+	  ,telegram_audios.duration as aud_duration
+	  ,telegram_audios.file_size as aud_file_size
+
+	  ,telegram_messages.document_id as doc_fileid
+	  ,telegram_documents.file_name as doc_file_name
+	  ,telegram_documents.file_size as doc_file_size
+	  ,telegram_documents.mime_type as doc_mime_type
+
+	  ,telegram_messages.phone as contact_phone
+	  ,telegram_contacts.first_name as contact_first_name
+	  ,telegram_contacts.last_name as contact_last_name
+	  ,telegram_contacts.user_id as contact_user_id
+
+	  ,telegram_messages.video_id as video_fileid
+	  ,telegram_videos.duration as video_duration
+	  ,telegram_videos.file_size as video_file_size
+	  ,telegram_videos.height as video_height
+	  ,telegram_videos.width as video_width
+	  ,telegram_videos.mime_type as video_mime_type
+
+      ,telegram_messages.voice_id as voice_fileid
+	  ,telegram_voices.duration as voice_duration
+	  ,telegram_voices.file_size as voice_file_size
+	  ,telegram_voices.mime_type as voice_mime_type
+
+
+	  ,telegram_messages.venue_id as venue
+      ,telegram_venues.address as venue_address
+	  ,telegram_venues.latitude as venue_latitude
+	  ,telegram_venues.longitude as venue_longitude
+	  ,telegram_venues.title as venue_title
+	  ,telegram_venues.foursquare_id as venue_foursquare_id
+
+	  ,telegram_messages.location_id as location
+      ,telegram_locations.latitude as location_latitude
+	  ,telegram_locations.longitude as location_longitude
+	  
+      ,telegram_messages.sticker_id as sticker_fileid
+	  ,telegram_stickers.file_size as sticker_file_size
+	  ,telegram_stickers.height as sticker_height
+	  ,telegram_stickers.width as sticker_width
+
+
+  FROM telegram_messages
+  left join telegram_users on telegram_messages.from_id=telegram_users.id
+  left join telegram_audios on telegram_messages.audio_id=telegram_audios.file_id
+  left join telegram_contacts on telegram_messages.phone=telegram_contacts.phone_number
+  left join telegram_documents on telegram_messages.document_id=telegram_documents.file_id
+  left join telegram_locations on telegram_messages.location_id=telegram_locations.id
+  left join telegram_stickers on telegram_messages.sticker_id=telegram_stickers.file_id
+  left join telegram_venues on telegram_messages.venue_id=telegram_venues.id
+  left join telegram_videos on telegram_messages.video_id=telegram_videos.file_id
+  left join telegram_voices on telegram_messages.voice_id=telegram_voices.file_id
+  where chat_id={chat.Id} and isreply=0"
+                    , Connection).ExecuteReaderAsync());
             }
             catch (Exception e)
             {
@@ -796,33 +869,137 @@ namespace TelegramBot.DAL
 #endif
             }
             var startDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            return Enumerable.Select(messages.AsEnumerable(), row => new Message
+            var messagesList = new List<Message>(messages.Rows.Count);
+            //TODO
+            //,telegram_messages.forward_from
+            //,telegram_messages.reply_to_message_id
+            //,telegram_messages.pinned_message_id
+            foreach (var row in messages.AsEnumerable().AsParallel())
             {
-                MessageId = int.Parse(row[0].ToString()),
-                From = Enumerable.Select(users.AsEnumerable(), user => new User
+                var mes = new Message
                 {
-                    Id = int.Parse(user[0].ToString()),
-                    FirstName = user[1].ToString(),
-                    LastName = user[2].ToString(),
-                    Username = user[3].ToString()
-                }).FirstOrDefault(r => r.Id == int.Parse(row[1].ToString())),
-                Date = startDateTime.AddSeconds(int.Parse(row[2].ToString())),
-                Chat = chat,
-                Text = row.IsNull(3) ? null : row[3].ToString(),
-                Sticker = row[4] == null ? null : new Sticker
+                    MessageId = int.Parse(row["message_id"].ToString()),
+                    From = row.IsNull("from_id")
+                        ? null
+                        : new User
+                        {
+                            Id = int.Parse(row["from_id"].ToString()),
+                            FirstName = row["user_first_name"]?.ToString(),
+                            LastName = row["user_last_name"]?.ToString(),
+                            Username = row["user_username"]?.ToString()
+                        },
+                    Date = startDateTime.AddSeconds(int.Parse(row["date"]?.ToString() ?? "0")),
+                    Chat = chat,
+                    Text = row.IsNull("text") ? null : row["text"].ToString(),
+                    ForwardDate = row.IsNull("forward_date") ? (DateTime?)null : startDateTime.AddSeconds(int.Parse(row["forward_date"]?.ToString() ?? "0")),
+
+                    Caption = row.IsNull("caption") ? null : row["caption"].ToString(),
+                    Audio = row.IsNull("aud_fileid")
+                        ? null
+                        : new Audio
+                        {
+                            FileId = row["aud_fileid"].ToString(),
+                            Duration = int.Parse(row["aud_duration"]?.ToString() ?? "0"),
+                            MimeType = row["aud_mime_type"]?.ToString(),
+                            Performer = row["aud_performer"]?.ToString(),
+                            Title = row["aud_title"]?.ToString(),
+                            FileSize = int.Parse(row["aud_file_size"]?.ToString() ?? "0")
+                        },
+                    Document = row.IsNull("doc_fileid")
+                        ? null
+                        : new Document
+                        {
+                            FileId = row["doc_fileid"].ToString(),
+                            FileName = row["doc_file_name"]?.ToString(),
+                            MimeType = row["doc_mime_type"]?.ToString(),
+                            FileSize = int.Parse(row["doc_file_size"]?.ToString() ?? "0"),
+                        },
+                    Contact = row.IsNull("contact_phone")
+                        ? null
+                        : new Contact
+                        {
+                            PhoneNumber = row["contact_phone"].ToString(),
+                            FirstName = row["contact_first_name"]?.ToString(),
+                            LastName = row["contact_last_name"]?.ToString(),
+                            UserId = int.Parse(row["contact_user_id"]?.ToString() ?? "0")
+                        },
+                    Video = row.IsNull("video_fileid")
+                        ? null
+                        : new Video
+                        {
+                            FileId = row["video_fileid"].ToString(),
+                            Duration = int.Parse(row["video_duration"]?.ToString() ?? "0"),
+                            MimeType = row["video_mime_type"]?.ToString(),
+                            FileSize = int.Parse(row["video_file_size"]?.ToString() ?? "0"),
+                            Height = row["video_height"]?.ToString(),
+                            Width = row["video_width"]?.ToString(),
+                        },
+                    Voice = row.IsNull("voice_fileid")
+                    ? null
+                    : new Voice
+                    {
+                        FileId = row["voice_fileid"].ToString(),
+                        Duration = int.Parse(row["voice_duration"]?.ToString() ?? "0"),
+                        MimeType = row["voice_mime_type"]?.ToString(),
+                        FileSize = int.Parse(row["voice_file_size"]?.ToString() ?? "0"),
+                    },
+                    Venue = row.IsNull("venue")
+                        ? null
+                        : new Venue
+                        {
+                            Address = row["venue_address"]?.ToString(),
+                            Location = new Location
+                            {
+                                Latitude = float.Parse(row["venue_latitude"]?.ToString()?.Replace('.', ',') ?? "0"),
+                                Longitude = float.Parse(row["venue_longitude"]?.ToString()?.Replace('.', ',') ?? "0"),
+                            },
+                            Title = row["venue_title"]?.ToString(),
+                            FoursquareId = row["venue_foursquare_id"]?.ToString()
+                        },
+                    Location = row.IsNull("location")
+                        ? null
+                        : new Location
+                        {
+                            Latitude = float.Parse(row["location_latitude"]?.ToString()?.Replace('.', ',') ?? "0"),
+                            Longitude = float.Parse(row["location_longitude"]?.ToString()?.Replace('.', ',') ?? "0"),
+                        },
+                    Sticker = row.IsNull("sticker_fileid")
+                        ? null
+                        : new Sticker
+                        {
+                            FileId = row["sticker_fileid"].ToString(),
+                            FileSize = int.Parse(row["sticker_file_size"]?.ToString() ?? "0"),
+                            Height = row["sticker_height"]?.ToString(),
+                            Width = row["sticker_width"]?.ToString()
+                        }
+                };
+                if (row["have_photos"].ToString() == "1")
                 {
-                    FileId = row[4].ToString()
-                },
-                Photo = !bool.Parse(row[5].ToString()) ? null : new PhotoSize[0],
-                Contact = row.IsNull(6) ? null:new Contact
+                    var photos = new DataTable();
+                    photos.Load(await new OleDbCommand($"select file_id, width, height, file_size FROM telegram_photos where messageid={row["message_id"]}", Connection).ExecuteReaderAsync());
+                    mes.Photo=Enumerable.Select(photos.AsEnumerable(), prow=>new PhotoSize
+                    {
+                        FileId = prow["file_id"]?.ToString(),
+                        Width = int.Parse(prow["width"]?.ToString()??"0"),
+                        Height = int.Parse(prow["height"]?.ToString() ?? "0"),
+                        FileSize = int.Parse(prow["file_size"]?.ToString() ?? "0"),
+                    }).ToArray();
+                }
+                if (row["have_message_entities"].ToString() == "1")
                 {
-                    PhoneNumber = row[6].ToString()
-                },              
-                Document = row.IsNull(7) ? null:new Document
-                {
-                    FileId = row[7].ToString()
-                },
-            }).OrderBy(x=>x.Date).ToList();
+                    var entities = new DataTable();
+                    entities.Load(await new OleDbCommand($"select type, offset, length, url FROM telegram_message_entities where messageid={row["message_id"]}", Connection).ExecuteReaderAsync());
+                    mes.Entities = Enumerable.Select(entities.AsEnumerable(), erow => new MessageEntity
+                    {
+                        Type = (MessageEntityType)Enum.Parse(typeof(MessageEntityType),erow["type"]?.ToString()??MessageEntityType.Pre.ToString()),
+                        Offset = int.Parse(erow["offset"]?.ToString() ?? "0"),
+                        Length = int.Parse(erow["length"]?.ToString() ?? "0"),
+                        Url = erow["url"]?.ToString(),
+                    }).ToList();
+                }
+                messagesList.Add(mes);
+            }
+            return messagesList.OrderBy(x => x.Date).ToList();
         }
 
         public async Task<List<Chat>> GetOpenedDialogChatsAsync()

@@ -10,5 +10,7 @@ namespace TelegramBot.GUI
     {
         public static TelegramBotClient Bot { get; set; }
         public static User BUser { get; set; }
+
+        public static MapWindow Map { get; set; }
     }
 }

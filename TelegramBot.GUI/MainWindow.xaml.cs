@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Shapes;
+using GMap.NET;
 using Telegram.Bot.Types;
 using TelegramBot.DAL;
 
@@ -45,6 +46,7 @@ namespace TelegramBot.GUI
         private void BExit_Click(object sender, RoutedEventArgs e)
         {
             Settings.Save();
+            GMaps.Instance.CancelTileCaching();
             Application.Current.Shutdown();
         }
 
@@ -320,6 +322,11 @@ namespace TelegramBot.GUI
         {
             if(ChatView.CurrentChat!=null)new Dialog(ChatView.CurrentChat).Show();
             ChatView.CurrentChat = null;
+        }
+
+        private void BMap_OnClick(object sender, RoutedEventArgs e)
+        {
+            App.Map.Show();
         }
     }
 }

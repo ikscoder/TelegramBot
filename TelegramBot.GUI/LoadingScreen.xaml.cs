@@ -35,10 +35,13 @@ namespace TelegramBot.GUI
                 App.Bot=new TelegramBotClient(BotSettings.Current.APIKey);
                 App.BUser = await App.Bot.GetMeAsync();
                 StartUpdating();
+                App.Map = new MapWindow();
+
                 LoadingLabel.Content = "Подключение к базе данных";
                 if (!Data.InitConnection(BotSettings.Current.ConnectionString))
                     throw new Exception("Cannot connect to database");
                 LoadingLabel.Content = "Загрузка главного окна";
+                (await Data.Current.GetOfficesAsync()).ForEach(ven => App.Map.AddOffice(ven));
                 var mw = new MainWindow {Visibility = Visibility.Visible };
                 mw.Show();
                 Hide();

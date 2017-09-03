@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Drawing.Imaging;
-using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -48,56 +47,58 @@ namespace TelegramBot.GUI
 
             #endregion
 
-            if (message.Photo!=null)
+            var photoid = message.Photo?.FirstOrDefault(x => x.Width<300);
+            if (photoid?.FileId != null)
             {
-                var photoid = Data.Current.GetPhotoFromMessageAsync(message).Result;
-                if (photoid?.FileId != null)
+                try
                 {
-                    try
-                    {
-                        var photo = App.Bot.GetFileAsync(photoid.FileId).Result;
+                    var photo = App.Bot.GetFileAsync(photoid.FileId).Result;
 
-                        var img = new BitmapImage();
-                        img.BeginInit();
-                        img.StreamSource = photo.FileStream;
-                        img.EndInit();
-                        MessageLabel.Content = new Image { Source = img, Stretch = Stretch.Uniform, MaxWidth = 400 };
+                    var img = new BitmapImage();
+                    img.BeginInit();
+                    img.StreamSource = photo.FileStream;
+                    img.EndInit();
+                    MessageLabel.Content = new Image { Source = img, Stretch = Stretch.Uniform, MaxWidth = 400 };
 
-                    }
-                    catch
-                    {
-                        MessageLabel.Content ="{Ссылка на файл уже не действительна}";
-                    }
-                   
                 }
-                
+                catch
+                {
+                    MessageLabel.Content ="{Ссылка на файл уже не действительна}";
+                }
+                   
             }
-            if (!string.IsNullOrWhiteSpace(message.Sticker?.FileId))
+            if (message.Sticker!=null)
             {
                 MessageLabel.Content = "{Стикер}";
+            }
+            if (message.Audio != null)
+            {
+                MessageLabel.Content = "{Audio}";
+            }
+            if (message.Video != null)
+            {
+                MessageLabel.Content = "{Video}";
             }
             if (message.Contact != null)
             {
                 MessageLabel.Content =
-                    $"Контакт:\n+{message.Contact.PhoneNumber}\n{message.From.LastName} {message.From.FirstName}";
+                    $"Контакт:\n+{message.Contact.PhoneNumber}\n{message.Contact.LastName} {message.Contact.FirstName}";
         
             }
             if (message.Document != null)
             {
-                var doc = Data.Current.GetDocumentAsync(message.Document.FileId).Result;
-                Message.Document = doc;
-                var p = new System.Windows.Shapes.Path
+                var p = new Path
                 {
                     Stretch = Stretch.Uniform
                 };
-                p.SetResourceReference(System.Windows.Shapes.Path.DataProperty, "Download");
+                p.SetResourceReference(Path.DataProperty, "Download");
                 p.SetResourceReference(Shape.FillProperty, "SecondaryColor");
                 var b=new Button();
                 b.SetResourceReference(StyleProperty, "TranspButton");
                 b.Content=new Border{Width = 40,Child = p};
                 b.Click +=async (s, e) =>
                 {
-                    var d = new SaveFileDialog {FileName = doc.FileName};
+                    var d = new SaveFileDialog {FileName = Message.Document.FileName};
                     if (d.ShowDialog() != true) return;
 
                     var file =await App.Bot.GetFileAsync(message.Document.FileId);
@@ -106,15 +107,70 @@ namespace TelegramBot.GUI
                 var dp=new DockPanel();
                 DockPanel.SetDock(b,Dock.Right);
                 dp.Children.Add(b);
-                var l1=new Label{VerticalContentAlignment = VerticalAlignment.Center,HorizontalContentAlignment = HorizontalAlignment.Center,Content = doc?.FileName};
+                var l1=new Label{VerticalContentAlignment = VerticalAlignment.Center,HorizontalContentAlignment = HorizontalAlignment.Center,Content = Message.Document?.FileName};
                 l1.SetResourceReference(ForegroundProperty, "TextOnDarkColor");
                 DockPanel.SetDock(l1, Dock.Top);
                 dp.Children.Add(l1);
-                var l2 = new Label { VerticalContentAlignment = VerticalAlignment.Center, HorizontalContentAlignment = HorizontalAlignment.Center, Content = $"{doc?.MimeType}\n{HRS(doc?.FileSize??0)}" };
+                var l2 = new Label { VerticalContentAlignment = VerticalAlignment.Center, HorizontalContentAlignment = HorizontalAlignment.Center, Content = $"{Message.Document?.MimeType}\n{Hrs(Message.Document?.FileSize??0)}" };
                 l2.SetResourceReference(FontSizeProperty, "FontSizeSmall");
                 l2.SetResourceReference(ForegroundProperty, "TextOnDarkColor");
                 DockPanel.SetDock(l2, Dock.Bottom);
                 dp.Children.Add(l2);
+                MessageLabel.Content = dp;
+            }
+            if (message.Venue != null)
+            {
+                var p = new Path
+                {
+                    Stretch = Stretch.Uniform
+                };
+                p.SetResourceReference(Path.DataProperty, "Map");
+                p.SetResourceReference(Shape.FillProperty, "SecondaryColor");
+                var b = new Button();
+                b.SetResourceReference(StyleProperty, "TranspButton");
+                b.Content = new Border { Width = 40, Child = p };
+                b.Click += (s, e) =>
+                {
+                    App.Map.AddPoint(message.Venue);
+                    App.Map.Show();
+                };
+                var dp = new DockPanel();
+                DockPanel.SetDock(b, Dock.Right);
+                dp.Children.Add(b);
+                var l1 = new Label { VerticalContentAlignment = VerticalAlignment.Center, HorizontalContentAlignment = HorizontalAlignment.Center, Content = Message.Venue?.Title };
+                l1.SetResourceReference(ForegroundProperty, "TextOnDarkColor");
+                DockPanel.SetDock(l1, Dock.Top);
+                dp.Children.Add(l1);
+                var l2 = new Label { VerticalContentAlignment = VerticalAlignment.Center, HorizontalContentAlignment = HorizontalAlignment.Center, Content = Message.Venue?.Address };
+                l2.SetResourceReference(FontSizeProperty, "FontSizeSmall");
+                l2.SetResourceReference(ForegroundProperty, "TextOnDarkColor");
+                DockPanel.SetDock(l2, Dock.Bottom);
+                dp.Children.Add(l2);
+                MessageLabel.Content = dp;
+            }
+            if (message.Location != null)
+            {
+                var p = new Path
+                {
+                    Stretch = Stretch.Uniform
+                };
+                p.SetResourceReference(Path.DataProperty, "Map");
+                p.SetResourceReference(Shape.FillProperty, "SecondaryColor");
+                var b = new Button();
+                b.SetResourceReference(StyleProperty, "TranspButton");
+                b.Content = new Border { Width = 40, Child = p };
+                b.Click += (s, e) =>
+                {
+                    App.Map.AddPoint(message.Location);
+                    App.Map.Show();
+                };
+                var dp = new DockPanel();
+                DockPanel.SetDock(b, Dock.Right);
+                dp.Children.Add(b);
+                var l1 = new Label { VerticalContentAlignment = VerticalAlignment.Center, HorizontalContentAlignment = HorizontalAlignment.Center, Content = $"lat: {Message.Location?.Latitude} lng: {Message.Location?.Longitude}" };
+                l1.SetResourceReference(ForegroundProperty, "TextOnDarkColor");
+                DockPanel.SetDock(l1, Dock.Top);
+                dp.Children.Add(l1);
                 MessageLabel.Content = dp;
             }
             if (message.Text != null) MessageLabel.Content = message.Text;
@@ -129,6 +185,10 @@ namespace TelegramBot.GUI
                 Clipboard.SetText($"Контакт:\n+{Message.Contact.PhoneNumber}\n{Message.From.LastName} {Message.From.FirstName}");
             if(Message.Document!=null)
                 Clipboard.SetText(Message.Document?.FileName);
+            if(Message.Venue!=null)
+                Clipboard.SetText(Message.Venue?.Address);
+            if(Message.Location!=null)
+                Clipboard.SetText($"lat: {Message.Location?.Latitude} lng: {Message.Location?.Longitude}");
             var image = MessageLabel.Content as Image;
             if (image?.Source != null) Clipboard.SetImage((BitmapImage)image.Source);
         }
@@ -150,7 +210,7 @@ namespace TelegramBot.GUI
             }
         }
 
-        private static string HRS(int fileSize)
+        private static string Hrs(int fileSize)
         {
             string[] sizes = { "Byte", "KB", "MB", "GB", "TB" };
             double len = fileSize;

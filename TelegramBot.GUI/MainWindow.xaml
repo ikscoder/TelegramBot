@@ -89,8 +89,13 @@
                 </MenuItem>
                 <MenuItem Header="Чаты" Style="{DynamicResource PrimaryMenuItem}" Click="TabChange" Tag="0"/>
                 <MenuItem Header="База данных" Style="{DynamicResource PrimaryMenuItem}" Click="TabChange" Tag="1"/>
-
+                <Button x:Name="BMap" Style="{DynamicResource MenuIconed}" Margin="0,0,0,0" Click="BMap_OnClick" VerticalAlignment="Stretch">
+                    <Border Margin="2">
+                        <Path Data="{StaticResource Map}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
+                    </Border>
+                </Button>
             </Menu>
+
         </Grid>
         <Border  Margin="0,29,0,0" BorderBrush="{DynamicResource PrimaryColor}" BorderThickness="2,0,2,2">
             <Grid x:Name="BodyGrid" Background="{DynamicResource BackgroundColor}" MouseDown="Drag">
