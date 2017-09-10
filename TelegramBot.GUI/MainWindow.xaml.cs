@@ -303,7 +303,7 @@ namespace TelegramBot.GUI
 
         private void TabChange(object sender, RoutedEventArgs e)
         {
-            if (!((sender as MenuItem)?.Tag is string)) return;
+            if (!((sender as FrameworkElement)?.Tag is string)) return;
             int.TryParse((string)((FrameworkElement) sender).Tag, out int j);
             TabControlMain.SelectedIndex = j;
         }

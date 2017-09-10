@@ -869,6 +869,7 @@ namespace TelegramBot.DAL
 #endif
             }
             var startDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+
             var messagesList = new List<Message>(messages.Rows.Count);
             //TODO
             //,telegram_messages.forward_from
@@ -1082,4 +1083,5 @@ namespace TelegramBot.DAL
 
         #endregion
     }
+
 }

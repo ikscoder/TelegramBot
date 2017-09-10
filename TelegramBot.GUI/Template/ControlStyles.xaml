@@ -1338,7 +1338,7 @@
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource AlternativeBackgroundColor}" />
                             <Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0" />
                             <Setter Property="Background" Value="{DynamicResource AlternativeBackgroundColor}" />
-                            <Setter Property="Foreground" Value="{DynamicResource SecondaryColor}" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextOnLightColor}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="False">
                             <Setter TargetName="Border" Property="Background" Value="{DynamicResource PrimaryColor}" />

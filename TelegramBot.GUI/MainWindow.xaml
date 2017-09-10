@@ -16,7 +16,7 @@
         <local:FontFamilyToStringValueConverter x:Key="FontFamilyToStringValueConverter"/>
         <Style x:Key="RectBorderStyle" TargetType="{x:Type Rectangle}">
             <Setter Property="Focusable" Value="False" />
-            <Setter Property="Visibility" Value="Visible" />
+            <Setter Property="Visibility" Value="Hidden" />
             <Setter Property="Fill" Value="Transparent" />
             <Setter Property="Tag" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
             <EventSetter Event="UIElement.MouseLeftButtonDown" Handler="Resize_Init"/>
@@ -49,6 +49,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="30"/>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="40"/>
                 <ColumnDefinition Width="40"/>
                 <ColumnDefinition Width="40"/>
@@ -57,22 +58,22 @@
             <Border Margin="4">
                 <Path Data="{StaticResource Robot}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
             </Border>
-            <Button Grid.Column="5" x:Name="BExit" Style="{DynamicResource MenuIconedDanger}" Margin="0,0,0,0" HorizontalAlignment="Stretch" Click="BExit_Click" VerticalAlignment="Stretch">
+            <Button Grid.Column="6" x:Name="BExit" Style="{DynamicResource MenuIconedDanger}" Margin="0,0,0,0" HorizontalAlignment="Stretch" Click="BExit_Click" VerticalAlignment="Stretch">
                 <Border Width="16">
                     <Path Data="{StaticResource Exit}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
                 </Border>
             </Button>
-            <Button Grid.Column="4" x:Name="BMaximize" Style="{DynamicResource MenuIconed}" Margin="0,0,0,0" HorizontalAlignment="Stretch" Click="BMaximize_Click" VerticalAlignment="Stretch">
+            <Button Grid.Column="5" x:Name="BMaximize" Style="{DynamicResource MenuIconed}" Margin="0,0,0,0" HorizontalAlignment="Stretch" Click="BMaximize_Click" VerticalAlignment="Stretch">
                 <Border Width="16">
                     <Path Data="{StaticResource Maximize}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
                 </Border>
             </Button>
-            <Button Grid.Column="3" x:Name="BMinimize" Style="{DynamicResource MenuIconed}" Margin="0,0,0,0" HorizontalAlignment="Stretch" Click="BMinimize_Click" VerticalAlignment="Stretch">
+            <Button Grid.Column="4" x:Name="BMinimize" Style="{DynamicResource MenuIconed}" Margin="0,0,0,0" HorizontalAlignment="Stretch" Click="BMinimize_Click" VerticalAlignment="Stretch">
                 <Border Width="16">
                     <Path Data="{StaticResource Minimize}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
                 </Border>
             </Button>
-            <Button Grid.Column="2" Style="{DynamicResource MenuIconed}" Margin="0,0,0,0"
+            <Button Grid.Column="3" Style="{DynamicResource MenuIconed}" Margin="0,0,0,0"
                      HorizontalAlignment="Stretch" Click="BAlwaysOnTop_Click" VerticalAlignment="Stretch">
                 <Border x:Name="BAlwaysOnTop" Width="18" RenderTransformOrigin="0.5,0.5">
                     <Path Data="{StaticResource DrawingPin}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
@@ -82,60 +83,80 @@
                 <MenuItem Header="{DynamicResource LangFile}" Style="{DynamicResource PrimaryMenuItem}" SubmenuOpened="OnMenuOpening" SubmenuClosed="OnMenuClosing" Margin="0,0,40,0">
                     <MenuItem Header="Новый токен" InputGestureText="Ctrl+N" Command="New"/>
                     <MenuItem Header="Новая рассылка" InputGestureText="Ctrl+S" Command="CancelPrint"/>
+                    <MenuItem Header="Карта" Click="BMap_OnClick"/>
                     <Separator/>
                     <MenuItem Header="{DynamicResource LangOptions}" InputGestureText="Ctrl+O" Command="Properties"/>
                     <Separator/>
                     <MenuItem Header="{DynamicResource LangExit}" Width="200" Command="Close"/>
                 </MenuItem>
-                <MenuItem Header="Чаты" Style="{DynamicResource PrimaryMenuItem}" Click="TabChange" Tag="0"/>
-                <MenuItem Header="База данных" Style="{DynamicResource PrimaryMenuItem}" Click="TabChange" Tag="1"/>
-                <Button x:Name="BMap" Style="{DynamicResource MenuIconed}" Margin="0,0,0,0" Click="BMap_OnClick" VerticalAlignment="Stretch">
-                    <Border Margin="2">
-                        <Path Data="{StaticResource Map}" Fill="{DynamicResource TextOnDarkColor}" Stretch="Uniform"/>
-                    </Border>
-                </Button>
-            </Menu>
 
+            </Menu>
+            
         </Grid>
         <Border  Margin="0,29,0,0" BorderBrush="{DynamicResource PrimaryColor}" BorderThickness="2,0,2,2">
             <Grid x:Name="BodyGrid" Background="{DynamicResource BackgroundColor}" MouseDown="Drag">
-                <TabControl x:Name="TabControlMain" BorderThickness="0" TabStripPlacement="Left" Padding="0" Panel.ZIndex="5"  MouseDown="Drag">
-                    <TabItem>
+                <TabControl x:Name="TabControlMain" BorderThickness="0" Padding="0" Panel.ZIndex="5"  MouseDown="Drag" TabStripPlacement="Top" Margin="0,-29,0,0">
+                    <TabControl.Resources>
+                        <Style TargetType="{x:Type TabPanel}">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </TabControl.Resources>
+                    <TabItem x:Name="Tab1">
+                        <TabItem.Header>
+                            <Viewbox Height="26" Stretch="Fill" Width="100" >
+                                <Label Content="Чаты" FontSize="{DynamicResource FontSizeBig}" FontFamily="{DynamicResource FontFamilyHighlight}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="{Binding Foreground, ElementName=Tab1, Mode=OneWay}" Width="100"/>
+                            </Viewbox>
+                        </TabItem.Header>
                         <Grid Background="{DynamicResource BackgroundColor}" SnapsToDevicePixels="True" UseLayoutRounding="True">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="235"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Border Margin="10,60,0,0" BorderBrush="{DynamicResource SecondaryColor}" BorderThickness="0,0,6,0">
-                                <ScrollViewer Margin="0,0,0,10" >
-                                    <StackPanel x:Name="Chats" Background="{DynamicResource BackgroundColor}"/>
-                                </ScrollViewer>
+                            <Border Margin="-4,0,0,0" BorderBrush="{DynamicResource SecondaryColor}" BorderThickness="0,0,6,0">
+                                <Grid Background="{DynamicResource AlternativeBackgroundColor}">
+                                    <ScrollViewer Margin="10,60,0,10" >
+                                        <StackPanel x:Name="Chats"/>
+                                    </ScrollViewer>
+                                    <Label Grid.Column="0" Content="Чаты" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" FontSize="{DynamicResource FontSizeBig}" FontFamily="{DynamicResource FontFamilyHighlight}"/>
+                                    <CheckBox Grid.Column="0" x:Name="ClientCheckChat" Content="Клиенты" HorizontalAlignment="Left" Margin="63,35,0,0" VerticalAlignment="Top" IsChecked="True" IsEnabled="{Binding IsChecked, ElementName=ManagerCheckChat}"/>
+                                    <CheckBox Grid.Column="0" x:Name="ManagerCheckChat" Content="Менеджеры" HorizontalAlignment="Left" Margin="63,10,0,0" VerticalAlignment="Top" IsChecked="True" IsEnabled="{Binding IsChecked, ElementName=ClientCheckChat}"/>
+
+                                </Grid>
                             </Border>
                             <Button x:Name="BOpenChat" Style="{DynamicResource TranspButton}" Margin="10,10,505,0" Click="BOpenChat_Click" HorizontalAlignment="Stretch" Visibility="{Binding Visibility, ElementName=ChatView}" Panel.ZIndex="5" Grid.Column="1">
                                 <Border Width="40">
                                     <Path Data="{StaticResource Chat}" Fill="{DynamicResource SecondaryColor}" Stretch="Uniform"/>
                                 </Border>
                             </Button>
-                            <Label Grid.Column="0" Content="Чаты" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top" FontSize="{DynamicResource FontSizeBig}" FontFamily="{DynamicResource FontFamilyHighlight}"/>
-                            <CheckBox Grid.Column="0" x:Name="ClientCheckChat" Content="Клиенты" HorizontalAlignment="Left" Margin="63,35,0,0" VerticalAlignment="Top" IsChecked="True" IsEnabled="{Binding IsChecked, ElementName=ManagerCheckChat}"/>
-                            <CheckBox Grid.Column="0" x:Name="ManagerCheckChat" Content="Менеджеры" HorizontalAlignment="Left" Margin="63,10,0,0" VerticalAlignment="Top" IsChecked="True" IsEnabled="{Binding IsChecked, ElementName=ClientCheckChat}"/>
                             <Label Content="Необходимо выбрать чат" Margin="0,0,0,0" VerticalAlignment="Center" FontSize="{DynamicResource FontSizeBig}" Grid.Column="1" HorizontalAlignment="Center" Visibility="{Binding Visibility, Converter={StaticResource InverseVisibilityConverter}, ElementName=ChatView}"/>
                             <local:ChatView x:Name="ChatView" Panel.ZIndex="3"  Grid.Column="1"/>
 
                         </Grid>
                     </TabItem>
-                    <TabItem>
-                        <Grid Background="{DynamicResource BackgroundColor}" SnapsToDevicePixels="True" UseLayoutRounding="True">
-                            <ListBox x:Name="ListTables" HorizontalAlignment="Left" Margin="10,41,0,10" Width="157" SelectionChanged="ListTables_SelectionChanged"/>
-                            <Label Content="Таблицы" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" FontFamily="{DynamicResource FontFamilyHighlight}" FontSize="{DynamicResource FontSizeBig}"/>
-                            <Label Content="{Binding SelectedItem, ElementName=ListTables}" HorizontalAlignment="Center" Margin="80,30,0,0" VerticalAlignment="Top" FontFamily="{DynamicResource FontFamilyHighlight}" FontSize="{DynamicResource FontSizeBig}" Foreground="{DynamicResource SecondaryColor}"/>
-                            <DataGrid x:Name="DBTable" Height="491" Margin="172,55,10,0" VerticalAlignment="Top" Background="{DynamicResource AlternativeBackgroundColor}" FrozenColumnCount="1"/>
-                            <Button x:Name="Refresh" Width="40" Style="{DynamicResource TranspButton}" Margin="0,7,10,0" VerticalAlignment="Top" Height="40" HorizontalAlignment="Right" Click="Refresh_OnClick">
+                    <TabItem x:Name="Tab2">
+                        <TabItem.Header>
+                            <Viewbox Height="26" Stretch="Fill" Width="110" >
+                                <Label Content="База данных" FontSize="{DynamicResource FontSizeBig}" FontFamily="{DynamicResource FontFamilyHighlight}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="{Binding Foreground, ElementName=Tab2, Mode=OneWay}"/>
+                            </Viewbox>
+                        </TabItem.Header>
+                        <Grid Background="{DynamicResource BackgroundColor}" SnapsToDevicePixels="True" UseLayoutRounding="True" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="235"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border BorderBrush="{DynamicResource SecondaryColor}" BorderThickness="0,0,6,0" Margin="-4,0,0,0">
+                                <Grid Background="{DynamicResource AlternativeBackgroundColor}">
+                                    <ListBox x:Name="ListTables" Margin="10,29,0,10" SelectionChanged="ListTables_SelectionChanged" Foreground="{DynamicResource TextOnLightColor}" Background="{x:Null}" BorderThickness="0"/>
+                                    <Label Content="Таблицы" HorizontalAlignment="Left" VerticalAlignment="Top" FontFamily="{DynamicResource FontFamilyHighlight}" FontSize="{DynamicResource FontSizeBig}" Margin="10,0,0,0"/>
+                                </Grid>
+                            </Border>
+                            <Label Grid.Column="1" Content="{Binding SelectedItem, ElementName=ListTables}" HorizontalAlignment="Left" Margin="60,24,0,0" VerticalAlignment="Top" FontFamily="{DynamicResource FontFamilyHighlight}" FontSize="{DynamicResource FontSizeBig}" Foreground="{DynamicResource SecondaryColor}"/>
+                            <DataGrid Grid.Column="1" x:Name="DBTable" Margin="10,39,10,10" FrozenColumnCount="1"/>
+                            <Button Grid.Column="1" x:Name="Refresh" Width="24" Style="{DynamicResource TranspButton}" Margin="0,10,523,0" VerticalAlignment="Top" Height="24" HorizontalAlignment="Right" Click="Refresh_OnClick">
                                 <Border>
                                     <Path Data="{StaticResource Refresh}" Fill="{DynamicResource SecondaryColor}" Stretch="Uniform"/>
                                 </Border>
                             </Button>
-                            <Label Content="Обновить таблицу" HorizontalAlignment="Right" Margin="0,18,55,0" VerticalAlignment="Top"/>
                         </Grid>
                     </TabItem>
 
